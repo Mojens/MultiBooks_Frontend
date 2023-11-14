@@ -21,9 +21,9 @@ export class AuthService {
     }),
   };
 
-  login(username: string, password: string): Observable<ApiResponse<any>> {
+  login(email: string, password: string): Observable<ApiResponse<any>> {
     const loginUrl = `${this.URL}/login`;
-    return this.http.post<ApiResponse<authModels.LoginResponse>>(loginUrl, { username, password }, this.httpOptions);
+    return this.http.post<ApiResponse<authModels.LoginResponse>>(loginUrl, { email, password }, this.httpOptions);
   }
 
   setToken(token: string) {

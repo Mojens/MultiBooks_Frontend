@@ -7,10 +7,11 @@ import { AppComponent } from './app.component';
 import {LoginComponent} from "./core/auth/login/login.component";
 import {AuthService} from "./core/auth/auth.service";
 import {routes} from "./app.routes";
+import {DashboardComponent} from "./features/dashboard/dashboard.component";
 
 @NgModule({
   imports: [BrowserModule, HttpClientModule, FormsModule, RouterModule.forRoot(routes)],
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent, DashboardComponent],
   providers: [AuthService],
   bootstrap: [AppComponent],
 })
