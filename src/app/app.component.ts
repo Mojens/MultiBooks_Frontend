@@ -10,28 +10,22 @@ import {AuthService} from "./core/auth/auth.service";
 export class AppComponent implements OnInit {
 
   token: string | null = null;
-  showSidebar: boolean = false;
+  showSidebar: boolean = true;
 
   constructor(private authService: AuthService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
-    if(router.config[2].path == 'login'){
-      this.showSidebar = false;
-    }else{
-      this.showSidebar = true;
-    }
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.showSidebar = !event.url.includes('/login');
+      }
+    });
   }
 
   ngOnInit(): void {
     this.token = this.authService.getToken();
     if (!this.token) {
       this.router.navigate(["/login"]);
-      this.showSidebar = false;
-    }
-    if(this.router.config[2].path == 'login'){
-      this.showSidebar = false;
-    }else{
-      this.showSidebar = true;
     }
   }
 

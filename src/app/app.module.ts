@@ -8,9 +8,11 @@ import {LoginComponent} from "./core/auth/login/login.component";
 import {AuthService} from "./core/auth/auth.service";
 import {routes} from "./app.routes";
 import {DashboardComponent} from "./features/dashboard/dashboard.component";
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
-  imports: [BrowserModule, HttpClientModule, FormsModule, RouterModule.forRoot(routes)],
+  imports: [BrowserModule, HttpClientModule, FormsModule,ChartModule,
+    RouterModule.forRoot(routes)],
   declarations: [AppComponent, LoginComponent, DashboardComponent],
   providers: [AuthService],
   bootstrap: [AppComponent],
