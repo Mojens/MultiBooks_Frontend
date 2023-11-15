@@ -17,13 +17,17 @@ export class AppComponent implements OnInit {
               private activatedRoute: ActivatedRoute) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        if(event.url.includes('/login') || event.url.includes('/register' || event.url.includes('/forgot-password'))){
+        console.log(event.url)
+        if(event.url.includes('/login') || event.url.includes('/register' || event.url.includes('/registerr'))){
           this.showSidebar = false;
         }
-        if(event.url.includes('/login') || event.url.includes('/register' || event.url.includes('/forgot-password'))){
+        if(event.url.includes('/login') || event.url.includes('/register' || event.url.includes('/registerr'))){
           document.getElementById('container_content_all')?.classList.add('p-0')
+          document.getElementById('container_content_all')?.classList.remove('p-5')
         }else{
+          this.showSidebar = true;
           document.getElementById('container_content_all')?.classList.remove('p-0')
+          document.getElementById('container_content_all')?.classList.add('p-5')
         }
       }
     });

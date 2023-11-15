@@ -12,8 +12,8 @@ import {RegisterComponent} from "./core/auth/register/register.component";
 import {ForgotPwdComponent} from "./core/auth/forgot-pwd/forgot-pwd.component";
 
 export const routes: Routes = [
-  { path: 'dashboard', component: DashboardComponent},
   { path: '', component: DashboardComponent},
+  { path: 'dashboard', component: DashboardComponent},
   { path: 'login', component: LoginComponent },
   { path: 'sales', component: SalesComponent},
   { path: 'accounting', component: AccountingComponent},
@@ -22,6 +22,11 @@ export const routes: Routes = [
   { path: 'taxes/vat', component: VatComponent},
   { path: 'taxes/govtax', component: GovtaxComponent },
   { path: 'register', component: RegisterComponent},
-  { path: 'forgot-password', component: ForgotPwdComponent},
+  { path: 'registerr', component: ForgotPwdComponent},
+
+
+
+
+
   { path: '**', component: ErrorComponent},
 ];
