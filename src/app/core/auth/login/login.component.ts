@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
@@ -35,5 +33,13 @@ export class LoginComponent implements OnInit {
         this.errorMessage = 'Invalid username or password';
       }
     );
+  }
+  navigateToRegister()
+  {
+    this.router.navigate(['/register']);
+  }
+  navigateToForgotPassword()
+  {
+    this.router.navigate(['/forgot-password']);
   }
 }

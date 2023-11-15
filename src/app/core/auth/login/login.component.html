@@ -24,9 +24,9 @@
     <div *ngIf="errorMessage" class="mt-4 text-red-500">{{ errorMessage }}</div>
 
     <div class="mt-4 text-center">
-      <a href="#" class="text-blue-500 hover:underline">Forgot Password</a>
+      <a (click)="navigateToForgotPassword()" class="text-blue-500 hover:underline cursor-pointer">Forgot Password</a>
       <span class="text-gray-500 mx-2">|</span>
-      <a href="#" class="text-blue-500 hover:underline">Register</a>
+      <a (click)="navigateToRegister()"  class="text-blue-500 hover:underline cursor-pointer">Register</a>
     </div>
   </div>
 </div>

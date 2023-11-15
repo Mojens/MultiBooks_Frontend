@@ -2,16 +2,16 @@
   <!-- Sidebar -->
   <aside *ngIf="showSidebar" class="bg-gray-800 w-64 space-y-6 py-7 px-2 hidden md:block h-screen">
     <nav>
-      <a href="/dashboard" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white">Dashboard</a>
-      <a href="/dashboard" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white">Sales</a>
-      <a href="/dashboard" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white">Accounting</a>
-      <a href="/dashboard" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white">Contacts</a>
-      <a href="/dashboard" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white" >Tax</a>
+      <a (click)="navigateToDashboard()" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white cursor-pointer">Dashboard</a>
+      <a (click)="navigateToSales()" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white cursor-pointer">Sales</a>
+      <a (click)="navigateToAccounting()" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white cursor-pointer">Accounting</a>
+      <a (click)="navigateToContacts()" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white cursor-pointer">Contacts</a>
+      <a (click)="navigateToTaxes()" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white cursor-pointer" >Tax</a>
     </nav>
   </aside>
 
   <!-- Main Content -->
-  <div class="flex-grow p-5">
+  <div class="flex-grow p-5" id="container_content_all">
     <router-outlet></router-outlet>
   </div>
 </div>
