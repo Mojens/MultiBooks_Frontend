@@ -70,4 +70,8 @@ export class AuthService {
     return this.http.post(`${this.URL}/logout`, {},this.httpOptions);
   }
 
+  forgotPwd(email: string): Observable<ApiResponse<any>> {
+    const forgotPwdUrl = `${this.URL}/forgot-password`;
+    return this.http.post<ApiResponse<any>>(forgotPwdUrl, { email }, this.httpOptions);
+  }
 }

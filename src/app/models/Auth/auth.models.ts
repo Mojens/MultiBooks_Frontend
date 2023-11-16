@@ -10,3 +10,8 @@ export interface RegisterResponse {
 export interface LogoutResponse {
   loggedOut: boolean;
 }
+
+export interface ForgotPwdResponse {
+  data: string;
+  message: string;
+}
