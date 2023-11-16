@@ -18,10 +18,10 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         console.log(event.url)
-        if(event.url.includes('/login') || event.url.includes('/register' || event.url.includes('/registerr'))){
+        if(event.url.includes('/login') || event.url.includes('/register' || event.url.includes('/forgot-password'))){
           this.showSidebar = false;
         }
-        if(event.url.includes('/login') || event.url.includes('/register' || event.url.includes('/registerr'))){
+        if(event.url.includes('/login') || event.url.includes('/register' || event.url.includes('/forgot-password'))){
           document.getElementById('container_content_all')?.classList.add('p-0')
           document.getElementById('container_content_all')?.classList.remove('p-5')
         }else{
@@ -34,11 +34,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.token = this.authService.getToken();
-    if (!this.token) {
-      this.router.navigate(["/login"]);
-    }
-
   }
 
   navigateToSales(){

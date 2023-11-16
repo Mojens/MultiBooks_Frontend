@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_URL } from '../../@shared/api.config'
 import { ApiResponse } from "../../@shared/api.response";
@@ -32,6 +32,37 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem(this.tokenKey);
+  }
+
+   async isAuthenticated() {
+    let authenticated = false;
+    const token = this.getToken();
+
+    if (token) {
+      try {
+        const response: HttpResponse<any> | undefined = await this.http.get(`${this.URL}/isAuthenticated`, {
+          headers: new HttpHeaders({ 'Authorization': `Bearer ${token}` }),
+          observe: 'response' // This tells Angular to return the full HttpResponse
+        }).toPromise();
+
+        // Check if 'response' is defined before accessing its properties.
+        if (response) {
+          if (response.status === 200) {
+            authenticated = true;
+          } else if (response.status === 401) {
+            authenticated = false;
+          }
+        }
+      } catch (error) {
+        // Handle any errors that occur during the HTTP request.
+        console.error(error);
+
+        // If an error occurs or response is undefined, you might want to set 'authenticated' to false as a fallback.
+        authenticated = false;
+      }
+    }
+
+    return authenticated;
   }
 
   logout() {

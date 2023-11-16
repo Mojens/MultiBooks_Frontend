@@ -10,19 +10,20 @@ import {VatComponent} from "./features/taxes/vat/vat.component";
 import {GovtaxComponent} from "./features/taxes/govtax/govtax.component";
 import {RegisterComponent} from "./core/auth/register/register.component";
 import {ForgotPwdComponent} from "./core/auth/forgot-pwd/forgot-pwd.component";
+import { AuthGuard } from "./core/auth/authGuard";
 
 export const routes: Routes = [
-  { path: '', component: DashboardComponent},
-  { path: 'dashboard', component: DashboardComponent},
+  { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'sales', component: SalesComponent},
-  { path: 'accounting', component: AccountingComponent},
-  { path: 'contacts', component: ContactsComponent },
-  { path: 'taxes', component: TaxesComponent},
-  { path: 'taxes/vat', component: VatComponent},
-  { path: 'taxes/govtax', component: GovtaxComponent },
+  { path: 'sales', component: SalesComponent, canActivate: [AuthGuard] },
+  { path: 'accounting', component: AccountingComponent, canActivate: [AuthGuard] },
+  { path: 'contacts', component: ContactsComponent, canActivate: [AuthGuard] },
+  { path: 'taxes', component: TaxesComponent, canActivate: [AuthGuard] },
+  { path: 'taxes/vat', component: VatComponent, canActivate: [AuthGuard] },
+  { path: 'taxes/govtax', component: GovtaxComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent},
-  { path: 'registerr', component: ForgotPwdComponent},
+  { path: 'forgot-password', component: ForgotPwdComponent},
 
 
 
