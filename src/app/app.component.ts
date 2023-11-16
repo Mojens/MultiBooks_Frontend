@@ -17,11 +17,18 @@ export class AppComponent implements OnInit {
               private activatedRoute: ActivatedRoute) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        console.log(event.url)
-        if(event.url.includes('/login') || event.url.includes('/register' || event.url.includes('/forgot-password'))){
+        if (
+          event.url.includes('/login') ||
+          event.url.includes('/forgot-password') ||
+          event.url.includes('/register')
+        ) {
           this.showSidebar = false;
         }
-        if(event.url.includes('/login') || event.url.includes('/register' || event.url.includes('/forgot-password'))){
+        if (
+          event.url.includes('/login') ||
+          event.url.includes('/forgot-password') ||
+          event.url.includes('/register')
+        ) {
           document.getElementById('container_content_all')?.classList.add('p-0')
           document.getElementById('container_content_all')?.classList.remove('p-5')
         }else{
