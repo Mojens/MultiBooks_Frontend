@@ -74,4 +74,11 @@ export class AuthService {
     const forgotPwdUrl = `${this.URL}/forgot-password`;
     return this.http.post<ApiResponse<any>>(forgotPwdUrl, { email }, this.httpOptions);
   }
+
+  registerUser(user: authModels.UserRequest): Observable<ApiResponse<any>> {
+    const registerUrl = `${this.URL}/register`;
+    return this.http.post<ApiResponse<authModels.RegisterResponse>>(registerUrl, user, this.httpOptions);
+
+  }
+
 }
