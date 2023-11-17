@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {FormsModule} from "@angular/forms";
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
+import {AuthService} from "../auth.service";
+import {RegisterRequest} from "../../../models";
 
 @Component({
   selector: 'app-register',
@@ -10,22 +12,35 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
 
-    email: string = '';
-    password: string = '';
-    message:string = '';
+  email: string = '';
+  password: string = '';
+  confirmPassword: string = '';
+  showSuccessMessage: string = '';
+  request: RegisterRequest = {
+    email: '',
+    password: '',
+    confirmPassword: ''
+  };
 
-    constructor(private router: Router) { }
 
-    ngOnInit(): void {
-    }
+  constructor(private router: Router, private service: AuthService) {
+  }
 
-    navigateToLogin() {
-      this.router.navigate(['/login']);
-    }
+  ngOnInit(): void {
+  }
 
-    register() {
-      this.message = 'Registering...';
-    }
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  register() {
+    this.request.email = this.email;
+    this.request.password = this.password;
+    this.request.confirmPassword = this.confirmPassword;
+    this.service.registerUser(this.request).subscribe((data) => {
+      this.showSuccessMessage = data.message;
+    });
+  }
 }
