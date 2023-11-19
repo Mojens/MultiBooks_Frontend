@@ -11,6 +11,7 @@ import {GovtaxComponent} from "./features/taxes/govtax/govtax.component";
 import {RegisterComponent} from "./core/auth/register/register.component";
 import {ForgotPwdComponent} from "./core/auth/forgot-pwd/forgot-pwd.component";
 import { AuthGuard } from "./core/auth/authGuard";
+import {ResetPwdComponent} from "./core/auth/reset-pwd/reset-pwd.component";
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -24,6 +25,7 @@ export const routes: Routes = [
   { path: 'taxes/govtax', component: GovtaxComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent},
   { path: 'forgot-password', component: ForgotPwdComponent},
+  { path: 'reset-password/:reset-token', component: ResetPwdComponent},
 
 
 

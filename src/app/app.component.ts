@@ -20,14 +20,16 @@ export class AppComponent implements OnInit {
         if (
           event.url.includes('/login') ||
           event.url.includes('/forgot-password') ||
-          event.url.includes('/register')
+          event.url.includes('/register') ||
+          event.url.includes('/reset-password')
         ) {
           this.showSidebar = false;
         }
         if (
           event.url.includes('/login') ||
           event.url.includes('/forgot-password') ||
-          event.url.includes('/register')
+          event.url.includes('/register') ||
+          event.url.includes('/reset-password')
         ) {
           document.getElementById('container_content_all')?.classList.add('p-0')
           document.getElementById('container_content_all')?.classList.remove('p-5')

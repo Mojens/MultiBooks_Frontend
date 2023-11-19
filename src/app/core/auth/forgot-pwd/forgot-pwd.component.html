@@ -15,7 +15,9 @@
         Reset Password
       </button>
     </form>
+    <div *ngIf="errorMessage" class="mt-4 text-red-500">{{ errorMessage }}</div>
     <div *ngIf="message" class="mt-4 text-green-500">{{ message }}</div>
+    <div *ngIf="messageTwo" class="mt-4 text-green-500 font-bold">{{ messageTwo }}</div>
     <div class="mt-4 text-center">
       <a (click)="navigateToLogin()" class="text-blue-500 hover:underline cursor-pointer">Back to Login</a>
     </div>

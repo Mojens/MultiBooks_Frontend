@@ -15,6 +15,9 @@ export class ForgotPwdComponent implements OnInit {
 
   email: string = '';
   message:string = '';
+  messageTwo:string = '';
+  errorMessage: string = '';
+
   constructor(private router: Router, private service: AuthService) { }
   ngOnInit(): void {
   }
@@ -23,9 +26,18 @@ export class ForgotPwdComponent implements OnInit {
   }
 
   forgotPwd() {
-    this.service.forgotPwd(this.email).subscribe((data) => {
-      this.message = data.message;
-    });
+    this.message = '';
+    this.errorMessage = '';
+
+    this.service.forgotPwd(this.email).subscribe(
+      (data) => {
+        this.message = data.message.split('-')[0];
+        this.messageTwo = data.message.split('-')[1];
+      },
+      (error) => {
+        this.errorMessage = error.error.message;
+      }
+    );
   }
 
 }

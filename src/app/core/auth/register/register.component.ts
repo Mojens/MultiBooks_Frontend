@@ -41,6 +41,9 @@ export class RegisterComponent implements OnInit {
     this.request.confirmPassword = this.confirmPassword;
     this.service.registerUser(this.request).subscribe((data) => {
       this.showSuccessMessage = data.message;
+      this.confirmPassword = '';
+      this.password = '';
+      this.email = '';
     });
   }
 }
