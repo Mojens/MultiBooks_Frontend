@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {AuthService} from "./core/auth/auth.service";
-import {MenuItem} from 'primeng/api';
 import {
   faHome,
   faDashboard,
@@ -11,7 +10,8 @@ import {
   faPercent,
   faSignOut,
   faGear,
-  faUsers
+  faUsers,
+  faBars
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -23,9 +23,8 @@ export class AppComponent implements OnInit {
 
   username: string | null = null;
   token: string | null = null;
-  showSidebar: boolean = true;
+  showSidebar: boolean = false;
 
-  faHome = faHome;
   faAddressBook = faAddressBook;
   faPercent = faPercent;
   faSignOut = faSignOut;
@@ -34,6 +33,7 @@ export class AppComponent implements OnInit {
   faDollarSign = faDollarSign;
   faDashboard = faDashboard;
   faUsers = faUsers;
+  faBars = faBars;
 
 
   constructor(private authService: AuthService,

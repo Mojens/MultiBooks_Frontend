@@ -1,0 +1,13 @@
+aside {
+  transition: transform 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 768px) {
+  aside {
+    transform: translateX(-6%);
+  }
+
+  aside[ng-reflect-ng-if="true"] {
+    transform: translateX(0);
+  }
+}
