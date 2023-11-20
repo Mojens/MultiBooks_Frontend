@@ -1,5 +1,6 @@
 @import url("../node_modules/primeicons/primeicons.css");
 @import url("../node_modules/primeng/resources/primeng.min.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

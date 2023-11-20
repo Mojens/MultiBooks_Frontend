@@ -42,10 +42,8 @@ export class AuthService {
       try {
         const response: HttpResponse<any> | undefined = await this.http.get(`${this.URL}/isAuthenticated`, {
           headers: new HttpHeaders({ 'Authorization': `Bearer ${token}` }),
-          observe: 'response' // This tells Angular to return the full HttpResponse
+          observe: 'response'
         }).toPromise();
-
-        // Check if 'response' is defined before accessing its properties.
         if (response) {
           if (response.status === 200) {
             authenticated = true;
@@ -54,10 +52,7 @@ export class AuthService {
           }
         }
       } catch (error) {
-        // Handle any errors that occur during the HTTP request.
         console.error(error);
-
-        // If an error occurs or response is undefined, you might want to set 'authenticated' to false as a fallback.
         authenticated = false;
       }
     }
@@ -67,7 +62,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem(this.tokenKey);
-    return this.http.post(`${this.URL}/logout`, {},this.httpOptions);
+    localStorage.removeItem('user_information');
   }
 
   forgotPwd(email: string): Observable<ApiResponse<any>> {
@@ -78,7 +73,16 @@ export class AuthService {
   registerUser(user: authModels.UserRequest): Observable<ApiResponse<any>> {
     const registerUrl = `${this.URL}/register`;
     return this.http.post<ApiResponse<authModels.RegisterResponse>>(registerUrl, user, this.httpOptions);
+  }
 
+  verifyResetToken(token: string): Observable<ApiResponse<any>> {
+    const verifyResetTokenUrl = `${this.URL}/verify-reset-token/${token}`;
+    return this.http.post<ApiResponse<any>>(verifyResetTokenUrl, { }, this.httpOptions);
+  }
+
+  resetPwd(request: authModels.ResetPwdRequest): Observable<ApiResponse<any>> {
+    const resetPwdUrl = `${this.URL}/reset-password`;
+    return this.http.post<ApiResponse<any>>(resetPwdUrl, request, this.httpOptions);
   }
 
 }

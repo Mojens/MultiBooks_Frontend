@@ -1,17 +1,77 @@
 <div class="flex">
-  <!-- Sidebar -->
-  <aside *ngIf="showSidebar" class="bg-gray-800 w-64 space-y-6 py-7 px-2 hidden md:block h-screen">
-    <nav>
-      <a (click)="navigateToDashboard()" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white cursor-pointer">Dashboard</a>
-      <a (click)="navigateToSales()" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white cursor-pointer">Sales</a>
-      <a (click)="navigateToAccounting()" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white cursor-pointer">Accounting</a>
-      <a (click)="navigateToContacts()" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white cursor-pointer">Contacts</a>
-      <a (click)="navigateToTaxes()" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-white cursor-pointer" >Tax</a>
+  <aside *ngIf="showSidebar"
+         class="bg-blue-500 w-64 space-y-6 py-7 px-2 hidden md:block h-screen flex flex-col relative">
+    <nav class="space-y-2">
+      <a (click)="navigateToDashboard()"
+         class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-950 hover:text-white text-white cursor-pointer">
+        <fa-icon class="mr-2" [icon]="faDashboard"></fa-icon>
+        Dashboard</a>
+      <a (click)="navigateToSales()"
+         class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-950 hover:text-white text-white cursor-pointer">
+        <fa-icon class="mr-2" [icon]="faDollarSign"></fa-icon>
+        Sales</a>
+      <a (click)="navigateToAccounting()"
+         class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-950 hover:text-white text-white cursor-pointer">
+        <fa-icon class="mr-2" [icon]="faFileInvoiceDollar"></fa-icon>
+        Accounting</a>
+      <a (click)="navigateToContacts()"
+         class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-950 hover:text-white text-white cursor-pointer">
+        <fa-icon class="mr-2" [icon]="faAddressBook"></fa-icon>
+        Contacts</a>
+      <a (click)="navigateToTaxes()"
+         class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-950 hover:text-white text-white cursor-pointer">
+        <fa-icon class="mr-2" [icon]="faPercent"></fa-icon>
+        Tax</a>
     </nav>
+
+
+    <div class="absolute bottom-0 left-0 right-0 pb-4">
+
+      <div class="flex justify-center gap-4">
+        <button class="hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg" [pTooltip]="tooltipContentSignout"
+                tooltipPosition="top" (click)="logout()">
+          <fa-icon [icon]="faSignOut"></fa-icon>
+        </button>
+        <button class="hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg"
+                [pTooltip]="tooltipContentTeamManagement" tooltipPosition="top" (click)="navigateToTeamManagement()">
+          <fa-icon [icon]="faUsers"></fa-icon>
+        </button>
+        <button class="hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg" [pTooltip]="tooltipContentSettings"
+                tooltipPosition="top" (click)="navigateToSettings()">
+          <fa-icon [icon]="faGear"></fa-icon>
+        </button>
+      </div>
+
+      <div class="text-white m-2">
+        <span>Logged in as</span>
+        <p class="font-semibold">{{ 'DK47382737' }}</p>
+      </div>
+
+    </div>
   </aside>
 
-  <!-- Main Content -->
   <div class="flex-grow p-0" id="container_content_all">
     <router-outlet></router-outlet>
   </div>
 </div>
+<ng-template #tooltipContentSignout>
+  <div class="flex align-items-center">
+    <span>
+            <b class="text-white">Sign out</b>
+        </span>
+  </div>
+</ng-template>
+<ng-template #tooltipContentTeamManagement>
+  <div class="flex align-items-center">
+    <span class="">
+            <b class="text-white">Team management</b>
+        </span>
+  </div>
+</ng-template>
+<ng-template #tooltipContentSettings>
+  <div class="flex align-items-center">
+    <span class="">
+            <b class="text-white">Go to settings</b>
+        </span>
+  </div>
+</ng-template>

@@ -26,3 +26,9 @@ export interface RegisterRequest {
   password: string;
   confirmPassword: string;
 }
+
+export interface ResetPwdRequest {
+  resetToken: string;
+  password: string;
+  confirmPassword: string;
+}

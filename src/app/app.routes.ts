@@ -12,6 +12,7 @@ import {RegisterComponent} from "./core/auth/register/register.component";
 import {ForgotPwdComponent} from "./core/auth/forgot-pwd/forgot-pwd.component";
 import { AuthGuard } from "./core/auth/authGuard";
 import {ResetPwdComponent} from "./core/auth/reset-pwd/reset-pwd.component";
+import {TeamManagementComponent} from "./features/team-management/team-management.component";
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -26,6 +27,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'forgot-password', component: ForgotPwdComponent},
   { path: 'reset-password/:reset-token', component: ResetPwdComponent},
+  { path: 'team-management', component: TeamManagementComponent, canActivate: [AuthGuard]},
 
 
 
