@@ -17,11 +17,12 @@ import { RippleModule } from 'primeng/ripple';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {TooltipModule} from "primeng/tooltip";
 import {ToastModule} from "primeng/toast";
+import {ScrollTopModule} from "primeng/scrolltop";
 
 
 @NgModule({
   imports: [BrowserModule, HttpClientModule, FormsModule, ChartModule, SidebarModule,
-    DividerModule, RippleModule, TooltipModule, ToastModule,
+    DividerModule, RippleModule, TooltipModule, ToastModule, ScrollTopModule,
     ButtonModule, BrowserAnimationsModule,
     RouterModule.forRoot(routes), FontAwesomeModule],
   declarations: [AppComponent, LoginComponent, DashboardComponent],
