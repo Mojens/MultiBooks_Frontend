@@ -16,16 +16,18 @@ import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {TooltipModule} from "primeng/tooltip";
-import {ToastModule} from "primeng/toast";
 import {ScrollTopModule} from "primeng/scrolltop";
+import {StepsModule} from "primeng/steps";
+import {RegisterComponent} from "./core/auth/register/register.component";
+import {ToastrModule} from "ngx-toastr";
 
 
 @NgModule({
   imports: [BrowserModule, HttpClientModule, FormsModule, ChartModule, SidebarModule,
-    DividerModule, RippleModule, TooltipModule, ToastModule, ScrollTopModule,
+    DividerModule, RippleModule, TooltipModule, ToastrModule.forRoot(), ScrollTopModule, StepsModule,
     ButtonModule, BrowserAnimationsModule,
     RouterModule.forRoot(routes), FontAwesomeModule],
-  declarations: [AppComponent, LoginComponent, DashboardComponent],
+  declarations: [AppComponent, LoginComponent, DashboardComponent, RegisterComponent],
   providers: [AuthService],
   bootstrap: [AppComponent],
 })
