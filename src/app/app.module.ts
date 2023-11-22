@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import {LoginComponent} from "./core/auth/login/login.component";
@@ -17,16 +17,18 @@ import { RippleModule } from 'primeng/ripple';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {TooltipModule} from "primeng/tooltip";
 import {ScrollTopModule} from "primeng/scrolltop";
-import {StepsModule} from "primeng/steps";
 import {RegisterComponent} from "./core/auth/register/register.component";
 import {ToastrModule} from "ngx-toastr";
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatFormFieldModule} from "@angular/material/form-field";
+
 
 
 @NgModule({
   imports: [BrowserModule, HttpClientModule, FormsModule, ChartModule, SidebarModule,
-    DividerModule, RippleModule, TooltipModule, ToastrModule.forRoot(), ScrollTopModule, StepsModule,
-    ButtonModule, BrowserAnimationsModule,
-    RouterModule.forRoot(routes), FontAwesomeModule],
+    DividerModule, RippleModule, TooltipModule, ToastrModule.forRoot(), ScrollTopModule,
+    ButtonModule, BrowserAnimationsModule, MatStepperModule, MatFormFieldModule, ReactiveFormsModule,
+    RouterModule.forRoot(routes), FontAwesomeModule, ReactiveFormsModule],
   declarations: [AppComponent, LoginComponent, DashboardComponent, RegisterComponent],
   providers: [AuthService],
   bootstrap: [AppComponent],

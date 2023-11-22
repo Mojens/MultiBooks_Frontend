@@ -4,6 +4,7 @@ import {AuthService} from "../auth.service";
 import {RegisterRequest} from "../../../models";
 import {MenuItem, MessageService} from "primeng/api";
 import {ToastrService} from "ngx-toastr";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -26,13 +27,21 @@ export class RegisterComponent implements OnInit {
   items: MenuItem[] | undefined;
   activeIndex: number = 0;
 
-  constructor(private router: Router, private service: AuthService, private messageService: MessageService, private toastr: ToastrService) {
+  isLinear = false;
+  firstFormGroup: FormGroup | undefined;
+  secondFormGroup: FormGroup | undefined;
+
+  constructor(private router: Router, private service: AuthService,
+             private toastr: ToastrService, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
-  }
-  onActiveIndexChange(event: number) {
-    this.activeIndex = event;
+    this.firstFormGroup = this.fb.group({
+      firstCtrl: ['', Validators.required]
+    });
+    this.secondFormGroup = this.fb.group({
+      secondCtrl: ['', Validators.required]
+    });
   }
   navigateToLogin() {
     this.router.navigate(['/login']);
