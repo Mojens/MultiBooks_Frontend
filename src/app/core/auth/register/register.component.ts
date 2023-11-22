@@ -4,7 +4,6 @@ import {AuthService} from "../auth.service";
 import {RegisterRequest} from "../../../models";
 import {MenuItem, MessageService} from "primeng/api";
 import {ToastrService} from "ngx-toastr";
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -24,24 +23,18 @@ export class RegisterComponent implements OnInit {
     confirmPassword: ''
   };
 
-  items: MenuItem[] | undefined;
-  activeIndex: number = 0;
+  step1: boolean = true;
+  step2: boolean = false;
+  step3: boolean = false;
+  openStep2: boolean = false;
+  openStep3: boolean = false;
 
-  isLinear = false;
-  firstFormGroup: FormGroup | undefined;
-  secondFormGroup: FormGroup | undefined;
 
   constructor(private router: Router, private service: AuthService,
-             private toastr: ToastrService, private fb: FormBuilder) {
+             private toast: ToastrService) {
   }
 
   ngOnInit(): void {
-    this.firstFormGroup = this.fb.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this.fb.group({
-      secondCtrl: ['', Validators.required]
-    });
   }
   navigateToLogin() {
     this.router.navigate(['/login']);
@@ -58,4 +51,29 @@ export class RegisterComponent implements OnInit {
       this.email = '';
     });
   }
+
+  goToStep2() {
+    this.step1 = false;
+    this.step2 = true;
+    this.step3 = false;
+    this.openStep2 = true;
+    this.openStep3 = false;
+  }
+
+  goToStep3() {
+    this.step1 = false;
+    this.step2 = false;
+    this.step3 = true;
+    this.openStep2 = false;
+    this.openStep3 = true;
+  }
+
+  goToStep1() {
+    this.step1 = true;
+    this.step2 = false;
+    this.step3 = false;
+    this.openStep2 = false;
+    this.openStep3 = false;
+  }
+
 }
