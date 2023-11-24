@@ -21,6 +21,7 @@ import {RegisterComponent} from "./core/auth/register/register.component";
 import {ToastrModule} from "ngx-toastr";
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {TeamManagementApiService} from "./features/team-management/team-management.api.service";
 
 
 
@@ -30,7 +31,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     ButtonModule, BrowserAnimationsModule, MatStepperModule, MatFormFieldModule, ReactiveFormsModule,
     RouterModule.forRoot(routes), FontAwesomeModule, ReactiveFormsModule],
   declarations: [AppComponent, LoginComponent, DashboardComponent, RegisterComponent],
-  providers: [AuthService],
+  providers: [AuthService, TeamManagementApiService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -4,6 +4,7 @@ import { AuthService } from "../auth.service";
 import { BusinessTeamRequest, RegisterRequest } from "../../../models";
 import { MessageService } from "primeng/api";
 import { ToastrService } from "ngx-toastr";
+import {TeamManagementApiService} from "../../../features/team-management/team-management.api.service";
 
 @Component({
   selector: 'app-register',
@@ -34,6 +35,7 @@ export class RegisterComponent implements OnInit {
   phoneNumber: string = '';
   website: string = '';
   companyEmail: string = '';
+
   businessTeamRequest: BusinessTeamRequest = {
     CVRNumber: 0,
     VATNumber: '',
@@ -44,7 +46,8 @@ export class RegisterComponent implements OnInit {
     country: '',
     phoneNumber: '',
     email: this.companyEmail,
-    website: ''
+    website: '',
+    ownerEmail: this.userEmail
   };
 
 
@@ -55,8 +58,8 @@ export class RegisterComponent implements OnInit {
   openStep3: boolean = false;
 
 
-  constructor(private router: Router, private service: AuthService,
-             private toast: ToastrService) {
+  constructor(private router: Router, private authService: AuthService,
+             private toast: ToastrService, private teamService: TeamManagementApiService) {
   }
 
   ngOnInit(): void {
@@ -69,11 +72,35 @@ export class RegisterComponent implements OnInit {
     this.registerRequest.email = this.userEmail;
     this.registerRequest.password = this.password;
     this.registerRequest.confirmPassword = this.confirmPassword;
-    this.service.registerUser(this.registerRequest).subscribe((data) => {
+    this.authService.registerUser(this.registerRequest).subscribe((data) => {
       this.showSuccessMessage = data.message;
       this.confirmPassword = '';
       this.password = '';
       this.userEmail = '';
+    });
+
+    this.businessTeamRequest.CVRNumber = this.CVRNumber;
+    this.businessTeamRequest.VATNumber = this.VATNumber;
+    this.businessTeamRequest.companyName = this.companyName;
+    this.businessTeamRequest.address = this.address;
+    this.businessTeamRequest.city = this.city;
+    this.businessTeamRequest.zipCode = this.zipCode;
+    this.businessTeamRequest.country = this.country;
+    this.businessTeamRequest.phoneNumber = this.phoneNumber;
+    this.businessTeamRequest.email = this.companyEmail;
+    this.businessTeamRequest.website = this.website;
+    this.businessTeamRequest.ownerEmail = this.userEmail;
+    this.teamService.createBusinessTeam(this.businessTeamRequest).subscribe((data) => {
+      this.CVRNumber = 0;
+      this.VATNumber = '';
+      this.companyName = '';
+      this.address = '';
+      this.city = '';
+      this.zipCode = 0;
+      this.country = '';
+      this.phoneNumber = '';
+      this.companyEmail = '';
+      this.website = '';
     });
   }
 
@@ -93,7 +120,7 @@ export class RegisterComponent implements OnInit {
 
   isValidPassword(password: string): boolean {
     // Example criteria: Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()_+]{8,}$/;
     return passwordRegex.test(password);
   }
 

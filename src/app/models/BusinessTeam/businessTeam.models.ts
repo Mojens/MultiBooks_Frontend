@@ -9,6 +9,7 @@ export interface BusinessTeamResponse {
   phoneNumber: string;
   email: string;
   website: string;
+  ownerEmail: string;
 }
 
 export interface BusinessTeamRequest {
@@ -22,4 +23,5 @@ export interface BusinessTeamRequest {
   phoneNumber: string;
   email: string;
   website: string;
+  ownerEmail: string;
 }

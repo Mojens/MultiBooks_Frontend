@@ -1,25 +1,25 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { API_URL } from '../../@shared/api.config'
-import { ApiResponse } from "../../@shared/api.response";
-import * as authModels from '../../models/Auth/auth.models';
+  import { Injectable } from '@angular/core';
+  import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+  import { Observable } from 'rxjs';
+  import { API_URL } from '../../@shared/api.config'
+  import { ApiResponse } from "../../@shared/api.response";
+  import * as authModels from '../../models/Auth/auth.models';
 
-@Injectable({
-  providedIn: 'root',
-})
+  @Injectable({
+    providedIn: 'root',
+  })
 
-export class AuthService {
-  private tokenKey = "token_key"
-  private URL = API_URL+'auth'
+  export class AuthService {
+    private tokenKey = "token_key"
+    private URL = API_URL+'auth'
 
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    }),
-  };
+    httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
 
   login(email: string, password: string): Observable<ApiResponse<any>> {
     const loginUrl = `${this.URL}/login`;
