@@ -74,33 +74,23 @@ export class RegisterComponent implements OnInit {
     this.registerRequest.confirmPassword = this.confirmPassword;
     this.authService.registerUser(this.registerRequest).subscribe((data) => {
       this.showSuccessMessage = data.message;
-      this.confirmPassword = '';
-      this.password = '';
-      this.userEmail = '';
-    });
-
-    this.businessTeamRequest.CVRNumber = this.CVRNumber;
-    this.businessTeamRequest.VATNumber = this.VATNumber;
-    this.businessTeamRequest.companyName = this.companyName;
-    this.businessTeamRequest.address = this.address;
-    this.businessTeamRequest.city = this.city;
-    this.businessTeamRequest.zipCode = this.zipCode;
-    this.businessTeamRequest.country = this.country;
-    this.businessTeamRequest.phoneNumber = this.phoneNumber;
-    this.businessTeamRequest.email = this.companyEmail;
-    this.businessTeamRequest.website = this.website;
-    this.businessTeamRequest.ownerEmail = this.userEmail;
-    this.teamService.createBusinessTeam(this.businessTeamRequest).subscribe((data) => {
-      this.CVRNumber = 0;
-      this.VATNumber = '';
-      this.companyName = '';
-      this.address = '';
-      this.city = '';
-      this.zipCode = 0;
-      this.country = '';
-      this.phoneNumber = '';
-      this.companyEmail = '';
-      this.website = '';
+      this.businessTeamRequest.CVRNumber = this.CVRNumber;
+      this.businessTeamRequest.VATNumber = this.VATNumber;
+      this.businessTeamRequest.companyName = this.companyName;
+      this.businessTeamRequest.address = this.address;
+      this.businessTeamRequest.city = this.city;
+      this.businessTeamRequest.zipCode = this.zipCode;
+      this.businessTeamRequest.country = this.country;
+      this.businessTeamRequest.phoneNumber = this.phoneNumber;
+      this.businessTeamRequest.email = this.companyEmail;
+      this.businessTeamRequest.website = this.website;
+      this.businessTeamRequest.ownerEmail = this.userEmail;
+      this.teamService.createBusinessTeam(this.businessTeamRequest).subscribe((data) => {
+        this.toast.success("You have successfully registered.");
+        this.navigateToLogin();
+      }, (error) => {
+        this.toast.error("Something went wrong.");
+      });
     });
   }
 
@@ -119,7 +109,6 @@ export class RegisterComponent implements OnInit {
   }
 
   isValidPassword(password: string): boolean {
-    // Example criteria: Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()_+]{8,}$/;
     return passwordRegex.test(password);
   }
@@ -145,7 +134,6 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    // Proceed to Step 2
     this.step1 = false;
     this.step2 = true;
     this.step3 = false;

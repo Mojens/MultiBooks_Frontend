@@ -22,8 +22,9 @@ export class TeamManagementApiService {
     }),
   };
 
-  createBusinessTeam(request: teamModels.BusinessTeamRequest): Observable<ApiResponse<teamModels.BusinessTeamResponse>>{
-    return this.http.post<ApiResponse<teamModels.BusinessTeamResponse>>(this.URL, request, this.httpOptions);
+  createBusinessTeam(request: teamModels.BusinessTeamRequest): Observable<ApiResponse<any>>{
+    const createBusinessTeamUrl = `${this.URL}/create`;
+    return this.http.post<ApiResponse<any>>(createBusinessTeamUrl, request, this.httpOptions);
   }
 
   setUserBusinessTeam(mail: string, CVRNumber: number): Observable<ApiResponse<any>>{
