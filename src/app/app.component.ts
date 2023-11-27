@@ -2,16 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {AuthService} from "./core/auth/auth.service";
 import {
-  faHome,
+  faAddressBook,
+  faBars,
   faDashboard,
   faDollarSign,
   faFileInvoiceDollar,
-  faAddressBook,
+  faGear,
   faPercent,
   faSignOut,
-  faGear,
-  faUsers,
-  faBars
+  faUsers
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -105,4 +104,11 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  get loggedInAs(): string {
+    const businessTeamJson = localStorage.getItem('current_business_team') || '';
+    const businessTeamObj = JSON.parse(businessTeamJson);
+    return businessTeamObj.companyName;
+  }
+
+  protected readonly localStorage = localStorage;
 }

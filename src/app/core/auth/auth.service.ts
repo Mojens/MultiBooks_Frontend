@@ -62,7 +62,8 @@
 
   logout() {
     localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem('user_information');
+    localStorage.removeItem('user_mail');
+    localStorage.removeItem('user_business_teams');
   }
 
   forgotPwd(email: string): Observable<ApiResponse<any>> {
@@ -70,7 +71,7 @@
     return this.http.post<ApiResponse<any>>(forgotPwdUrl, { email }, this.httpOptions);
   }
 
-  registerUser(user: authModels.UserRequest): Observable<ApiResponse<any>> {
+  registerUser(user: authModels.RegisterRequest): Observable<ApiResponse<any>> {
     const registerUrl = `${this.URL}/register`;
     return this.http.post<ApiResponse<authModels.RegisterResponse>>(registerUrl, user, this.httpOptions);
   }

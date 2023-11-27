@@ -5,6 +5,7 @@ import { BusinessTeamRequest, RegisterRequest } from "../../../models";
 import { MessageService } from "primeng/api";
 import { ToastrService } from "ngx-toastr";
 import {TeamManagementApiService} from "../../../features/team-management/team-management.api.service";
+import {Validations} from "../../../@shared/validations";
 
 @Component({
   selector: 'app-register',
@@ -66,27 +67,8 @@ export class RegisterComponent implements OnInit {
     }, () => this.toast.error("Error registering user."));
   }
 
-  isValidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-
-  isValidCVR(cvr: number): boolean {
-    return cvr.toString().length <= 8;
-  }
-
-  isValidVAT(vat: string): boolean {
-    const vatRegex = /^DK\d{8}$/;
-    return vatRegex.test(vat);
-  }
-
-  isValidPassword(password: string): boolean {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()_+]{8,}$/;
-    return passwordRegex.test(password);
-  }
-
   goToStep2() {
-    if (!this.isValidEmail(this.formData.userEmail)) {
+    if (!Validations.isValidEmail(this.formData.userEmail)) {
       this.toast.error("Invalid email address.");
       return;
     }
@@ -95,8 +77,7 @@ export class RegisterComponent implements OnInit {
       this.toast.error("Passwords do not match.");
       return;
     }
-
-    if (!this.isValidPassword(this.formData.password)) {
+    if (!Validations.isValidPassword(this.formData.password)) {
       this.toast.error("Password does not meet criteria: Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number.");
       return;
     }
@@ -112,13 +93,18 @@ export class RegisterComponent implements OnInit {
   }
 
   goToStep3() {
-    if (!this.isValidCVR(this.formData.CVRNumber)) {
+    if (!Validations.isValidCVR(this.formData.CVRNumber)) {
       this.toast.error("Invalid CVR number. It should be up to 8 digits long.");
       return;
     }
 
-    if (!this.isValidVAT(this.formData.VATNumber)) {
+    if (!Validations.isValidVAT(this.formData.VATNumber)) {
       this.toast.error("Invalid VAT number. Format should be DK followed by 8 digits.");
+      return;
+    }
+
+    if(!Validations.isValidEmail(this.formData.companyEmail)) {
+      this.toast.error("Invalid email address.");
       return;
     }
 

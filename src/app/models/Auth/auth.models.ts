@@ -16,11 +16,6 @@ export interface ForgotPwdResponse {
   message: string;
 }
 
-export interface UserRequest {
-  email: string;
-  password: string;
-}
-
 export interface RegisterRequest {
   email: string;
   password: string;

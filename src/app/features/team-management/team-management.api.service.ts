@@ -4,21 +4,23 @@ import { Observable } from 'rxjs';
 import { API_URL } from '../../@shared/api.config'
 import * as teamModels from '../../models/BusinessTeam/businessTeam.models';
 import {ApiResponse} from "../../@shared/api.response";
+import {AuthService} from "../../core/auth/auth.service";
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class TeamManagementApiService {
-  private tokenKey = "token_key"
+  private token = this.authService.getToken();
   private URL = API_URL + 'business-team'
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authService: AuthService) {
   }
 
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
     }),
   };
 
@@ -30,6 +32,17 @@ export class TeamManagementApiService {
   setUserBusinessTeam(mail: string, CVRNumber: number): Observable<ApiResponse<any>>{
     return this.http.patch<ApiResponse<any>>(this.URL+`/${mail}/${CVRNumber}`, this.httpOptions);
   }
+
+  getUserBusinessTeam(mail: string): Observable<ApiResponse<any>>{
+    const getUserBusinessTeamUrl = `${this.URL}/user/${mail}`;
+    return this.http.get<ApiResponse<any>>(getUserBusinessTeamUrl, this.httpOptions);
+  }
+
+  getBusinessTeam(CVRNumber: number): Observable<ApiResponse<any>>{
+    const getBusinessTeamUrl = `${this.URL}/get/${CVRNumber}`;
+    return this.http.get<ApiResponse<any>>(getBusinessTeamUrl, this.httpOptions);
+  }
+
 
 
 }
