@@ -1,6 +1,6 @@
 export interface BusinessTeamResponse {
-  CVRNumber: number;
-  VATNumber: string;
+  cvrnumber: number;
+  vatnumber: string;
   companyName: string;
   address: string;
   city: string;

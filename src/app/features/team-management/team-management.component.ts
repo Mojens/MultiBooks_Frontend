@@ -66,12 +66,12 @@ export class TeamManagementComponent implements OnInit {
   setTeam(team: BusinessTeamResponse) {
     console.log(team);
     localStorage.setItem('current_business_team', JSON.stringify(team));
-    this.router.navigate(['dashboard'], {queryParams: {team: team.CVRNumber}});
+    this.router.navigate(['dashboard'], {queryParams: {team: team.cvrnumber}});
   }
 
   goBack() {
     const team = JSON.parse(localStorage.getItem('current_business_team') || '{}');
-    this.router.navigate(['dashboard'], {queryParams: {team: team.CVRNumber}});
+    this.router.navigate(['dashboard'], {queryParams: {team: team.cvrnumber}});
   }
 
   setCreateMode() {

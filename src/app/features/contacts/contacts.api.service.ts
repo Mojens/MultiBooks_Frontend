@@ -24,10 +24,11 @@ export class ContactsApiService {
     }),
   };
 
-  getContacts(CVRNumber: number): Observable<ApiResponse<any>>{
-    const getContactsUrl = `${this.URL}/all/${CVRNumber}`;
-    return this.http.get<ApiResponse<any>>(getContactsUrl, this.httpOptions);
+  getContacts(CVRNumber: number, page: number, size: number): Observable<ApiResponse<contactsModels.PagedResponse<contactsModels.ContactsResponse>>> {
+    const getContactsUrl = `${this.URL}/all/${CVRNumber}?page=${page}&size=${size}`;
+    return this.http.get<ApiResponse<contactsModels.PagedResponse<contactsModels.ContactsResponse>>>(getContactsUrl, this.httpOptions);
   }
+
 
   createContact(request: contactsModels.ContactsRequest): Observable<ApiResponse<any>>{
     const createContactUrl = `${this.URL}/create`;
