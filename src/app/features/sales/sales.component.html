@@ -4,4 +4,61 @@
     Sales
   </h1>
 </div>
-<hr class="my-4 border-black" />
+<hr class="my-4 border-black"/>
+<div class="mb-5">
+  <h2 class="text-xl font-semibold mb-2">Enhance Your Sales Experience</h2>
+  <p>
+    Welcome to our sales platform, where you can turbocharge your sales process. Our system simplifies product
+    management and automates invoicing for a smoother sales journey.
+  </p>
+  <p>
+    Create and manage a variety of products effortlessly. Whether it's physical goods, digital products, or services,
+    we've got you covered. Generate professional invoices with ease and maintain a clear transaction record.
+  </p>
+  <p>
+    Elevate your sales, boost revenue, and provide exceptional customer experiences with our user-friendly platform.
+  </p>
+</div>
+<hr class="my-4 border-black-alpha-90 mb-2"/>
+<div class="grid grid-cols-2 gap-5 justify-items-center mt-10">
+  <div>
+    <div class="max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+      <a (click)="navigateToSales()" class="cursor-pointer">
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Create Sales</h5>
+      </a>
+      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        Create and manage sales effortlessly with our powerful tool. Simplify the sales process, generate invoices, and keep track of transactions seamlessly.
+      </p>
+      <a (click)="navigateToSales()"
+         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer">
+        Use tool
+        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+             viewBox="0 0 14 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div>
+    <div class="max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+      <a (click)="navigateToProducts()" class="cursor-pointer">
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Products</h5>
+      </a>
+      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        Explore our range of products and manage your inventory efficiently. Add, edit, or remove products with ease and keep your offerings up-to-date.
+      </p>
+      <a (click)="navigateToProducts()"
+         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer">
+        Use tool
+        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+             viewBox="0 0 14 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+

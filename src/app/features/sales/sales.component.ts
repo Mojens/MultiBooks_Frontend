@@ -15,4 +15,11 @@ export class SalesComponent implements OnInit{
   ngOnInit(): void {
   }
 
+  navigateToSales(){
+
+  }
+  navigateToProducts(){
+
+  }
+
 }
