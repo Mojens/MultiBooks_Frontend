@@ -5,11 +5,12 @@ import {faDollarSign, faDashboard} from "@fortawesome/free-solid-svg-icons";
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem } from 'primeng/api';
 import {ActivatedRoute, Router} from "@angular/router";
+import {ButtonModule} from "primeng/button";
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, BreadcrumbModule],
+  imports: [CommonModule, FontAwesomeModule, BreadcrumbModule, ButtonModule],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
