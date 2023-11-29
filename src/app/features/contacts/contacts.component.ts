@@ -157,5 +157,8 @@ export class ContactsComponent implements OnInit {
     });
   }
 
+  onUpdateContact(contact: ContactsResponse) {
+
+  }
 
 }

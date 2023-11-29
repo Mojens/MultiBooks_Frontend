@@ -148,16 +148,14 @@
           </td>
           <td class="text-center border p-2">{{ contact.einvoiceRecipientType }}</td>
           <td class="text-center border p-2">
-            <!-- See Details Button -->
+
             <button pButton pRipple type="button" icon="pi pi-eye" class="p-button-text p-button-lg text-blue-500"
                     pTooltip="{{ 'See details' }}" tooltipPosition="top" (click)="seeDetails(contact)">
             </button>
 
-            <!-- Edit Button -->
             <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-text p-button-lg text-yellow-500"
-                    pTooltip="{{ 'Edit' }}" tooltipPosition="top"></button>
+                    pTooltip="{{ 'Edit' }}" tooltipPosition="top" (click)="onUpdateContact(contact)"></button>
 
-            <!-- Delete Button -->
             <button pButton pRipple type="button" icon="pi pi-trash"
                     class="p-button-text p-button-danger p-button-lg text-red-500"
                     pTooltip="{{ 'Delete' }}" tooltipPosition="top"
