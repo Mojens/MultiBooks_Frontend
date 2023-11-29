@@ -14,6 +14,8 @@ import { AuthGuard } from "./core/auth/authGuard";
 import {ResetPwdComponent} from "./core/auth/reset-pwd/reset-pwd.component";
 import {TeamManagementComponent} from "./features/team-management/team-management.component";
 import {SettingsComponent} from "./features/settings/settings.component";
+import {ProductComponent} from "./features/sales/product/product.component";
+import {CreateSalesComponent} from "./features/sales/create-sales/create-sales.component";
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -30,7 +32,8 @@ export const routes: Routes = [
   { path: 'reset-password/:reset-token', component: ResetPwdComponent},
   { path: 'team-management', component: TeamManagementComponent, canActivate: [AuthGuard] },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
-
+  { path: 'sales/product',component: ProductComponent, canActivate: [AuthGuard] },
+  { path: 'sales/create', component: CreateSalesComponent, canActivate: [AuthGuard]},
 
 
 
