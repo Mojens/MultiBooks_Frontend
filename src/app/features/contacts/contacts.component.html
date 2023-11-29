@@ -5,57 +5,171 @@
   </h1>
 </div>
 <hr class="my-4 border-black"/>
+<div class="mb-5">
+  <h2 class="text-xl font-semibold mb-2">Enhance Your Sales Experience</h2>
+  <p>
+    Create contacts to enhance your sales experience and gain a comprehensive overview of your customers and their
+    information. This system is designed to streamline your sales process, making it more efficient and user-friendly.
+    By maintaining a detailed database of customer contacts, you can easily access critical information, track customer
+    interactions, and build stronger, more personalized relationships. This not only simplifies your workflow but also
+    provides valuable insights into customer preferences and behavior, enabling you to tailor your sales strategies
+    effectively. With this tool, managing customer data becomes effortless, allowing you to focus on what truly matters
+    - growing your business and delivering exceptional customer experiences.
+  </p>
+</div>
+<hr class="my-4 border-black-alpha-90 mb-2"/>
 <div class="mb-0">
-  <button pButton pRipple type="button" class="p-button-text p-button-lg text-white bg-blue-500 flex items-center p-3">
+  <h3 class="text-lg font-semibold mb-2">Create a New Contact</h3>
+  <button pButton pRipple type="button" class="p-button-text p-button-lg text-white bg-blue-500 flex items-center p-3"
+          *ngIf="!createMode" (click)="setCreateMode()">
     <i class="pi pi-plus mr-2"></i>
     Create contact
   </button>
-  <p-divider></p-divider>
+  <div *ngIf="createMode" class="grid grid-cols-1 md:grid-cols-2 gap-2 bg-white shadow-lg rounded-lg p-4 max-w-4xl mx-auto mb-5">
+
+    <div class="flex flex-col items-center mb-4 col-span-2">
+      <h4 class="text-lg font-bold mb-2">Business Details</h4>
+      <div class="w-full">
+        <label for="CVRNumber" class="block text-gray-700 font-bold mb-2"><i class="pi pi-info-circle mr-2" [pTooltip]="CVRTooltip" tooltipPosition="top"></i>CVR - Number *</label>
+        <input type="number" id="CVRNumber" name="CVRNumber" required [(ngModel)]="formData.CVRNumber" class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+    </div>
+    <div class="flex flex-col items-center mb-4 col-span-2">
+      <h4 class="text-lg font-bold mb-2">Contact Info</h4>
+
+      <div class="w-full">
+        <label for="mail" class="block text-gray-700 font-bold mb-2">Email</label>
+        <input type="email" id="mail" name="mail" [(ngModel)]="formData.email" class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+
+      <div class="w-full">
+        <label for="companyName" class="block text-gray-700 font-bold mb-2">Company name *</label>
+        <input type="text" id="companyName" name="companyName" required [(ngModel)]="formData.companyName" class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+
+      <div class="w-full">
+        <label for="website" class="block text-gray-700 font-bold mb-2">Website</label>
+        <input type="url" id="website" name="email" [(ngModel)]="formData.website" class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+
+      <div class="w-full">
+        <label for="attentionPerson" class="block text-gray-700 font-bold mb-2"><i class="pi pi-info-circle mr-2" [pTooltip]="attPerson" tooltipPosition="top"></i>Att. Person</label>
+        <input type="text" id="attentionPerson" name="attentionPerson" [(ngModel)]="formData.attentionPerson" class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+
+      <div class="w-full">
+        <label for="phoneNumber" class="block text-gray-700 font-bold mb-2">Phone number</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" [(ngModel)]="formData.phoneNumber" class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+    </div>
+
+    <div class="flex flex-col items-center mb-4 col-span-2">
+      <h4 class="text-lg font-bold mb-2">Payment Terms</h4>
+      <div class="w-full mb-4">
+        <label for="paymentTermsDays" class="block text-gray-700 font-bold mb-2"><i class="pi pi-info-circle mr-2" [pTooltip]="maxDays" tooltipPosition="top"></i>Max days for payment</label>
+        <input type="number" id="paymentTermsDays" name="paymentTermsDays" [(ngModel)]="formData.paymentTermsDays" class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+      <div class="w-full">
+        <label for="paymentTermsMethod" class="block text-gray-700 font-bold mb-2">Payment method</label>
+        <input type="text" id="paymentTermsMethod" name="paymentTermsMethod" [(ngModel)]="formData.paymentTermsMethod" class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+    </div>
+
+    <!-- Cancel Button Container -->
+    <div class="flex justify-center mb-4">
+      <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" (click)="setCreateMode()">
+        <i class="pi pi-times mr-2"></i> Cancel
+      </button>
+    </div>
+
+    <!-- Create Button Container -->
+    <div class="flex justify-center mb-4">
+      <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              >
+        <i class="pi pi-check mr-2"></i> Create
+      </button>
+    </div>
+
+  </div>
 </div>
 <div>
   <hr class="my-4 border-black-alpha-90 mb-2"/>
-  <p-table [value]="contacts" [paginator]="true" [rows]="rows"
-           [totalRecords]="totalRecords" (onLazyLoad)="onLazyLoad($event)"
-           [lazy]="true" [rowsPerPageOptions]="[5,15,50]">
-    <ng-template pTemplate="header">
-      <tr class="bg-gray-100">
-        <th class="border p-2 font-bold text-center">CVR Number</th>
-        <th class="border p-2 font-bold text-center">Company Name</th>
-        <th class="border p-2 font-bold text-center">Phone number</th>
-        <th class="border p-2 font-bold text-center">E invoice Recipient type</th>
-        <th class="border p-2 font-bold text-center">Tools</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-contact>
-      <tr>
-        <td class="text-center border p-2">
-          <a href="{{'https://datacvr.virk.dk/enhed/virksomhed/'+contact.cvrnumber}}" class="hover:text-blue-600" target="_blank">
-            {{ contact.cvrnumber }}
-          </a>
-        </td>
-        <td class="text-center border p-2">{{ contact.companyName }}</td>
-        <td class="text-center border p-2">
-          <a href="tel:{{contact.phoneNumber}}" class="hover:text-blue-600">
-            {{ formatPhoneNumber(contact.phoneNumber) }}
-          </a>
-        </td>
-        <td class="text-center border p-2">{{ contact.einvoiceRecipientType }}</td>
-        <td class="text-center border p-2">
-          <!-- See Details Button -->
-          <button pButton pRipple type="button" icon="pi pi-eye" class="p-button-text p-button-lg text-blue-500"
-                  pTooltip="{{ 'See details' }}" tooltipPosition="top">
-          </button>
+  <h2 class="text-xl font-semibold mb-2">Contact List</h2>
+  <div *ngIf="contacts.length > 0">
+    <p-table [value]="contacts" [paginator]="true" [rows]="rows"
+             [totalRecords]="totalRecords" (onLazyLoad)="onLazyLoad($event)"
+             [lazy]="true" [rowsPerPageOptions]="[5,15,50]">
+      <ng-template pTemplate="header">
+        <tr class="bg-gray-100">
+          <th class="border p-2 font-bold text-center">CVR Number</th>
+          <th class="border p-2 font-bold text-center">Company Name</th>
+          <th class="border p-2 font-bold text-center">Phone number</th>
+          <th class="border p-2 font-bold text-center">E invoice Recipient type</th>
+          <th class="border p-2 font-bold text-center">Tools</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-contact>
+        <tr>
+          <td class="text-center border p-2">
+            <a href="{{'https://datacvr.virk.dk/enhed/virksomhed/'+contact.cvrnumber}}" class="hover:text-blue-600"
+               target="_blank">
+              {{ contact.cvrnumber }}
+            </a>
+          </td>
+          <td class="text-center border p-2">{{ contact.companyName }}</td>
+          <td class="text-center border p-2">
+            <a href="tel:{{contact.phoneNumber}}" class="hover:text-blue-600">
+              {{ formatPhoneNumber(contact.phoneNumber) }}
+            </a>
+          </td>
+          <td class="text-center border p-2">{{ contact.einvoiceRecipientType }}</td>
+          <td class="text-center border p-2">
+            <!-- See Details Button -->
+            <button pButton pRipple type="button" icon="pi pi-eye" class="p-button-text p-button-lg text-blue-500"
+                    pTooltip="{{ 'See details' }}" tooltipPosition="top">
+            </button>
 
-          <!-- Edit Button -->
-          <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-text p-button-lg text-yellow-500"
-                  pTooltip="{{ 'Edit' }}" tooltipPosition="top"></button>
+            <!-- Edit Button -->
+            <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-text p-button-lg text-yellow-500"
+                    pTooltip="{{ 'Edit' }}" tooltipPosition="top"></button>
 
-          <!-- Delete Button -->
-          <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-text p-button-danger p-button-lg text-red-500"
-                  pTooltip="{{ 'Delete' }}" tooltipPosition="top"></button>
-        </td>
+            <!-- Delete Button -->
+            <button pButton pRipple type="button" icon="pi pi-trash"
+                    class="p-button-text p-button-danger p-button-lg text-red-500"
+                    pTooltip="{{ 'Delete' }}" tooltipPosition="top"></button>
+          </td>
 
-      </tr>
-    </ng-template>
-  </p-table>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div *ngIf="contacts.length <= 0" class="text-center py-4">
+    <p class="text-lg"><b>No contacts available.</b> Please create new contacts to display here.</p>
+  </div>
 </div>
+<ng-template #CVRTooltip>
+  <div class="flex align-items-center p-2 rounded-lg">
+    <span>
+            <b class="text-white">A CVR number stands for The Central Business Register and can be compared with your personal CPR number, but instead of 10 digits it has 8. Besides that, they are very comparable.</b>
+        </span>
+  </div>
+</ng-template>
+<ng-template #attPerson>
+  <div class="flex align-items-center p-2 rounded-lg">
+    <span>
+            <b class="text-white">
+              The person who is responsible for the company.
+            </b>
+        </span>
+  </div>
+</ng-template>
+<ng-template #maxDays>
+  <div class="flex align-items-center p-2 rounded-lg">
+    <span>
+            <b class="text-white">
+              The maximum amount of days the customer has to pay the invoice. If the customer does not pay within the given amount of days, the invoice will be marked as overdue.
+              Typically, the amount of days is 8, 14, 30, 60 or 90.
+            </b>
+        </span>
+  </div>
+</ng-template>

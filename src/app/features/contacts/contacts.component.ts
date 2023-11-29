@@ -6,7 +6,7 @@ import {ContactsApiService} from "./contacts.api.service";
 import {DividerModule} from "primeng/divider";
 import {faAddressBook} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {ContactsResponse} from "../../models";
+import {ContactsRequest, ContactsResponse} from "../../models";
 import {TeamManagementApiService} from "../team-management/team-management.api.service";
 import {TableModule} from "primeng/table";
 import {ButtonModule} from "primeng/button";
@@ -28,6 +28,20 @@ export class ContactsComponent implements OnInit {
   totalRecords: number = 0;
   rows: number = 5;
   currentPage: number = 0;
+
+  formData: ContactsRequest = {
+    attentionPerson: '',
+    companyName: '',
+    CVRNumber: 0,
+    email: '',
+    paymentTermsDays: 0,
+    paymentTermsMethod: '',
+    phoneNumber: '',
+    website: '',
+    businessTeamCVRNumber: 0,
+  }
+
+  createMode: boolean = false;
 
   constructor(private contactService: ContactsApiService, private teamService: TeamManagementApiService) {
   }
@@ -53,6 +67,10 @@ export class ContactsComponent implements OnInit {
   onLazyLoad(event: any): void {
     this.currentPage = event.first / event.rows;
     this.getContacts(this.currentPage, event.rows);
+  }
+
+  setCreateMode() {
+    this.createMode = !this.createMode;
   }
 
 }

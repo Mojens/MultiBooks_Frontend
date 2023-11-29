@@ -13,7 +13,7 @@ export interface ContactsResponse {
 export interface ContactsRequest {
   attentionPerson: string,
   companyName: string,
-  cvrnumber: number,
+  CVRNumber: number,
   email: string,
   paymentTermsDays: number,
   paymentTermsMethod: string,

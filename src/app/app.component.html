@@ -1,6 +1,6 @@
 <div class="flex">
-  <aside *ngIf="showSidebar"
-         class="bg-blue-500 w-64 space-y-6 py-7 px-2 hidden md:block h-screen flex flex-col relative">
+
+  <aside *ngIf="showSidebar" class="fixed bg-blue-500 w-64 space-y-6 py-7 px-2 h-screen">
     <nav class="space-y-2">
       <a (click)="navigateToDashboard()"
          class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-950 hover:text-white text-white cursor-pointer">
@@ -50,7 +50,7 @@
     </div>
   </aside>
 
-  <div class="flex-grow p-0" id="container_content_all">
+  <div [ngStyle]="showSidebar ? {'margin-left': '16rem', 'width': 'calc(100% - 16rem)'} : {'margin-left': '0', 'width': '100%'}" id="container_content_all" style="height: 100vh; overflow-y: auto;">
     <router-outlet></router-outlet>
   </div>
   <p-scrollTop></p-scrollTop>
