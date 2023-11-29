@@ -27,7 +27,7 @@ export interface ContactsRequest {
 export interface UpdateContactsRequest{
   attentionPerson: string,
   companyName: string,
-  cvrnumber: number,
+  CVRNumber: number,
   email: string,
   id: number,
   paymentTermsDays: number,

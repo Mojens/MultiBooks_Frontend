@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TooltipModule} from "primeng/tooltip";
@@ -6,7 +6,7 @@ import {ContactsApiService} from "./contacts.api.service";
 import {DividerModule} from "primeng/divider";
 import {faAddressBook} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {ContactsRequest, ContactsResponse} from "../../models";
+import {ContactsRequest, ContactsResponse, UpdateContactsRequest} from "../../models";
 import {TeamManagementApiService} from "../team-management/team-management.api.service";
 import {TableModule} from "primeng/table";
 import {ButtonModule} from "primeng/button";
@@ -16,6 +16,7 @@ import {ToastrService} from "ngx-toastr";
 import { ConfirmationService } from 'primeng/api';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import DOMPurify from 'dompurify';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-contacts',
@@ -23,7 +24,16 @@ import DOMPurify from 'dompurify';
   imports: [CommonModule, ReactiveFormsModule, FormsModule, TooltipModule, DividerModule, FontAwesomeModule, TableModule, ButtonModule, RippleModule, DropdownModule, ConfirmDialogModule],
   providers: [ConfirmationService],
   templateUrl: './contacts.component.html',
-  styleUrl: './contacts.component.css'
+  styleUrl: './contacts.component.css',
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0,
+        transform: 'translateY(-20px)'
+      })),
+      transition('void <=> *', animate(300)),
+    ]),
+  ],
 })
 export class ContactsComponent implements OnInit {
 
@@ -48,13 +58,27 @@ export class ContactsComponent implements OnInit {
     website: '',
     businessTeamCVRNumber: 0,
   }
+  editFormData: UpdateContactsRequest = {
+    attentionPerson: '',
+    companyName: '',
+    CVRNumber: 0,
+    email: '',
+    id: 0,
+    paymentTermsDays: 0,
+    paymentTermsMethod: '',
+    eInvoiceRecipientType: '',
+    phoneNumber: '',
+    website: '',
+    businessTeamCVRNumber: 0,
+  }
 
   createMode: boolean = false;
+  editMode: boolean = false;
 
-  constructor(private contactService: ContactsApiService,
-              private teamService: TeamManagementApiService,
-              private toast: ToastrService,
-              private confirmationService: ConfirmationService) {
+  constructor(  private contactService: ContactsApiService,
+                private teamService: TeamManagementApiService,
+                private toast: ToastrService,
+                private confirmationService: ConfirmationService) {
   }
 
   ngOnInit(): void {
@@ -157,8 +181,43 @@ export class ContactsComponent implements OnInit {
     });
   }
 
-  onUpdateContact(contact: ContactsResponse) {
+  onUpdateContact() {
+    const request: UpdateContactsRequest = {
+      ...this.editFormData,
+      businessTeamCVRNumber: this.currentBusinessTeamCVRNumber
+    }
+    this.contactService.updateContact(request).subscribe(
+      (response) => {
+        this.contacts = this.contacts.map((contact) => {
+          if (contact.id === response.data.id) {
+            return response.data;
+          }
+          return contact;
+        });
+        this.toast.success('Successfully updated contact');
+        this.exitEditMode();
+      });
 
   }
+  setEditMode(contact: ContactsResponse) {
+    this.editMode = !this.editMode;
+    this.editFormData = {
+      attentionPerson: contact.attentionPerson,
+      companyName: contact.companyName,
+      CVRNumber: contact.cvrnumber,
+      email: contact.email,
+      id: contact.id,
+      paymentTermsDays: contact.paymentTermsDays,
+      paymentTermsMethod: contact.paymentTermsMethod,
+      eInvoiceRecipientType: contact.einvoiceRecipientType,
+      phoneNumber: contact.phoneNumber,
+      website: contact.website,
+      businessTeamCVRNumber: this.currentBusinessTeamCVRNumber,
+    }
+  }
+  exitEditMode() {
+    this.editMode = false;
+  }
+
 
 }

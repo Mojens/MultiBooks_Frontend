@@ -26,7 +26,7 @@
     <i class="pi pi-plus mr-2"></i>
     Create contact
   </button>
-  <div *ngIf="createMode"
+  <div *ngIf="createMode" [@fadeInOut]
        class="grid grid-cols-1 md:grid-cols-2 gap-2 bg-white shadow-lg rounded-lg p-4 max-w-4xl mx-auto mb-5">
 
     <div class="flex flex-col items-center mb-4 col-span-2">
@@ -113,10 +113,9 @@
         <i class="pi pi-check mr-2"></i> Create
       </button>
     </div>
-
   </div>
 </div>
-<div>
+<div *ngIf="!editMode">
   <hr class="my-4 border-black-alpha-90 mb-2"/>
   <h2 class="text-xl font-semibold mb-2">Contact List</h2>
   <div *ngIf="contacts.length > 0">
@@ -154,7 +153,7 @@
             </button>
 
             <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-text p-button-lg text-yellow-500"
-                    pTooltip="{{ 'Edit' }}" tooltipPosition="top" (click)="onUpdateContact(contact)"></button>
+                    pTooltip="{{ 'Edit' }}" tooltipPosition="top" (click)="setEditMode(contact)"></button>
 
             <button pButton pRipple type="button" icon="pi pi-trash"
                     class="p-button-text p-button-danger p-button-lg text-red-500"
@@ -169,6 +168,97 @@
   </div>
   <div *ngIf="contacts.length <= 0" class="text-center py-4">
     <p class="text-lg"><b>No contacts available.</b> Please create new contacts to display here.</p>
+  </div>
+</div>
+<div *ngIf="editMode" [@fadeInOut]
+     class="grid grid-cols-1 md:grid-cols-2 gap-2 bg-white shadow-lg rounded-lg p-4 max-w-4xl mx-auto mb-20 mt-5"
+     id="editSection">
+
+  <div class="flex flex-col items-center mb-4 col-span-2">
+    <h4 class="text-lg font-bold mb-2">Business Details</h4>
+    <div class="w-full">
+      <label for="editCVRNumber" class="block text-gray-700 font-bold mb-2"><i class="pi pi-info-circle mr-2"
+                                                                               [pTooltip]="CVRTooltip"
+                                                                               tooltipPosition="top"></i>CVR - Number
+        *</label>
+      <input type="number" id="editCVRNumber" name="editCVRNumber" required [(ngModel)]="editFormData.CVRNumber"
+             class="w-full px-3 py-2 border rounded-lg shadow-sm">
+    </div>
+  </div>
+  <div class="flex flex-col mb-4 col-span-2">
+    <h4 class="text-lg font-bold mb-2">Contact Info</h4>
+
+    <div class="w-full">
+      <label for="editMail" class="block text-gray-700 font-bold mb-2">Email</label>
+      <input type="email" id="editMail" name="editMail" [(ngModel)]="editFormData.email"
+             class="w-full px-3 py-2 border rounded-lg shadow-sm">
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div class="flex flex-col mb-4">
+        <label for="editCompanyName" class="block text-gray-700 font-bold mb-2">Company name *</label>
+        <input type="text" id="editCompanyName" name="editCompanyName" required [(ngModel)]="editFormData.companyName"
+               class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+
+      <div class="flex flex-col mb-4">
+        <label for="editWebsite" class="block text-gray-700 font-bold mb-2">Website</label>
+        <input type="url" id="editWebsite" name="editWebsite" [(ngModel)]="editFormData.website"
+               class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+
+      <div class="flex flex-col mb-4">
+        <label for="editAttentionPerson" class="block text-gray-700 font-bold mb-2"><i class="pi pi-info-circle mr-2"
+                                                                                       [pTooltip]="attPerson"
+                                                                                       tooltipPosition="top"></i>Att.
+          Person</label>
+        <input type="text" id="editAttentionPerson" name="editAttentionPerson"
+               [(ngModel)]="editFormData.attentionPerson"
+               class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+
+      <div class="flex flex-col">
+        <label for="editPhoneNumber" class="block text-gray-700 font-bold mb-2">Phone number</label>
+        <input type="text" id="editPhoneNumber" name="editPhoneNumber" [(ngModel)]="editFormData.phoneNumber"
+               class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-4 col-span-2">
+    <h4 class="text-lg font-bold mb-2">Payment Terms</h4>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div class="flex flex-col mb-4">
+        <label for="editPaymentTermsDays" class="block text-gray-700 font-bold mb-2">
+          <i class="pi pi-info-circle mr-2" [pTooltip]="maxDays" tooltipPosition="top"></i>
+          Max days for payment
+        </label>
+        <input type="number" id="editPaymentTermsDays" name="editPaymentTermsDays"
+               [(ngModel)]="editFormData.paymentTermsDays"
+               class="px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+
+      <div class="flex flex-col">
+        <label class="block text-gray-700 font-bold mb-2">Payment method</label>
+        <p-dropdown [options]="paymentMethods" [(ngModel)]="editFormData.paymentTermsMethod" optionValue="value"
+                    [showClear]="true" placeholder="Select a payment method"></p-dropdown>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="flex justify-center mb-4">
+    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" (click)="exitEditMode()">
+      <i class="pi pi-times mr-2"></i> Cancel
+    </button>
+  </div>
+
+  <div class="flex justify-center mb-4">
+    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            (click)="onUpdateContact()"
+    >
+      <i class="pi pi-check mr-2"></i> Edit
+    </button>
   </div>
 </div>
 <ng-template #CVRTooltip>
