@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import {faDollarSign} from "@fortawesome/free-solid-svg-icons";
+import { MenuItem } from 'primeng/api';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-sales',
@@ -13,7 +15,13 @@ import {faDollarSign} from "@fortawesome/free-solid-svg-icons";
 })
 export class CreateSalesComponent implements OnInit{
   faDollarSign = faDollarSign;
+  items: MenuItem[] | undefined;
+
+  constructor(private router: Router, private route: ActivatedRoute) {
+  }
+
   ngOnInit(): void {
+    this.items = [{ label: 'Sales', routerLink: '/sales' }, { label: 'Create sale',routerLink:'/sales/create' }];
   }
 
 }

@@ -3,6 +3,8 @@ import {CommonModule} from '@angular/common';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {faPercent} from "@fortawesome/free-solid-svg-icons";
 import {BreadcrumbModule} from "primeng/breadcrumb";
+import { MenuItem } from 'primeng/api';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-govtax',
@@ -14,10 +16,12 @@ import {BreadcrumbModule} from "primeng/breadcrumb";
 export class GovtaxComponent implements OnInit {
 
   faPercent = faPercent;
+  items: MenuItem[] | undefined;
 
-  constructor() {
+  constructor(private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.items = [{ label: 'Tax', routerLink: '/taxes' }, { label: 'Government Tax',routerLink:'/taxes/govtax' }];
   }
 }
