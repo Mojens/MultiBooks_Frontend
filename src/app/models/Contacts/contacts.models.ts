@@ -1,6 +1,6 @@
 export interface ContactsResponse {
   attentionPerson: string,
-  eInvoiceRecipientType: string,
+  einvoiceRecipientType: string,
   companyName: string,
   cvrnumber: number,
   email: string,

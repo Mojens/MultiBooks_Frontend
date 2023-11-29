@@ -1,3 +1,4 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <div class="flex justify-items-center mb-4">
   <h1 class="text-2xl font-bold">
     <fa-icon [icon]="faAddressBook"></fa-icon>
@@ -149,7 +150,7 @@
           <td class="text-center border p-2">
             <!-- See Details Button -->
             <button pButton pRipple type="button" icon="pi pi-eye" class="p-button-text p-button-lg text-blue-500"
-                    pTooltip="{{ 'See details' }}" tooltipPosition="top">
+                    pTooltip="{{ 'See details' }}" tooltipPosition="top" (click)="seeDetails(contact)">
             </button>
 
             <!-- Edit Button -->
@@ -159,7 +160,9 @@
             <!-- Delete Button -->
             <button pButton pRipple type="button" icon="pi pi-trash"
                     class="p-button-text p-button-danger p-button-lg text-red-500"
-                    pTooltip="{{ 'Delete' }}" tooltipPosition="top"></button>
+                    pTooltip="{{ 'Delete' }}" tooltipPosition="top"
+                    (click)="deleteContact(contact.id)"
+            ></button>
           </td>
 
         </tr>
