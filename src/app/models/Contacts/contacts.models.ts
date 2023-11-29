@@ -1,5 +1,6 @@
 export interface ContactsResponse {
   attentionPerson: string,
+  eInvoiceRecipientType: string,
   companyName: string,
   cvrnumber: number,
   email: string,
@@ -20,6 +21,7 @@ export interface ContactsRequest {
   phoneNumber: string,
   website: string,
   businessTeamCVRNumber: number,
+  eInvoiceRecipientType: string
 }
 
 export interface UpdateContactsRequest{
@@ -30,6 +32,7 @@ export interface UpdateContactsRequest{
   id: number,
   paymentTermsDays: number,
   paymentTermsMethod: string,
+  eInvoiceRecipientType: string,
   phoneNumber: string,
   website: string,
   businessTeamCVRNumber: number,
