@@ -49,6 +49,10 @@ export class ContactsComponent implements OnInit {
   formData: ContactsRequest = {
     attentionPerson: '',
     companyName: '',
+    companyAddress: '',
+    companyCity: '',
+    companyZipCode: 0,
+    companyCountry: '',
     CVRNumber: 0,
     email: '',
     paymentTermsDays: 0,
@@ -61,6 +65,10 @@ export class ContactsComponent implements OnInit {
   editFormData: UpdateContactsRequest = {
     attentionPerson: '',
     companyName: '',
+    companyAddress: '',
+    companyCity: '',
+    companyZipCode: 0,
+    companyCountry: '',
     CVRNumber: 0,
     email: '',
     id: 0,
@@ -158,9 +166,13 @@ export class ContactsComponent implements OnInit {
     const formattedPhoneNumber = this.formatPhoneNumber(contact.phoneNumber);
     const rawContactDetails = `
     <div>
+      <p><b>Company Name:</b> ${contact.companyName}</p>
+      <p><b>Company Address:</b> ${contact.companyAddress}</p>
+      <p><b>Company City:</b> ${contact.companyCity}</p>
+      <p><b>Company Zip Code:</b> ${contact.companyZipCode}</p>
+      <p><b>Company Country:</b> ${contact.companyCountry}</p>
       <p><b>Attention Person:</b> ${contact.attentionPerson}</p>
       <p><b>E Invoice Recipient Type:</b> ${contact.einvoiceRecipientType}</p>
-      <p><b>Company Name:</b> ${contact.companyName}</p>
       <p><b>CVR Number:</b> ${contact.cvrnumber}</p>
       <p><b>Email:</b> ${contact.email}</p>
       <p><b>Payment Terms Days:</b> ${contact.paymentTermsDays}</p>
@@ -212,6 +224,10 @@ export class ContactsComponent implements OnInit {
       eInvoiceRecipientType: contact.einvoiceRecipientType,
       phoneNumber: contact.phoneNumber,
       website: contact.website,
+      companyAddress: contact.companyAddress,
+      companyCity: contact.companyCity,
+      companyCountry: contact.companyCountry,
+      companyZipCode: contact.companyZipCode,
       businessTeamCVRNumber: this.currentBusinessTeamCVRNumber,
     }
   }

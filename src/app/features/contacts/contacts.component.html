@@ -29,32 +29,48 @@
   <div *ngIf="createMode" [@fadeInOut]
        class="grid grid-cols-1 md:grid-cols-2 gap-2 bg-white shadow-lg rounded-lg p-4 max-w-4xl mx-auto mb-5">
 
-    <div class="flex flex-col items-center mb-4 col-span-2">
-      <h4 class="text-lg font-bold mb-2">Business Details</h4>
-      <div class="w-full">
-        <label for="CVRNumber" class="block text-gray-700 font-bold mb-2"><i class="pi pi-info-circle mr-2"
-                                                                             [pTooltip]="CVRTooltip"
-                                                                             tooltipPosition="top"></i>CVR - Number
-          *</label>
-        <input type="number" id="CVRNumber" name="CVRNumber" required [(ngModel)]="formData.CVRNumber"
-               class="w-full px-3 py-2 border rounded-lg shadow-sm">
-      </div>
-    </div>
     <div class="flex flex-col mb-4 col-span-2">
-      <h4 class="text-lg font-bold mb-2">Contact Info</h4>
-
-      <div class="w-full">
-        <label for="mail" class="block text-gray-700 font-bold mb-2">Email</label>
-        <input type="email" id="mail" name="mail" [(ngModel)]="formData.email"
-               class="w-full px-3 py-2 border rounded-lg shadow-sm">
-      </div>
+      <h4 class="text-lg font-bold mb-2">Business Details</h4>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div class="w-full">
+          <label for="CVRNumber" class="block text-gray-700 font-bold mb-2"><i class="pi pi-info-circle mr-2"
+                                                                               [pTooltip]="CVRTooltip"
+                                                                               tooltipPosition="top"></i>CVR - Number
+            *</label>
+          <input type="number" id="CVRNumber" name="CVRNumber" required [(ngModel)]="formData.CVRNumber"
+                 class="w-full px-3 py-2 border rounded-lg shadow-sm">
+        </div>
         <div class="flex flex-col mb-4">
           <label for="companyName" class="block text-gray-700 font-bold mb-2">Company name *</label>
           <input type="text" id="companyName" name="companyName" required [(ngModel)]="formData.companyName"
                  class="w-full px-3 py-2 border rounded-lg shadow-sm">
         </div>
+        <div class="flex flex-col mb-4">
+          <label for="companyAddress" class="block text-gray-700 font-bold mb-2">Address *</label>
+          <input type="text" id="companyAddress" name="companyAddress" required [(ngModel)]="formData.companyAddress"
+                 class="w-full px-3 py-2 border rounded-lg shadow-sm">
+        </div>
+        <div class="flex flex-col mb-4">
+          <label for="companyCity" class="block text-gray-700 font-bold mb-2">City *</label>
+          <input type="text" id="companyCity" name="companyCity" required [(ngModel)]="formData.companyCity"
+                 class="w-full px-3 py-2 border rounded-lg shadow-sm">
+        </div>
+        <div class="flex flex-col mb-4">
+          <label for="companyZipCode" class="block text-gray-700 font-bold mb-2">Zip Code *</label>
+          <input type="text" id="companyZipCode" name="companyZipCode" required [(ngModel)]="formData.companyZipCode"
+                 class="w-full px-3 py-2 border rounded-lg shadow-sm">
+        </div>
+        <div class="flex flex-col mb-4">
+          <label for="companyCountry" class="block text-gray-700 font-bold mb-2">Country *</label>
+          <input type="text" id="companyCountry" name="companyCountry" required [(ngModel)]="formData.companyCountry"
+                 class="w-full px-3 py-2 border rounded-lg shadow-sm">
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col mb-4 col-span-2">
+      <h4 class="text-lg font-bold mb-2">Contact Info</h4>
 
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
         <div class="flex flex-col mb-4">
           <label for="website" class="block text-gray-700 font-bold mb-2">Website</label>
           <input type="url" id="website" name="email" [(ngModel)]="formData.website"
@@ -73,6 +89,11 @@
         <div class="flex flex-col">
           <label for="phoneNumber" class="block text-gray-700 font-bold mb-2">Phone number</label>
           <input type="text" id="phoneNumber" name="phoneNumber" [(ngModel)]="formData.phoneNumber"
+                 class="w-full px-3 py-2 border rounded-lg shadow-sm">
+        </div>
+        <div class="flex flex-col mb-4">
+          <label for="mail" class="block text-gray-700 font-bold mb-2">Email</label>
+          <input type="email" id="mail" name="mail" [(ngModel)]="formData.email"
                  class="w-full px-3 py-2 border rounded-lg shadow-sm">
         </div>
       </div>
@@ -174,32 +195,48 @@
      class="grid grid-cols-1 md:grid-cols-2 gap-2 bg-white shadow-lg rounded-lg p-4 max-w-4xl mx-auto mb-20 mt-5"
      id="editSection">
 
-  <div class="flex flex-col items-center mb-4 col-span-2">
-    <h4 class="text-lg font-bold mb-2">Business Details</h4>
-    <div class="w-full">
-      <label for="editCVRNumber" class="block text-gray-700 font-bold mb-2"><i class="pi pi-info-circle mr-2"
-                                                                               [pTooltip]="CVRTooltip"
-                                                                               tooltipPosition="top"></i>CVR - Number
-        *</label>
-      <input type="number" id="editCVRNumber" name="editCVRNumber" required [(ngModel)]="editFormData.CVRNumber"
-             class="w-full px-3 py-2 border rounded-lg shadow-sm">
-    </div>
-  </div>
   <div class="flex flex-col mb-4 col-span-2">
-    <h4 class="text-lg font-bold mb-2">Contact Info</h4>
-
-    <div class="w-full">
-      <label for="editMail" class="block text-gray-700 font-bold mb-2">Email</label>
-      <input type="email" id="editMail" name="editMail" [(ngModel)]="editFormData.email"
-             class="w-full px-3 py-2 border rounded-lg shadow-sm">
-    </div>
+    <h4 class="text-lg font-bold mb-2">Business Details</h4>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div class="w-full">
+        <label for="editCVRNumber" class="block text-gray-700 font-bold mb-2"><i class="pi pi-info-circle mr-2"
+                                                                             [pTooltip]="CVRTooltip"
+                                                                             tooltipPosition="top"></i>CVR - Number
+          *</label>
+        <input type="number" id="editCVRNumber" name="editCVRNumber" required [(ngModel)]="editFormData.CVRNumber"
+               class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
       <div class="flex flex-col mb-4">
         <label for="editCompanyName" class="block text-gray-700 font-bold mb-2">Company name *</label>
         <input type="text" id="editCompanyName" name="editCompanyName" required [(ngModel)]="editFormData.companyName"
                class="w-full px-3 py-2 border rounded-lg shadow-sm">
       </div>
+      <div class="flex flex-col mb-4">
+        <label for="editCompanyAddress" class="block text-gray-700 font-bold mb-2">Address *</label>
+        <input type="text" id="editCompanyAddress" name="editCompanyAddress" required [(ngModel)]="editFormData.companyAddress"
+               class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+      <div class="flex flex-col mb-4">
+        <label for="editCompanyCity" class="block text-gray-700 font-bold mb-2">City *</label>
+        <input type="text" id="editCompanyCity" name="editCompanyCity" required [(ngModel)]="editFormData.companyCity"
+               class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+      <div class="flex flex-col mb-4">
+        <label for="editCompanyZipCode" class="block text-gray-700 font-bold mb-2">Zip Code *</label>
+        <input type="text" id="editCompanyZipCode" name="editCompanyZipCode" required [(ngModel)]="editFormData.companyZipCode"
+               class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+      <div class="flex flex-col mb-4">
+        <label for="editCompanyCountry" class="block text-gray-700 font-bold mb-2">Country *</label>
+        <input type="text" id="editCompanyCountry" name="editCompanyCountry" required [(ngModel)]="editFormData.companyCountry"
+               class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col mb-4 col-span-2">
+    <h4 class="text-lg font-bold mb-2">Contact Info</h4>
 
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
       <div class="flex flex-col mb-4">
         <label for="editWebsite" class="block text-gray-700 font-bold mb-2">Website</label>
         <input type="url" id="editWebsite" name="editWebsite" [(ngModel)]="editFormData.website"
@@ -208,17 +245,21 @@
 
       <div class="flex flex-col mb-4">
         <label for="editAttentionPerson" class="block text-gray-700 font-bold mb-2"><i class="pi pi-info-circle mr-2"
-                                                                                       [pTooltip]="attPerson"
-                                                                                       tooltipPosition="top"></i>Att.
+                                                                                   [pTooltip]="attPerson"
+                                                                                   tooltipPosition="top"></i>Att.
           Person</label>
-        <input type="text" id="editAttentionPerson" name="editAttentionPerson"
-               [(ngModel)]="editFormData.attentionPerson"
+        <input type="text" id="editAttentionPerson" name="editAttentionPerson" [(ngModel)]="editFormData.attentionPerson"
                class="w-full px-3 py-2 border rounded-lg shadow-sm">
       </div>
 
       <div class="flex flex-col">
         <label for="editPhoneNumber" class="block text-gray-700 font-bold mb-2">Phone number</label>
         <input type="text" id="editPhoneNumber" name="editPhoneNumber" [(ngModel)]="editFormData.phoneNumber"
+               class="w-full px-3 py-2 border rounded-lg shadow-sm">
+      </div>
+      <div class="flex flex-col mb-4">
+        <label for="editMail" class="block text-gray-700 font-bold mb-2">Email</label>
+        <input type="email" id="editMail" name="editMail" [(ngModel)]="editFormData.email"
                class="w-full px-3 py-2 border rounded-lg shadow-sm">
       </div>
     </div>
