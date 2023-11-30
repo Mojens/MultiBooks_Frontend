@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {faDollarSign} from "@fortawesome/free-solid-svg-icons";
+import {faClipboardCheck} from "@fortawesome/free-solid-svg-icons";
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {ConfirmationService, MenuItem} from 'primeng/api';
 import {ActivatedRoute, Router} from "@angular/router";
@@ -28,7 +28,7 @@ export class EditProductComponent implements OnInit {
 
   productId: number = 0;
   items: MenuItem[] | undefined;
-  faDollarSign = faDollarSign;
+  faClipboardCheck = faClipboardCheck;
 
   editFormData: UpdateProductRequest = {
     productName: '',

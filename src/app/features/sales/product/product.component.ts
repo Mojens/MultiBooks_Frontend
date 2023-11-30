@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {faDollarSign} from "@fortawesome/free-solid-svg-icons";
+import {faClipboardCheck} from "@fortawesome/free-solid-svg-icons";
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {MenuItem} from 'primeng/api';
 import {ActivatedRoute, Router} from "@angular/router";
@@ -25,7 +25,8 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
   styleUrl: './product.component.css'
 })
 export class ProductComponent implements OnInit {
-  faDollarSign = faDollarSign;
+
+  faClipboardCheck = faClipboardCheck;
 
   items: MenuItem[] | undefined;
 
