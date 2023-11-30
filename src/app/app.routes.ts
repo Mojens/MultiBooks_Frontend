@@ -36,7 +36,7 @@ export const routes: Routes = [
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
   { path: 'sales/product',component: ProductComponent, canActivate: [AuthGuard] },
   { path: 'sales/product/create', component: CreateProductComponent, canActivate: [AuthGuard] },
-  { path: 'sales/product/edit/:id', component: EditProductComponent, canActivate: [AuthGuard] },
+  { path: 'sales/product/edit/:productId', component: EditProductComponent, canActivate: [AuthGuard] },
   { path: 'sales/create', component: CreateSalesComponent, canActivate: [AuthGuard] },
 
 
