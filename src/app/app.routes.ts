@@ -16,6 +16,8 @@ import {TeamManagementComponent} from "./features/team-management/team-managemen
 import {SettingsComponent} from "./features/settings/settings.component";
 import {ProductComponent} from "./features/sales/product/product.component";
 import {CreateSalesComponent} from "./features/sales/create-sales/create-sales.component";
+import {CreateProductComponent} from "./features/sales/product/create-product/create-product.component";
+import {EditProductComponent} from "./features/sales/product/edit-product/edit-product.component";
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -33,7 +35,9 @@ export const routes: Routes = [
   { path: 'team-management', component: TeamManagementComponent, canActivate: [AuthGuard] },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
   { path: 'sales/product',component: ProductComponent, canActivate: [AuthGuard] },
-  { path: 'sales/create', component: CreateSalesComponent, canActivate: [AuthGuard]},
+  { path: 'sales/product/create', component: CreateProductComponent, canActivate: [AuthGuard] },
+  { path: 'sales/product/edit/:id', component: EditProductComponent, canActivate: [AuthGuard] },
+  { path: 'sales/create', component: CreateSalesComponent, canActivate: [AuthGuard] },
 
 
 
