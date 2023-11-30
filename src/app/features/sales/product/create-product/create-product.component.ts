@@ -17,6 +17,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import { EditorModule } from 'primeng/editor';
+import {Variables} from "../../../../@shared/variables";
 
 @Component({
   selector: 'app-create-product',
@@ -56,35 +57,19 @@ export class CreateProductComponent implements OnInit{
   ngOnInit(): void {
     this.currentBusinessTeamCVRNumber = Number(this.teamService.getCurrentBusinessTeam().cvrnumber);
     this.items = [{label: 'Sales', routerLink: '/sales'}, {label: 'Products', routerLink: '/sales/product'}, {label: 'Create Product', routerLink: '/sales/product/create'}];
-    this.unitOptions = [
-      { label: 'Hours', value:'Hours' },
-      { label: 'Piece', value: 'Piece' },
-      { label: 'Km', value: 'Km' },
-      { label: 'Days', value: 'Days' },
-      { label: 'Weeks', value:'Weeks' },
-      { label: 'Months', value: 'Months' },
-      { label: 'Kg', value: 'Kg' },
-      { label: 'Cubic Meters', value: 'Cubic Meters' },
-      { label: 'Set', value: 'Set'},
-      { label: 'Liter', value: 'Liter' },
-      { label: 'Meter', value: 'Meter' },
-      { label: 'Smaller Boxes', value: 'Smaller Boxes' },
-      { label: 'Boxes', value: 'Boxes' },
-      { label: 'Pallets', value: 'Pallets' },
-      { label: 'Cartons', value: 'Cartons'},
-      { label: 'Packages', value: 'Packages' },
-      { label: 'Sessions', value: 'Sessions' },
-      { label: 'Tons', value: 'Tons' },
-      { label: 'Square Meters', value: 'Square Meters' },
-    ]
+    this.unitOptions = Variables.unitOptions;
   }
 
   onCancelCreateProduct() {
     if(this.formData.productName !== '' || this.formData.productCode !== 0 || this.formData.productAmount !== 0 || this.formData.productUnit !== '' || this.formData.productPriceExclVAT !== 0 || this.formData.productPriceInclVAT !== 0 || this.formData.productDescription !== '' || this.formData.productAccount !== 0) {
       this.confirmationService.confirm({
         message: 'Are you sure you want to leave this page?',
-        header: 'Confirmation',
+        header: 'Leave confirmation',
         icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'Yes',
+        rejectLabel: 'No',
+        acceptButtonStyleClass: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-5',
+        rejectButtonStyleClass: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded',
 
         accept: () => {
           this.router.navigate(['../'], {relativeTo: this.route});
@@ -92,6 +77,8 @@ export class CreateProductComponent implements OnInit{
         reject: () => {
         }
       });
+    }else{
+      this.router.navigate(['../'], {relativeTo: this.route});
     }
   }
 

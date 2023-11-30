@@ -7,3 +7,60 @@
 </div>
 <hr class="my-4 border-black"/>
 <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-2 bg-white shadow-lg rounded-lg p-4 max-w-4xl mx-auto mb-20 mt-10">
+
+  <div class="flex flex-col mb-4">
+    <label for="productName" class="block text-gray-700 font-bold mb-2 text-center">Product name *</label>
+    <input type="text" id="productName" name="productName" required [(ngModel)]="editFormData.productName"
+           class="w-full px-3 py-2 border rounded-lg shadow-sm">
+  </div>
+
+  <div class="flex flex-col mb-4">
+    <label for="productCode" class="block text-gray-700 font-bold mb-2 text-center">Product code</label>
+    <input type="number" id="productCode" name="productCode" required [(ngModel)]="editFormData.productCode"
+           class="w-full px-3 py-2 border rounded-lg shadow-sm">
+  </div>
+
+  <div class="flex flex-col mb-4">
+    <label for="productAmount" class="block text-gray-700 font-bold mb-2 text-center">Amount *</label>
+    <input type="number" id="productAmount" name="productAmount" required [(ngModel)]="editFormData.productAmount"
+           class="w-full px-3 py-2 border rounded-lg shadow-sm">
+  </div>
+
+  <div class="flex flex-col mb-4">
+    <label for="productUnit" class="block text-gray-700 font-bold mb-2 text-center">Product unit *</label>
+    <p-dropdown [options]="unitOptions" [(ngModel)]="editFormData.productUnit" optionValue="value" id="productUnit"
+                [showClear]="true" placeholder="Select a unit" class="text-center"></p-dropdown>
+  </div>
+
+  <div class="flex flex-col mb-4">
+    <label for="productPriceExclVAT" class="block text-gray-700 font-bold mb-2 text-center">Price Excl. VAT *</label>
+    <input type="text" id="productPriceExclVAT" name="productPriceExclVAT" required [(ngModel)]="editFormData.productPriceExclVAT"
+           class="w-full px-3 py-2 border rounded-lg shadow-sm">
+  </div>
+
+  <div class="flex flex-col mb-4">
+    <label for="productDescription" class="block text-gray-700 font-bold mb-2 text-center">Product Description</label>
+    <textarea id="productDescription" name="productDescription" [(ngModel)]="editFormData.productDescription"
+              class="w-full px-3 py-2 border rounded-lg shadow-sm" rows="4"></textarea>
+  </div>
+
+
+
+  <div class="flex justify-center mb-4">
+    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            (click)="onCancelEditProduct()"
+    >
+      <i class="pi pi-times mr-2"></i> Cancel
+    </button>
+  </div>
+
+  <div class="flex justify-center mb-4">
+    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            (click)="onEditProduct()"
+    >
+      <i class="pi pi-check mr-2"></i> Edit
+    </button>
+  </div>
+
+</div>

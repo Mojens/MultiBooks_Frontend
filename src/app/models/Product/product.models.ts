@@ -32,6 +32,7 @@ export interface UpdateProductRequest {
   productPriceInclVAT: number,
   productDescription: string,
   productAccount: number,
+  businessCVRNumber: number
 }
 
 export interface Pageable {
