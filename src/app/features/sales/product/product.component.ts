@@ -87,7 +87,7 @@ export class ProductComponent implements OnInit {
 
   deleteProduct(id: number) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete this contact?',
+      message: 'Are you sure you want to delete this product?',
       header: 'Confirm Deletion',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Yes',
@@ -103,7 +103,7 @@ export class ProductComponent implements OnInit {
               this.currentPage -= 1;
             }
             this.getProducts(this.currentPage, this.rows);
-            this.toast.success('Successfully deleted contact');
+            this.toast.success('Successfully deleted product');
           });
       },
       reject: () => {
