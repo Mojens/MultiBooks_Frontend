@@ -20,4 +20,12 @@ export class Variables {
     {label: 'Tons', value: 'Tons'},
     {label: 'Square Meters', value: 'Square Meters'},
   ]
+  static invoiceStatusOptions = [
+    { label: 'Draft', value: 1 },
+    { label: 'Confirmed', value: 2 },
+    { label: 'Paid', value: 3 },
+    { label: 'Overdue', value: 4 },
+    { label: 'Overpaid', value: 5 },
+    { label: 'Cancelled', value: 6 },
+  ]
 }
