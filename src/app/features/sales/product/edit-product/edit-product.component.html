@@ -37,6 +37,9 @@
     <label for="productPriceExclVAT" class="block text-gray-700 font-bold mb-2 text-center">Price Excl. VAT *</label>
     <input type="text" id="productPriceExclVAT" name="productPriceExclVAT" required [(ngModel)]="editFormData.productPriceExclVAT"
            class="w-full px-3 py-2 border rounded-lg shadow-sm">
+    <label for="productUnit" class="block text-gray-700 font-bold mb-2 text-center">Account</label>
+    <p-dropdown [options]="accountOptions" [(ngModel)]="editFormData.productAccount" optionValue="value" id="account"
+                [showClear]="true" placeholder="Select a unit" class="text-center"></p-dropdown>
   </div>
 
   <div class="flex flex-col mb-4">

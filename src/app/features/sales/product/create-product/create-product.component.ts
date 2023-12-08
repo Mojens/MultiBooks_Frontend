@@ -32,6 +32,7 @@ export class CreateProductComponent implements OnInit{
   faClipboardCheck = faClipboardCheck;
   items: MenuItem[] | undefined;
   unitOptions: any[] = [];
+  accountOptions: any[] = [];
 
   formData: ProductRequest = {
     productName: '',
@@ -41,7 +42,7 @@ export class CreateProductComponent implements OnInit{
     productPriceExclVAT: 0,
     productPriceInclVAT: 0,
     productDescription: '',
-    productAccount: 0,
+    productAccount: '',
     businessCVRNumber: 0
   };
 
@@ -58,10 +59,11 @@ export class CreateProductComponent implements OnInit{
     this.currentBusinessTeamCVRNumber = Number(this.teamService.getCurrentBusinessTeam().cvrnumber);
     this.items = [{label: 'Sales', routerLink: '/sales'}, {label: 'Products', routerLink: '/sales/product'}, {label: 'Create Product', routerLink: '/sales/product/create'}];
     this.unitOptions = Variables.unitOptions;
+    this.accountOptions = Variables.accountOptions;
   }
 
   onCancelCreateProduct() {
-    if(this.formData.productName !== '' || this.formData.productCode !== 0 || this.formData.productAmount !== 0 || this.formData.productUnit !== '' || this.formData.productPriceExclVAT !== 0 || this.formData.productPriceInclVAT !== 0 || this.formData.productDescription !== '' || this.formData.productAccount !== 0) {
+    if(this.formData.productName !== '' || this.formData.productCode !== 0 || this.formData.productAmount !== 0 || this.formData.productUnit !== '' || this.formData.productPriceExclVAT !== 0 || this.formData.productPriceInclVAT !== 0 || this.formData.productDescription !== '' || this.formData.productAccount !== '') {
       this.confirmationService.confirm({
         message: 'Are you sure you want to leave this page?',
         header: 'Leave confirmation',

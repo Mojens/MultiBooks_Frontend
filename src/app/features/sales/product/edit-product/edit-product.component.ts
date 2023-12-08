@@ -33,6 +33,7 @@ export class EditProductComponent implements OnInit {
   items: MenuItem[] | undefined;
   faClipboardCheck = faClipboardCheck;
   unitOptions: any[] = [];
+  accountOptions: any[] = [];
   currentBusinessTeamCVRNumber: number = 0;
 
   productData: ProductResponse = {
@@ -44,7 +45,7 @@ export class EditProductComponent implements OnInit {
     productPriceExclVAT: 0,
     productPriceInclVAT: 0,
     productDescription: '',
-    productAccount: 0,
+    productAccount: '',
   }
 
   editFormData: UpdateProductRequest = {
@@ -56,7 +57,7 @@ export class EditProductComponent implements OnInit {
     productPriceExclVAT: 0,
     productPriceInclVAT: 0,
     productDescription: '',
-    productAccount: 0,
+    productAccount: '',
     businessCVRNumber: 0
   };
 
@@ -70,6 +71,7 @@ export class EditProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.unitOptions = Variables.unitOptions;
+    this.accountOptions = Variables.accountOptions;
     this.productId = Number(this.route.snapshot.params['productId'])
     this.currentBusinessTeamCVRNumber = Number(this.teamService.getCurrentBusinessTeam().cvrnumber);
     this.items = [{label: 'Sales', routerLink: '/sales'}, {label: 'Products', routerLink: '/sales/product'}, {label: 'Edit Product', routerLink: `/sales/product/edit/${this.productId}`}];

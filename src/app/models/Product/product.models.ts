@@ -6,7 +6,7 @@ export interface ProductRequest {
   productPriceExclVAT: number,
   productPriceInclVAT: number,
   productDescription: string,
-  productAccount: number,
+  productAccount: string,
   businessCVRNumber: number
 }
 
@@ -19,7 +19,7 @@ export interface ProductResponse {
   productPriceExclVAT: number,
   productPriceInclVAT: number,
   productDescription: string,
-  productAccount: number,
+  productAccount: string,
 }
 
 export interface UpdateProductRequest {
@@ -31,7 +31,7 @@ export interface UpdateProductRequest {
   productPriceExclVAT: number,
   productPriceInclVAT: number,
   productDescription: string,
-  productAccount: number,
+  productAccount: string,
   businessCVRNumber: number
 }
 
