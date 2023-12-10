@@ -17,4 +17,9 @@ export class Validations {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()_+]{8,}$/;
     return passwordRegex.test(password);
   }
+
+  static formatCurrency(amount: number): string {
+    return amount.toFixed(2).replace(/\./g, '|').replace(/\B(?=(\d{3})+\b)/g, ',').replace(/\|/g, '.');
+  }
+
 }

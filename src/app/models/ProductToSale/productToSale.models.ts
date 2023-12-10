@@ -7,7 +7,7 @@ export interface ProductToSaleRequest {
   productDiscount: number,
   productPriceExclVAT: number,
   productPriceAfterDiscount: number,
-  invoiceNumber: number,
+  productId: number
 }
 
 export interface ProductToSaleResponse {

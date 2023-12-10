@@ -1,0 +1,11 @@
+.even-background {
+  background-color: #6a6d70 !important;
+  color: #fff;
+  input{
+    color: black;
+  }
+}
+
+.odd-background {
+  background-color: #bcbfc2 !important;
+}

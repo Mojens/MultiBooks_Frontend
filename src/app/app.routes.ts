@@ -37,7 +37,8 @@ export const routes: Routes = [
   { path: 'sales/product',component: ProductComponent, canActivate: [AuthGuard] },
   { path: 'sales/product/create', component: CreateProductComponent, canActivate: [AuthGuard] },
   { path: 'sales/product/edit/:productId', component: EditProductComponent, canActivate: [AuthGuard] },
-  { path: 'sales/create', component: CreateSalesComponent, canActivate: [AuthGuard] },
+  { path: 'sales/create/:invoiceId', component: CreateSalesComponent, canActivate: [AuthGuard] },
+
 
 
 

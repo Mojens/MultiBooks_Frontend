@@ -1,4 +1,5 @@
 import {ProductToSaleResponse} from "../ProductToSale/productToSale.models";
+import {ContactsResponse} from "../Contacts/contacts.models";
 
 export interface InvoiceFillRequest {
   invoiceNumber: number,
@@ -9,6 +10,7 @@ export interface InvoiceFillRequest {
   total: number,
   statusCode: number,
   EditedBy: string,
+  contactId: number
 }
 
 export interface InvoiceResponse {
@@ -19,6 +21,7 @@ export interface InvoiceResponse {
   subTotal: number,
   total: number,
   status: string,
+  contact: ContactsResponse,
   productToSale: ProductToSaleResponse[]
 }
 
