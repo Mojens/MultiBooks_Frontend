@@ -17,11 +17,12 @@ import { ConfirmationService } from 'primeng/api';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import DOMPurify from 'dompurify';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import {InputTextModule} from "primeng/inputtext";
 
 @Component({
   selector: 'app-contacts',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, TooltipModule, DividerModule, FontAwesomeModule, TableModule, ButtonModule, RippleModule, DropdownModule, ConfirmDialogModule],
+    imports: [CommonModule, ReactiveFormsModule, FormsModule, TooltipModule, DividerModule, FontAwesomeModule, TableModule, ButtonModule, RippleModule, DropdownModule, ConfirmDialogModule, InputTextModule],
   providers: [ConfirmationService],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.css',

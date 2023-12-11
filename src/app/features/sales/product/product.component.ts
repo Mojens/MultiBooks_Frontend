@@ -15,11 +15,12 @@ import DOMPurify from 'dompurify';
 import {ToastrService} from "ngx-toastr";
 import { ConfirmationService } from 'primeng/api';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {InputTextModule} from "primeng/inputtext";
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, BreadcrumbModule, ButtonModule, RippleModule, TableModule, ConfirmDialogModule],
+  imports: [CommonModule, FontAwesomeModule, BreadcrumbModule, ButtonModule, RippleModule, TableModule, ConfirmDialogModule, InputTextModule],
   providers: [ConfirmationService],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'

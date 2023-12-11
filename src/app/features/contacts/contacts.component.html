@@ -140,9 +140,29 @@
   <hr class="my-4 border-black-alpha-90 mb-2"/>
   <h2 class="text-xl font-semibold mb-2">Contact List</h2>
   <div *ngIf="contacts.length > 0">
-    <p-table [value]="contacts" [paginator]="true" [rows]="rows"
-             [totalRecords]="totalRecords" (onLazyLoad)="onLazyLoad($event)"
-             [lazy]="true" [rowsPerPageOptions]="[5,15,50]">
+    <p-table
+      #contactTable
+      [value]="contacts"
+      [paginator]="true"
+      [rows]="rows"
+      [lazy]="false"
+      [rowHover]="true"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="[5,15,50]"
+      [globalFilterFields]="['cvrnumber', 'phoneNumber', 'companyName']"
+      dataKey="id"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+        <span class="p-input-icon-right">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"
+                           class="ml-10"
+                           (input)="contactTable.filterGlobal($any($event.target).value, 'contains')" placeholder="Search..." />
+                </span>
+        </div>
+        <small class="text-gray-500 mt-1">Searchable fields: <b>CVR Number</b>, <b>Company Name</b>, <b>Phone Number</b></small>
+      </ng-template>
       <ng-template pTemplate="header">
         <tr class="bg-gray-100">
           <th class="border p-2 font-bold text-center">CVR Number</th>
