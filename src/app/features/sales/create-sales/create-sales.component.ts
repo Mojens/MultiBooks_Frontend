@@ -98,7 +98,7 @@ export class CreateSalesComponent implements OnInit {
     if (this.productRequests.length > 0) {
       return true;
     }
-    if (this.invoiceForm.invoiceTitle !== 'Invoice') {
+    if (this.invoiceForm.invoiceTitle !== '') {
       return true;
     }
     if (this.subTotalWithVat !== -1) {
