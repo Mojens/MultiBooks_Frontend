@@ -19,6 +19,7 @@ export interface InvoiceResponse {
   invoiceTitle: string,
   invoiceDate: Date,
   subTotal: number,
+  subTotalWithVat: number,
   total: number,
   status: string,
   contact: ContactsResponse,

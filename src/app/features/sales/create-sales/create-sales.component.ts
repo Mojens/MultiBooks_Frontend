@@ -42,13 +42,15 @@ export class CreateSalesComponent implements OnInit {
   showAddProductDialog: boolean = false;
 
   unitOptions: any[] = [];
-  selectedUnit: string = '';
+
+  selectedStatus: number = 0;
   chosenProducts: ProductResponse[] = [];
 
   selectedContact: any;
   selectedDate: Date = new Date();
 
   contactOptions: any[] = [];
+  statusOptions: any[] = [];
 
   invoiceForm: InvoiceFillRequest = {
     invoiceNumber: 0,
@@ -66,6 +68,11 @@ export class CreateSalesComponent implements OnInit {
 
   currentProducts: ProductResponse[] = [];
 
+  subTotalWithVat: number = -1;
+  subTotalWithoutVat: number = -1;
+  vatPrice: number = -1;
+  totalPrice: number = -1;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private contactService: ContactsApiService,
@@ -79,6 +86,7 @@ export class CreateSalesComponent implements OnInit {
 
   ngOnInit(): void {
     this.unitOptions = Variables.unitOptions;
+    this.statusOptions = Variables.invoiceStatusOptions;
     this.invoiceStatusOptions = Variables.invoiceStatusOptions;
     this.invoiceNumber = Number(this.route.snapshot.params['invoiceId'])
     this.currentBusinessTeamCVRNumber = Number(this.teamService.getCurrentBusinessTeam().cvrnumber);
@@ -141,11 +149,10 @@ export class CreateSalesComponent implements OnInit {
         productAmount: 1,
         productDiscount: 0,
         productPriceExclVAT: item.productPriceExclVAT,
-        productPriceAfterDiscount: 0
+        productPriceAfterDiscount: item.productPriceExclVAT
       }
       this.productRequests.push(request);
     });
-    console.log(this.productRequests)
     this.toast.success('Product added to invoice', 'Success');
   }
 
@@ -163,25 +170,34 @@ export class CreateSalesComponent implements OnInit {
         productAmount: 1,
         productDiscount: 0,
         productPriceExclVAT: item.productPriceExclVAT,
-        productPriceAfterDiscount: 0
+        productPriceAfterDiscount: item.productPriceExclVAT
       }
       this.productRequests.push(request);
     })
     this.toast.success('All products added to invoice', 'Success');
   }
 
+  removeAllProducts() {
+    this.chosenProducts = [];
+    this.productRequests = [];
+    this.toast.error('All products removed from invoice', 'Success');
+  }
+
   changeQuantity(event: any, product: ProductResponse) {
-    this.productRequests.forEach((productRequest) => {
+    const newProductRequests = [...this.productRequests]; // Create a copy of productRequests
+    newProductRequests.forEach((productRequest) => {
       if (productRequest.productId === Number(product.id)) {
         productRequest.productAmount = Number(event.target.value);
       }
     });
+    this.productRequests = newProductRequests; // Assign the copy back to productRequests
+    this.getDiscountedPrice(product);
   }
 
   changeDiscount(event: any, product: ProductResponse) {
-    if(event.target.value > 100){
+    if (event.target.value > 100) {
       event.target.value = 100;
-    }else if(event.target.value < 0){
+    } else if (event.target.value < 0) {
       event.target.value = 0;
     }
     this.productRequests.forEach((productRequest) => {
@@ -218,15 +234,51 @@ export class CreateSalesComponent implements OnInit {
         break;
       }
     }
-
     return finalPrice;
   }
 
+  getSubTotalInclVAT() {
+    this.subTotalWithVat = 0;
+    for (const productRequest of this.productRequests) {
+      this.subTotalWithVat += (productRequest.productPriceAfterDiscount + (productRequest.productPriceAfterDiscount / 4));
+    }
+    return this.subTotalWithVat;
+  }
 
+  getSubTotalExclVAT() {
+    this.subTotalWithoutVat = 0;
+    for (const productRequest of this.productRequests) {
+      this.subTotalWithoutVat += productRequest.productPriceAfterDiscount;
+    }
+    return this.subTotalWithoutVat;
+  }
 
+  getVAT() {
+    this.vatPrice = 0;
+    for (const productRequest of this.productRequests) {
+      this.vatPrice += (productRequest.productPriceAfterDiscount / 4);
+    }
+    return this.vatPrice;
+  }
+
+  getTotal() {
+    this.totalPrice = 0;
+    for (const productRequest of this.productRequests) {
+      this.totalPrice += productRequest.productPriceAfterDiscount;
+    }
+    return this.totalPrice;
+  }
+
+  calculateTotal() {
+    console.log('calculateTotal')
+    this.getTotal();
+    this.getVAT();
+    this.getSubTotalExclVAT();
+    this.getSubTotalInclVAT();
+  }
 
 
   test() {
-    console.log(this.productRequests)
+    console.log(this.invoiceForm.statusCode)
   }
 }

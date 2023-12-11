@@ -13,8 +13,11 @@
     </div>
     <div class="flex flex-col mb-4">
       <label for="contactId" class="block text-gray-700 font-bold mb-2">Date</label>
-      <p-calendar [(ngModel)]="selectedDate" dateFormat="dd/mm/yy" [showIcon]="true" [readonlyInput]="true"
-      ></p-calendar>
+      <div class="flex items-center">
+        <p-calendar [(ngModel)]="selectedDate" dateFormat="dd/mm/yy" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+        <label for="status" class="ml-4 text-gray-700 font-bold mb-2">Status</label>
+        <p-dropdown [options]="invoiceStatusOptions" [(ngModel)]="selectedStatus" optionLabel="label" id="status" class="ml-2" placeholder="Select a status" ></p-dropdown>
+      </div>
     </div>
     <div class="flex flex-col mb-4">
       <label for="contactId" class="block text-gray-700 font-bold mb-2">Contact</label>
@@ -66,7 +69,25 @@
     </p-pickList>
   </p-dialog>
   <hr class="my-4 border-black mb-3"/>
-  <div class="border rounded-lg shadow-sm">
+  <div class="border rounded-lg shadow-sm" *ngIf="chosenProducts.length > 0">
+    <div class="grid grid-cols-4 md:grid-cols-4 gap-4 p-1">
+      <div class="flex flex-col mb-4">
+      </div>
+      <div class="flex flex-col mb-4">
+      </div>
+      <div class="flex flex-col mb-4 text-center">
+        <button pButton type="button" label="Calculate Price" class="p-button-success bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+                (click)="calculateTotal()"
+        ></button>
+      </div>
+      <div class="flex flex-col mb-4">
+        <button type="button" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                (click)="removeAllProducts()">
+          Remove All Products
+        </button>
+
+      </div>
+    </div>
     <div class="grid grid-cols-7 gap-7 mb-3" *ngFor="let product of chosenProducts; let i = index"
          [ngClass]="{'even-background': i % 2 === 0, 'odd-background': i % 2 !== 0}">
       <div class="text-center mb-3 mt-3">
@@ -76,6 +97,7 @@
       <div class="text-center mb-3 mt-3">
         <label class="block font-extrabold mb-2">Quantity</label>
         <input type="number" id="quantity" name="quantity"
+               min="1" max="{{ product.productAmount }}"
                class="w-full px-3 py-2 border rounded-lg shadow-sm"
                (change)="changeQuantity($event, product)"
         >
@@ -89,18 +111,19 @@
       </div>
       <div class="text-center mb-3 mt-3">
         <label class="block font-extrabold mb-2">Unit price</label>
-        <span class="font-semibold">{{ product.productPriceExclVAT }}</span>
+        <span class="font-semibold">{{ product.productPriceExclVAT | currency:'DKK' }}</span>
       </div>
       <div class="text-center mb-3 mt-3">
         <label for="discount" class="block font-extrabold mb-2">Discount</label>
         <input type="number" id="discount" name="unitPrice"
                class="w-full px-3 py-2 border rounded-lg shadow-sm"
+               min="0" max="100"
                (change)="changeDiscount($event, product)"
         >
       </div>
       <div class="text-center mb-3 mt-3">
         <label class="block font-extrabold mb-2">Price</label>
-        <span class="font-semibold">{{ getDiscountedPrice(product) }}</span>
+        <span class="font-semibold">{{ getDiscountedPrice(product) | currency:'DKK' }}</span>
       </div>
       <div class="text-center mb-3 mt-3 ml-0">
         <label class="block font-extrabold mb-2">&nbsp;</label>
@@ -110,17 +133,24 @@
       </div>
     </div>
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-2 ">
-    <div class="flex flex-col mb-4">
-    </div>
-  </div>
   <hr class="my-4 border-black mb-3"/>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-2 ">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-2"
+       *ngIf="subTotalWithVat !== -1 || vatPrice !== -1 || totalPrice !== -1 || subTotalWithoutVat !== -1">
     <div class="flex flex-col mb-4">
+      <h2 class="text-xl font-bold mb-2">Subtotal without VAT</h2>
+      <span class="font-semibold">{{ subTotalWithoutVat | currency:'DKK ' }}</span>
     </div>
     <div class="flex flex-col mb-4">
-      //show subtotal and total here, and VAT 25%
-
+      <h2 class="text-xl font-bold mb-2">Subtotal with VAT</h2>
+      <span class="font-semibold">{{ subTotalWithVat | currency:'DKK' }}</span>
+    </div>
+    <div class="flex flex-col mb-4">
+      <h2 class="text-xl font-bold mb-2">VAT</h2>
+      <span class="font-semibold">{{ vatPrice | currency:'DKK' }}</span>
+    </div>
+    <div class="flex flex-col mb-4">
+      <h2 class="text-xl font-bold mb-2">Total</h2>
+      <span class="font-semibold">{{ totalPrice | currency:'DKK' }}</span>
     </div>
   </div>
 </div>
