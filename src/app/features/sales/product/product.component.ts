@@ -106,13 +106,18 @@ export class ProductComponent implements OnInit {
             }
             this.getProducts(this.currentPage, this.rows);
             this.toast.success('Successfully deleted product');
-          });
+          },
+          (error) => {
+            this.toast.error('Failed to delete product. Please try again later.');
+          }
+        );
       },
       reject: () => {
         return;
       }
     });
   }
+
 
   navigateToCreateProduct() {
     this.router.navigate(['create'], {relativeTo: this.route});

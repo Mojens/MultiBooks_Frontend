@@ -1,3 +1,4 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <div class="flex justify-items-center mb-4">
   <h1 class="text-2xl font-bold">
     <fa-icon [icon]="faDollarSign"></fa-icon>
@@ -20,7 +21,7 @@
   </p>
 </div>
 <hr class="my-4 border-black-alpha-90 mb-2"/>
-<div class="grid grid-cols-2 gap-2 justify-items-center mt-10">
+<div class="grid grid-cols-2 gap-2 justify-items-center mt-10 mb-10">
   <div>
     <div
       class="max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
@@ -72,25 +73,13 @@
     [value]="invoices"
     [paginator]="true"
     [rows]="rows"
-    [globalFilterFields]="['invoiceNumber', 'invoiceDate', 'status']"
     dataKey="invoiceNumber"
     [totalRecords]="totalRecords"
-    [lazy]="false"
     [rowsPerPageOptions]="[5,15,50]"
     [rowHover]="true"
-
+    (onLazyLoad)="onLazyLoad($event)"
+    [lazy]="true"
   >
-    <ng-template pTemplate="caption">
-      <div class="flex align-items-center justify-content-between">
-        <span class="p-input-icon-right">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text"
-                           class="ml-10"
-                           (input)="invoicesTable.filterGlobal($any($event.target).value, 'contains')" placeholder="Search..." />
-                </span>
-      </div>
-      <small class="text-gray-500 mt-1">Searchable fields: <b>Invoice number</b>, <b>Date</b>, <b>Status</b></small>
-    </ng-template>
     <ng-template pTemplate="header">
       <tr class="bg-gray-100">
         <th class="border p-2 font-bold text-center">Invoice number</th>
@@ -124,6 +113,7 @@
           <button pButton pRipple type="button" icon="pi pi-trash"
                   class="p-button-text p-button-danger p-button-lg text-red-500"
                   pTooltip="{{ 'Delete' }}" tooltipPosition="top"
+                  (click)="deleteInvoice(invoice.invoiceNumber)"
 
           ></button>
         </td>

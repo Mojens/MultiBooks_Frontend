@@ -155,13 +155,18 @@ export class ContactsComponent implements OnInit {
             }
             this.getContacts(this.currentPage, this.rows);
             this.toast.success('Successfully deleted contact');
-          });
+          },
+          (error) => {
+            this.toast.error('Failed to delete contact. Please try again later.');
+          }
+        );
       },
       reject: () => {
         return;
-        }
-      });
+      }
+    });
   }
+
 
   seeDetails(contact: ContactsResponse) {
     const formattedPhoneNumber = this.formatPhoneNumber(contact.phoneNumber);

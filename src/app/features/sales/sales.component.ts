@@ -8,25 +8,20 @@ import {TeamManagementApiService} from "../team-management/team-management.api.s
 import {InvoiceResponse} from "../../models/Invoice/invoice.models";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
-import {SharedModule} from "primeng/api";
+import {ConfirmationService, SharedModule} from "primeng/api";
 import {TableModule} from "primeng/table";
 import {TooltipModule} from "primeng/tooltip";
 import {FormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
-import { Table } from 'primeng/table';
+import {ToastrService} from "ngx-toastr";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {BreadcrumbModule} from "primeng/breadcrumb";
 
 @Component({
   selector: 'app-sales',
   standalone: true,
-  imports: [CommonModule,
-    FontAwesomeModule,
-    ButtonModule,
-    RippleModule,
-    SharedModule,
-    TableModule,
-    TooltipModule,
-    FormsModule,
-    InputTextModule],
+  imports: [CommonModule, FontAwesomeModule, BreadcrumbModule, ButtonModule, RippleModule, TableModule, ConfirmDialogModule, InputTextModule],
+  providers: [ConfirmationService],
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.css'
 })
@@ -37,11 +32,12 @@ export class SalesComponent implements OnInit {
   totalRecords: number = 0;
   rows: number = 5;
   currentPage: number = 0;
-  inputSearch: string = '';
 
   constructor(private route: Router,
               private salesService: SalesApiService,
-              private teamService: TeamManagementApiService) {
+              private teamService: TeamManagementApiService,
+              private toast: ToastrService,
+              private confirmationService: ConfirmationService) {
   }
 
   ngOnInit(): void {
@@ -62,8 +58,45 @@ export class SalesComponent implements OnInit {
   getInvoices(currentPage: number, rows: number) {
     this.salesService.getInvoices(this.currentBusinessTeamCVRNumber, currentPage, rows).subscribe((response: any) => {
       this.invoices = response.data.content;
+      console.log(response)
       this.totalRecords = response.data.totalElements;
     });
   }
+
+  deleteInvoice(invoiceNumber: number) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this Invoice?',
+      header: 'Confirm Deletion',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Yes',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-5',
+      rejectButtonStyleClass: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded',
+      accept: () => {
+        this.salesService.deleteInvoice(invoiceNumber).subscribe(
+          (response) => {
+            this.invoices = this.invoices.filter((invoice) => invoice.invoiceNumber !== invoiceNumber);
+            this.totalRecords -= 1;
+            if (this.invoices.length === 0 && this.currentPage > 0) {
+              this.currentPage -= 1;
+            }
+            this.getInvoices(this.currentPage, this.rows);
+            this.toast.success('Successfully deleted invoice');
+          },
+          (error) => {
+            this.toast.error('Failed to delete invoice. Please try again later.');
+          }
+        );
+      },
+      reject: () => {
+        return;
+      }
+    });
+  }
+  onLazyLoad(event: any): void {
+    this.currentPage = event.first / event.rows;
+    this.getInvoices(this.currentPage, event.rows);
+  }
+
 
 }
