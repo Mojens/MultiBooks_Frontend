@@ -98,7 +98,7 @@
           {{ invoice.invoiceNumber }}
         </td>
         <td class="text-center border p-2">
-          {{ invoice.invoiceDate }}
+          {{ invoice.invoiceDate | date:'dd-MM-yyyy' }}
         </td>
         <td class="text-center border p-2">
           {{ invoice.total }}

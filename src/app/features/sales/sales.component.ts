@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {faDollarSign} from "@fortawesome/free-solid-svg-icons";
 import {Router} from "@angular/router";
@@ -19,7 +19,7 @@ import {BreadcrumbModule} from "primeng/breadcrumb";
   selector: 'app-sales',
   standalone: true,
   imports: [CommonModule, FontAwesomeModule, BreadcrumbModule, ButtonModule, RippleModule, TableModule, ConfirmDialogModule, InputTextModule],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, DatePipe],
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.css'
 })
@@ -35,7 +35,8 @@ export class SalesComponent implements OnInit {
               private salesService: SalesApiService,
               private teamService: TeamManagementApiService,
               private toast: ToastrService,
-              private confirmationService: ConfirmationService) {
+              private confirmationService: ConfirmationService,
+              private datePipe: DatePipe) {
   }
 
   ngOnInit(): void {
@@ -95,5 +96,4 @@ export class SalesComponent implements OnInit {
     this.currentPage = event.first / event.rows;
     this.getInvoices(this.currentPage, event.rows);
   }
-
 }

@@ -1,5 +1,5 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule, DatePipe} from '@angular/common';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {faDollarSign} from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +14,6 @@ import {TeamManagementApiService} from "../../team-management/team-management.ap
 import {ContactsResponse} from "../../../models";
 import {FormsModule} from "@angular/forms";
 import {CalendarModule} from "primeng/calendar";
-import {DatePipe} from '@angular/common';
 import {Variables} from "../../../@shared/variables";
 import {DialogModule} from "primeng/dialog";
 import {PickListModule} from 'primeng/picklist';
@@ -57,7 +56,7 @@ export class CreateSalesComponent implements OnInit {
     invoiceNumber: 0,
     invoiceComment: '',
     invoiceTitle: 'Invoice',
-    invoiceDate: new Date(),
+    invoiceDate: '',
     subTotal: 0,
     total: 0,
     statusCode: 0,
@@ -81,7 +80,6 @@ export class CreateSalesComponent implements OnInit {
               private salesService: SalesApiService,
               private teamService: TeamManagementApiService,
               private datePipe: DatePipe,
-              private cdr: ChangeDetectorRef,
               private toast: ToastrService) {
   }
 
@@ -97,8 +95,25 @@ export class CreateSalesComponent implements OnInit {
   }
 
   hasUnsavedChanges(): boolean {
-
-    return true;
+    if (this.productRequests.length > 0) {
+      return true;
+    }
+    if (this.invoiceForm.invoiceTitle !== 'Invoice') {
+      return true;
+    }
+    if (this.subTotalWithVat !== -1) {
+      return true;
+    }
+    if (this.subTotalWithoutVat !== -1) {
+      return true;
+    }
+    if (this.vatPrice !== -1) {
+      return true;
+    }
+    if (this.totalPrice !== -1) {
+      return true;
+    }
+    return false;
   }
 
   getContacts() {
@@ -119,6 +134,7 @@ export class CreateSalesComponent implements OnInit {
   formatDate(date: Date) {
     return this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00Z')?.split('+')[0] + 'Z';
   }
+
 
   showAddProductDialogFunc() {
     this.showAddProductDialog = true;
@@ -190,13 +206,13 @@ export class CreateSalesComponent implements OnInit {
   }
 
   changeQuantity(event: any, product: ProductResponse) {
-    const newProductRequests = [...this.productRequests]; // Create a copy of productRequests
+    const newProductRequests = [...this.productRequests];
     newProductRequests.forEach((productRequest) => {
       if (productRequest.productId === Number(product.id)) {
         productRequest.productAmount = Number(event.target.value);
       }
     });
-    this.productRequests = newProductRequests; // Assign the copy back to productRequests
+    this.productRequests = newProductRequests;
     this.getDiscountedPrice(product);
   }
 
@@ -220,6 +236,10 @@ export class CreateSalesComponent implements OnInit {
         productRequest.productUnit = event.value;
       }
     });
+  }
+
+  changeStatus(event: any) {
+    this.selectedStatus = event.value.value
   }
 
   getDiscountedPrice(product: ProductResponse) {
@@ -283,8 +303,74 @@ export class CreateSalesComponent implements OnInit {
     this.getSubTotalInclVAT();
   }
 
+  onCreateInvoice() {
+    this.isFormValid();
+    const invoiceRequest: InvoiceFillRequest = {
+      ...this.invoiceForm,
+      invoiceDate: this.formatDate(this.selectedDate),
+      total: this.totalPrice,
+      subTotal: this.subTotalWithoutVat,
+      statusCode: this.selectedStatus,
+      invoiceNumber: this.invoiceNumber,
+      contactId: this.selectedContact.value,
+    }
+    this.salesService.fillInvoice(invoiceRequest).subscribe((response) => {
+      this.toast.success('Invoice created', 'Success');
+      this.resetForms();
+      this.router.navigate(['/sales']);
+    }, (error) => {
+      this.toast.error('Failed to create invoice, try again later', 'Error');
+    });
+    this.productRequests.forEach((productRequest) => {
+      this.salesService.addProductToInvoice(this.invoiceNumber, productRequest).subscribe((response) => {
+      }, (error) => {
+        this.toast.error('Failed to create invoice, try again later', 'Error');
+      });
+    });
+  }
 
-  test() {
-    console.log(this.invoiceForm.statusCode)
+  isFormValid(): void {
+    if (this.totalPrice === -1) {
+      this.toast.error('Remember to click on calculate price', 'Error');
+    }
+    if (this.subTotalWithVat === -1) {
+      this.toast.error('Remember to click on calculate price', 'Error');
+    }
+    if (this.subTotalWithoutVat === -1) {
+      this.toast.error('Remember to click on calculate price', 'Error');
+    }
+    if (this.vatPrice === -1) {
+      this.toast.error('Remember to click on calculate price', 'Error');
+    }
+    if(this.selectedContact.value === undefined) {
+      this.toast.error('Remember to choose a contact', 'Error');
+    }
+    if (this.productRequests.length > 0) {
+      this.productRequests.forEach((productRequest) => {
+        if (productRequest.productUnit === null) {
+          this.toast.error('Remember to choose a unit', 'Error');
+        }
+      });
+    }
+  }
+
+  resetForms() {
+    this.productRequests = [];
+    this.chosenProducts = [];
+    this.invoiceForm = {
+      invoiceNumber: 0,
+      invoiceComment: '',
+      invoiceTitle: 'Invoice',
+      invoiceDate: '',
+      subTotal: 0,
+      total: 0,
+      statusCode: 0,
+      EditedBy: '',
+      contactId: 0
+    }
+    this.subTotalWithoutVat = -1;
+    this.subTotalWithVat = -1;
+    this.vatPrice = -1;
+    this.totalPrice = -1;
   }
 }

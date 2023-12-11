@@ -5,7 +5,7 @@ export interface InvoiceFillRequest {
   invoiceNumber: number,
   invoiceComment: string,
   invoiceTitle: string,
-  invoiceDate: Date,
+  invoiceDate: string,
   subTotal: number,
   total: number,
   statusCode: number,

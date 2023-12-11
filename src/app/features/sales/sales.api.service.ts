@@ -14,7 +14,7 @@ import {AuthService} from "../../core/auth/auth.service";
 export class SalesApiService {
   private token = this.authService.getToken();
   private INVOICE_URL = API_URL + 'invoice'
-  private PRODUCT_TO_SALE_URL = API_URL + 'product-to-Sale'
+  private PRODUCT_TO_SALE_URL = API_URL + 'product-to-sale'
 
   constructor(private http: HttpClient,
               private authService: AuthService) {
