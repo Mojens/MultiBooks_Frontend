@@ -22,6 +22,8 @@ import {ToastrModule} from "ngx-toastr";
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {TeamManagementApiService} from "./features/team-management/team-management.api.service";
+import {ConfirmationService} from "primeng/api";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 
 
@@ -29,9 +31,9 @@ import {TeamManagementApiService} from "./features/team-management/team-manageme
   imports: [BrowserModule, HttpClientModule, FormsModule, ChartModule, SidebarModule,
     DividerModule, RippleModule, TooltipModule, ToastrModule.forRoot(), ScrollTopModule,
     ButtonModule, BrowserAnimationsModule, MatStepperModule, MatFormFieldModule, ReactiveFormsModule,
-    RouterModule.forRoot(routes), FontAwesomeModule, ReactiveFormsModule],
+    RouterModule.forRoot(routes), FontAwesomeModule, ReactiveFormsModule, ConfirmDialogModule],
   declarations: [AppComponent, LoginComponent, DashboardComponent, RegisterComponent],
-  providers: [AuthService, TeamManagementApiService],
+  providers: [AuthService, TeamManagementApiService, ConfirmationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

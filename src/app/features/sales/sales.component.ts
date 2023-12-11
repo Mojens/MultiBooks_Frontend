@@ -8,10 +8,8 @@ import {TeamManagementApiService} from "../team-management/team-management.api.s
 import {InvoiceResponse} from "../../models/Invoice/invoice.models";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
-import {ConfirmationService, SharedModule} from "primeng/api";
+import {ConfirmationService, SortEvent} from "primeng/api";
 import {TableModule} from "primeng/table";
-import {TooltipModule} from "primeng/tooltip";
-import {FormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {ToastrService} from "ngx-toastr";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
@@ -58,7 +56,6 @@ export class SalesComponent implements OnInit {
   getInvoices(currentPage: number, rows: number) {
     this.salesService.getInvoices(this.currentBusinessTeamCVRNumber, currentPage, rows).subscribe((response: any) => {
       this.invoices = response.data.content;
-      console.log(response)
       this.totalRecords = response.data.totalElements;
     });
   }
@@ -93,10 +90,10 @@ export class SalesComponent implements OnInit {
       }
     });
   }
+
   onLazyLoad(event: any): void {
     this.currentPage = event.first / event.rows;
     this.getInvoices(this.currentPage, event.rows);
   }
-
 
 }

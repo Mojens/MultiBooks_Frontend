@@ -18,6 +18,7 @@ import {ProductComponent} from "./features/sales/product/product.component";
 import {CreateSalesComponent} from "./features/sales/create-sales/create-sales.component";
 import {CreateProductComponent} from "./features/sales/product/create-product/create-product.component";
 import {EditProductComponent} from "./features/sales/product/edit-product/edit-product.component";
+import {CanDeactivateCreateInvoiceGuard} from "./features/sales/create-sales/CanDeactivateCreateInvoiceGuard";
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -37,7 +38,8 @@ export const routes: Routes = [
   { path: 'sales/product',component: ProductComponent, canActivate: [AuthGuard] },
   { path: 'sales/product/create', component: CreateProductComponent, canActivate: [AuthGuard] },
   { path: 'sales/product/edit/:productId', component: EditProductComponent, canActivate: [AuthGuard] },
-  { path: 'sales/create/:invoiceId', component: CreateSalesComponent, canActivate: [AuthGuard] },
+  { path: 'sales/create/:invoiceId', component: CreateSalesComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateCreateInvoiceGuard] },
+
 
 
 

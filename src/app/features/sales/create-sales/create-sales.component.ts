@@ -23,12 +23,13 @@ import {ToastrService} from "ngx-toastr";
 import {ProductToSaleRequest} from "../../../models/ProductToSale/productToSale.models";
 import {TooltipModule} from "primeng/tooltip";
 import {Validations} from "../../../@shared/validations";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @Component({
   selector: 'app-create-sales',
   standalone: true,
   providers: [DatePipe, MessageService, ConfirmationService],
-  imports: [CommonModule, FontAwesomeModule, BreadcrumbModule, DropdownModule, FormsModule, CalendarModule, DialogModule, PickListModule, TooltipModule],
+  imports: [CommonModule, FontAwesomeModule, BreadcrumbModule, DropdownModule, FormsModule, CalendarModule, DialogModule, PickListModule, TooltipModule, ConfirmDialogModule],
   templateUrl: './create-sales.component.html',
   styleUrl: './create-sales.component.css'
 })
@@ -93,6 +94,11 @@ export class CreateSalesComponent implements OnInit {
     this.items = [{label: 'Sales', routerLink: '/sales'}, {label: 'Create sale', routerLink: '/sales/create'}];
     this.getContacts();
     this.getProducts();
+  }
+
+  hasUnsavedChanges(): boolean {
+
+    return true;
   }
 
   getContacts() {
