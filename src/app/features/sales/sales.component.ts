@@ -96,4 +96,9 @@ export class SalesComponent implements OnInit {
     this.currentPage = event.first / event.rows;
     this.getInvoices(this.currentPage, event.rows);
   }
+
+  navigateToInvoice(invoiceNumber: number) {
+    this.route.navigate(['sales/invoice/', invoiceNumber]);
+  }
+
 }

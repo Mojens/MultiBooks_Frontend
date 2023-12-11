@@ -18,6 +18,7 @@ export interface InvoiceResponse {
   invoiceComment: string,
   invoiceTitle: string,
   invoiceDate: Date,
+  createdDate: Date,
   subTotal: number,
   subTotalWithVat: number,
   total: number,

@@ -41,6 +41,8 @@ export class CreateSalesComponent implements OnInit {
   invoiceNumber: number = 0;
   showAddProductDialog: boolean = false;
 
+  hasChanges: boolean = false;
+
   unitOptions: any[] = [];
 
   selectedStatus: number = 0;
@@ -92,13 +94,11 @@ export class CreateSalesComponent implements OnInit {
     this.items = [{label: 'Sales', routerLink: '/sales'}, {label: 'Create sale', routerLink: '/sales/create'}];
     this.getContacts();
     this.getProducts();
+    this.hasChanges = true;
   }
 
   hasUnsavedChanges(): boolean {
     if (this.productRequests.length > 0) {
-      return true;
-    }
-    if (this.invoiceForm.invoiceTitle !== '') {
       return true;
     }
     if (this.subTotalWithVat !== -1) {
@@ -111,6 +111,9 @@ export class CreateSalesComponent implements OnInit {
       return true;
     }
     if (this.totalPrice !== -1) {
+      return true;
+    }
+    if (this.hasChanges) {
       return true;
     }
     return false;
@@ -342,7 +345,7 @@ export class CreateSalesComponent implements OnInit {
     if (this.vatPrice === -1) {
       this.toast.error('Remember to click on calculate price', 'Error');
     }
-    if(this.selectedContact.value === undefined) {
+    if (this.selectedContact.value === undefined) {
       this.toast.error('Remember to choose a contact', 'Error');
     }
     if (this.productRequests.length > 0) {

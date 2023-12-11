@@ -107,7 +107,7 @@
         <td class="text-center border p-2">
 
           <button pButton pRipple type="button" icon="pi pi-eye" class="p-button-text p-button-lg text-blue-500"
-                  pTooltip="{{ 'See invoice' }}" tooltipPosition="top" >
+                  pTooltip="{{ 'See invoice' }}" tooltipPosition="top" (click)="navigateToInvoice(invoice.invoiceNumber)">
           </button>
 
           <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-text p-button-lg text-yellow-500 hidden"
