@@ -28,7 +28,10 @@ export class RegisterComponent implements OnInit {
     country: '',
     phoneNumber: '',
     website: '',
-    companyEmail: ''
+    companyEmail: '',
+    accNumber: '',
+    regNumber: 0,
+    bankName: ''
   };
 
 

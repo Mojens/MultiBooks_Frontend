@@ -319,6 +319,7 @@ export class CreateSalesComponent implements OnInit {
     }
     this.salesService.fillInvoice(invoiceRequest).subscribe((response) => {
       this.toast.success('Invoice created', 'Success');
+      this.hasChanges = false;
       this.resetForms();
       this.router.navigate(['/sales']);
     }, (error) => {

@@ -43,4 +43,11 @@ export class Variables {
     { label: '9000 - Bank interest', value: '9000 - Bank interest' },
     { label: '9010 - Various interest income', value: '9010 - Various interest income' }
   ];
+
+  static paymentMethodOptions = [
+    { label: 'The invoice is paid', value:'The invoice is paid' },
+    { label:'Current month',value: 'Current month' },
+    { label:'Netto (Net)',value: 'Netto (Net)' },
+    { label:'Netto cash (Net cash)',value: 'Netto cash (Net cash)' }
+  ]
 }

@@ -14,6 +14,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {ToastrService} from "ngx-toastr";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {BreadcrumbModule} from "primeng/breadcrumb";
+import {Validations} from "../../@shared/validations";
 
 @Component({
   selector: 'app-sales',
@@ -101,4 +102,6 @@ export class SalesComponent implements OnInit {
     this.route.navigate(['sales/invoice/', invoiceNumber]);
   }
 
+  protected readonly Validations = Validations;
+  protected readonly Number = Number;
 }

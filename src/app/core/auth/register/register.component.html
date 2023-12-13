@@ -110,6 +110,21 @@
           <input type="url" id="website" name="email" [(ngModel)]="formData.website" class="w-full px-3 py-2 border rounded-lg shadow-sm">
         </div>
 
+        <div class="mb-4">
+          <label for="regNumber" class="block text-gray-700 font-bold mb-2">Registration number</label>
+          <input type="number" id="regNumber" name="regNumber" [(ngModel)]="formData.regNumber" class="w-full px-3 py-2 border rounded-lg shadow-sm">
+        </div>
+
+        <div class="mb-4">
+          <label for="accNumber" class="block text-gray-700 font-bold mb-2">Account number</label>
+          <input type="text" id="accNumber" name="accNumber" [(ngModel)]="formData.accNumber" class="w-full px-3 py-2 border rounded-lg shadow-sm">
+        </div>
+
+        <div class="mb-4">
+          <label for="bankName" class="block text-gray-700 font-bold mb-2">Bank name</label>
+          <input type="text" id="bankName" name="bankName" [(ngModel)]="formData.bankName" class="w-full px-3 py-2 border rounded-lg shadow-sm">
+        </div>
+
       </div>
 
       <div *ngIf="step3" class="p-4 bg-white rounded-lg shadow mb-4">

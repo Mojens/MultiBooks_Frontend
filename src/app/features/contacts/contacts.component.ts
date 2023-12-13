@@ -18,6 +18,8 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import DOMPurify from 'dompurify';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import {InputTextModule} from "primeng/inputtext";
+import {Validations} from "../../@shared/validations";
+import {Variables} from "../../@shared/variables";
 
 @Component({
   selector: 'app-contacts',
@@ -93,12 +95,7 @@ export class ContactsComponent implements OnInit {
   ngOnInit(): void {
     this.currentBusinessTeamCVRNumber = Number(this.teamService.getCurrentBusinessTeam().cvrnumber);
     this.getContacts(this.currentPage, this.rows);
-    this.paymentMethods = [
-      { label: 'The invoice is paid', value:'The invoice is paid' },
-      { label:'Current month',value: 'Current month' },
-      { label:'Netto (Net)',value: 'Netto (Net)' },
-      { label:'Netto cash (Net cash)',value: 'Netto cash (Net cash)' }
-    ]
+    this.paymentMethods = Variables.paymentMethodOptions;
   }
 
   getContacts(page: number, size: number) {

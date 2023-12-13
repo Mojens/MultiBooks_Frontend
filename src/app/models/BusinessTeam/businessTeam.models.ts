@@ -10,6 +10,9 @@ export interface BusinessTeamResponse {
   email: string;
   website: string;
   ownerEmail: string;
+  accNumber: string;
+  regNumber: number;
+  bankName: string;
 }
 
 export interface BusinessTeamRequest {
@@ -24,4 +27,7 @@ export interface BusinessTeamRequest {
   email: string;
   website: string;
   ownerEmail: string;
+  accNumber: string;
+  regNumber: number;
+  bankName: string;
 }

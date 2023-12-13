@@ -1,4 +1,9 @@
+type Translation = {
+  [key: string]: string;
+};
+
 export class Validations {
+
   static isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -19,7 +24,25 @@ export class Validations {
   }
 
   static formatCurrency(amount: number): string {
-    return amount.toFixed(2).replace(/\./g, '|').replace(/\B(?=(\d{3})+\b)/g, ',').replace(/\|/g, '.');
+    const formattedAmount = new Intl.NumberFormat('de-DE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amount);
+
+    return formattedAmount;
+  }
+
+   static translateTerms(value: string): string {
+    const danishTranslations: Translation = {
+      'The invoice is paid': 'Fakturaen er betalt',
+      'Current month': 'Nuværende måned',
+      'Netto (Net)': 'Netto (Net)',
+      'Netto cash (Net cash)': 'Netto kontant (Netto kontant)'
+    };
+    if (danishTranslations.hasOwnProperty(value)) {
+      return danishTranslations[value];
+    }
+    return value;
   }
 
 }

@@ -35,7 +35,10 @@ export class TeamManagementComponent implements OnInit {
     country: '',
     phoneNumber: '',
     website: '',
-    companyEmail: ''
+    companyEmail: '',
+    accNumber: '',
+    regNumber: 0,
+    bankName: ''
   };
 
   constructor(private route: ActivatedRoute,

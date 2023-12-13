@@ -101,7 +101,7 @@
           {{ invoice.invoiceDate | date:'dd-MM-yyyy' }}
         </td>
         <td class="text-center border p-2">
-          {{ invoice.total }}
+          {{ Validations.formatCurrency(Number(invoice.total*1.25)) }}
         </td>
         <td class="text-center border p-2">{{ invoice.status }}</td>
         <td class="text-center border p-2">

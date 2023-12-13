@@ -1,181 +1,164 @@
-<p-menu [model]="items"></p-menu>
-<section class="py-20 bg-black">
+<div class="flex justify-items-center mb-4">
+  <h1 class="text-2xl font-bold">
+    <fa-icon [icon]="faFileInvoiceDollar"></fa-icon>
+    Invoice number: {{ invoice.invoiceNumber }}
+  </h1>
+</div>
+<p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
+<section class="py-15">
   <div class="max-w-5xl mx-auto py-16 bg-white">
     <article class="overflow-hidden">
-      <div class="bg-[white] rounded-b-md">
-        <div class="p-9">
-          <div class="space-y-6 text-slate-700">
-            <p class="text-xl font-extrabold tracking-tight uppercase font-body">
-              Unwrapped.design
-            </p>
+      <p-menubar [model]="menuItems"></p-menubar>
+      <div class="border border-slate-500 rounded-md mt-1" id="invoice_print">
+        <div class="bg-[white] rounded-b-md">
+          <div class="p-9">
+            <div class="space-y-6 text-slate-700">
+              <p class="text-xl font-extrabold tracking-tight uppercase font-body">
+                {{ currentBusinessObject.companyName }}
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="p-9">
-          <div class="flex w-full">
-            <div class="grid grid-cols-4 gap-12">
-              <div class="text-sm font-light text-slate-500">
-                <p class="text-sm font-normal text-slate-700">
-                  Invoice Detail:
-                </p>
-                <p>Unwrapped</p>
-                <p>Fake Street 123</p>
-                <p>San Javier</p>
-                <p>CA 1234</p>
-              </div>
-              <div class="text-sm font-light text-slate-500">
-                <p class="text-sm font-normal text-slate-700">Billed To</p>
-                <p>The Boring Company</p>
-                <p>Tesla Street 007</p>
-                <p>Frisco</p>
-                <p>CA 0000</p>
-              </div>
-              <div class="text-sm font-light text-slate-500">
-                <p class="text-sm font-normal text-slate-700">Invoice Number</p>
-                <p>000000</p>
+          <div class="p-9">
+            <div class="flex w-full">
+              <div class="grid grid-cols-4 gap-12">
+                <div class="text-sm font-light text-slate-500">
+                  <p class="text-sm font-normal text-slate-700">
+                    Faktura fra:
+                  </p>
+                  <p>{{ currentBusinessObject.companyName }}</p>
+                  <p>{{ currentBusinessObject.address }}</p>
+                  <p>{{ currentBusinessObject.city + ', ' + currentBusinessObject.zipCode }}</p>
+                  <p>{{ currentBusinessObject.country }}</p>
+                  <p>{{ 'CVR.nr. ' + currentBusinessObject.cvrnumber }}</p>
+                </div>
+                <div class="text-sm font-light text-slate-500">
+                  <p class="text-sm font-normal text-slate-700">Faktura til:</p>
+                  <p>{{ invoice.contact.companyName }}</p>
+                  <p>{{ invoice.contact.companyAddress }}</p>
+                  <p>{{ invoice.contact.companyCity + ', ' + invoice.contact.companyZipCode }}</p>
+                  <p>{{ invoice.contact.companyCountry }}</p>
+                  <p>{{ invoice.contact.attentionPerson }}</p>
+                  <p>{{ 'CVR.nr. ' + invoice.contact.cvrnumber }}</p>
+                </div>
+                <div class="text-sm font-light text-slate-500">
+                  <p class="text-sm font-normal text-slate-700">FAKTURA NR.</p>
+                  <p>{{ invoice.invoiceNumber }}</p>
 
-                <p class="mt-2 text-sm font-normal text-slate-700">
-                  Date of Issue
-                </p>
-                <p>00.00.00</p>
-              </div>
-              <div class="text-sm font-light text-slate-500">
-                <p class="text-sm font-normal text-slate-700">Terms</p>
-                <p>0 Days</p>
+                  <p class="mt-2 text-sm font-normal text-slate-700">
+                    OPRETTET:
+                  </p>
+                  <p>{{ invoice.createdDate | date:'dd-MM-yyyy' }}</p>
+                </div>
+                <div class="text-sm font-light text-slate-500">
+                  <p class="text-sm font-normal text-slate-700">Vilkår:</p>
+                  <p>{{ invoice.contact.paymentTermsDays + ' Dage' }}</p>
 
-                <p class="mt-2 text-sm font-normal text-slate-700">Due</p>
-                <p>00.00.00</p>
+                  <p class="mt-2 text-sm font-normal text-slate-700">DATO:</p>
+                  <p>{{ invoice.invoiceDate | date:'dd-MM-yyyy' }}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="p-9">
-          <div class="flex flex-col mx-0 mt-8">
-            <table class="min-w-full divide-y divide-slate-500">
-              <thead>
-              <tr>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-normal text-slate-700 sm:pl-6 md:pl-0">
-                  Description
-                </th>
-                <th scope="col" class="hidden py-3.5 px-3 text-right text-sm font-normal text-slate-700 sm:table-cell">
-                  Quantity
-                </th>
-                <th scope="col" class="hidden py-3.5 px-3 text-right text-sm font-normal text-slate-700 sm:table-cell">
-                  Rate
-                </th>
-                <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-normal text-slate-700 sm:pr-6 md:pr-0">
-                  Amount
-                </th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr class="border-b border-slate-200">
-                <td class="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
-                  <div class="font-medium text-slate-700">Tesla Truck</div>
-                  <div class="mt-0.5 text-slate-500 sm:hidden">
-                    1 unit at $0.00
-                  </div>
-                </td>
-                <td class="hidden px-3 py-4 text-sm text-right text-slate-500 sm:table-cell">
-                  48
-                </td>
-                <td class="hidden px-3 py-4 text-sm text-right text-slate-500 sm:table-cell">
-                  $0.00
-                </td>
-                <td class="py-4 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
-                  $0.00
-                </td>
-              </tr>
-              <tr class="border-b border-slate-200">
-                <td class="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
-                  <div class="font-medium text-slate-700">
-                    Tesla Charging Station
-                  </div>
-                  <div class="mt-0.5 text-slate-500 sm:hidden">
-                    1 unit at $75.00
-                  </div>
-                </td>
-                <td class="hidden px-3 py-4 text-sm text-right text-slate-500 sm:table-cell">
-                  4
-                </td>
-                <td class="hidden px-3 py-4 text-sm text-right text-slate-500 sm:table-cell">
-                  $0.00
-                </td>
-                <td class="py-4 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
-                  $0.00
-                </td>
-              </tr>
-
-              <!-- Here you can write more products/tasks that you want to charge for-->
-              </tbody>
-              <tfoot>
-              <tr>
-                <th scope="row" colspan="3"
-                    class="hidden pt-6 pl-6 pr-3 text-sm font-light text-right text-slate-500 sm:table-cell md:pl-0">
-                  Subtotal
-                </th>
-                <th scope="row" class="pt-6 pl-4 pr-3 text-sm font-light text-left text-slate-500 sm:hidden">
-                  Subtotal
-                </th>
-                <td class="pt-6 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
-                  $0.00
-                </td>
-              </tr>
-              <tr>
-                <th scope="row" colspan="3"
-                    class="hidden pt-6 pl-6 pr-3 text-sm font-light text-right text-slate-500 sm:table-cell md:pl-0">
-                  Discount
-                </th>
-                <th scope="row" class="pt-6 pl-4 pr-3 text-sm font-light text-left text-slate-500 sm:hidden">
-                  Discount
-                </th>
-                <td class="pt-6 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
-                  $0.00
-                </td>
-              </tr>
-              <tr>
-                <th scope="row" colspan="3"
-                    class="hidden pt-4 pl-6 pr-3 text-sm font-light text-right text-slate-500 sm:table-cell md:pl-0">
-                  Tax
-                </th>
-                <th scope="row" class="pt-4 pl-4 pr-3 text-sm font-light text-left text-slate-500 sm:hidden">
-                  Tax
-                </th>
-                <td class="pt-4 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
-                  $0.00
-                </td>
-              </tr>
-              <tr>
-                <th scope="row" colspan="3"
-                    class="hidden pt-4 pl-6 pr-3 text-sm font-normal text-right text-slate-700 sm:table-cell md:pl-0">
-                  Total
-                </th>
-                <th scope="row" class="pt-4 pl-4 pr-3 text-sm font-normal text-left text-slate-700 sm:hidden">
-                  Total
-                </th>
-                <td class="pt-4 pl-3 pr-4 text-sm font-normal text-right text-slate-700 sm:pr-6 md:pr-0">
-                  $0.00
-                </td>
-              </tr>
-              </tfoot>
-            </table>
+          <div class="p-9">
+            <div class="flex flex-col mx-0 mt-8">
+              <table class="min-w-full divide-y divide-slate-500">
+                <thead>
+                <tr>
+                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-normal text-slate-700 sm:pl-6 md:pl-0">
+                    Beskrivelse
+                  </th>
+                  <th scope="col"
+                      class="hidden py-3.5 px-3 text-right text-sm font-normal text-slate-700 sm:table-cell">
+                    Antal
+                  </th>
+                  <th scope="col"
+                      class="hidden py-3.5 px-3 text-right text-sm font-normal text-slate-700 sm:table-cell">
+                    Pris
+                  </th>
+                  <th scope="col"
+                      class="py-3.5 pl-3 pr-4 text-right text-sm font-normal text-slate-700 sm:pr-6 md:pr-0">
+                    Total
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="border-b border-slate-200" *ngFor="let productToSale of invoice.productToSale">
+                  <td class="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
+                    <div class="font-medium text-slate-700">
+                      {{ productToSale.product.productName }}
+                      <div class="text-xs text-slate-500">{{ productToSale.product.productDescription }}</div>
+                    </div>
+                  </td>
+                  <td class="hidden px-3 py-4 text-sm text-right text-slate-500 sm:table-cell">
+                    {{ productToSale.productAmount }}
+                  </td>
+                  <td class="hidden px-3 py-4 text-sm text-right text-slate-500 sm:table-cell">
+                    {{ Validations.formatCurrency(Number(productToSale.productPriceExclVAT-(productToSale.productPriceExclVAT/100)*productToSale.productDiscount)) }}
+                  </td>
+                  <td class="py-4 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
+                    {{ Validations.formatCurrency(Number(productToSale.productPriceAfterDiscount)) }}
+                  </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th scope="row" colspan="3"
+                      class="hidden pt-6 pl-6 pr-3 text-sm font-light text-right text-slate-500 sm:table-cell md:pl-0">
+                    Subtotal
+                  </th>
+                  <td class="pt-6 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
+                    {{ Validations.formatCurrency(Number(invoice.subTotalWithVat)) }}
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" colspan="3"
+                      class="hidden pt-6 pl-6 pr-3 text-sm font-light text-right text-slate-500 sm:table-cell md:pl-0">
+                    Momssats (%)
+                  </th>
+                  <td class="pt-6 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
+                    25%
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" colspan="3"
+                      class="hidden pt-4 pl-6 pr-3 text-sm font-light text-right text-slate-500 sm:table-cell md:pl-0">
+                    Momsbeløb
+                  </th>
+                  <td class="pt-4 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
+                    {{ Validations.formatCurrency(Number((invoice.total * 1.25) - invoice.total)) }}
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" colspan="3"
+                      class="hidden pt-4 pl-6 pr-3 text-sm font-normal text-right text-slate-700 sm:table-cell md:pl-0">
+                    I alt
+                  </th>
+                  <td class="pt-4 pl-3 pr-4 text-sm font-normal text-right text-slate-700 sm:pr-6 md:pr-0">
+                    {{ Validations.formatCurrency(Number(invoice.total * 1.25)) }}
+                  </td>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
           </div>
-        </div>
-
-        <div class="mt-48 p-9">
-          <div class="border-t pt-9 border-slate-200">
-            <div class="text-sm font-light text-slate-700">
-              <p>
-                Payment terms are 14 days. Please be aware that according to the
-                Late Payment of Unwrapped Debts Act 0000, freelancers are
-                entitled to claim a 00.00 late fee upon non-payment of debts
-                after this time, at which point a new invoice will be submitted
-                with the addition of this fee. If payment of the revised invoice
-                is not received within a further 14 days, additional interest
-                will be charged to the overdue account and a statutory rate of
-                8% plus Bank of England base of 0.5%, totalling 8.5%. Parties
-                cannot contract out of the Act’s provisions.
-              </p>
+          <div class="p-9" *ngIf="invoice.invoiceComment.length > 1">
+            <div class="text-sm font-light text-slate-500">
+              <p class="text-sm font-normal text-slate-700">Kommentar:</p>
+              <p>{{ invoice.invoiceComment }}</p>
+            </div>
+          </div>
+          <div class="mt-48 p-9">
+            <div class="border-t pt-9 border-slate-200">
+              <div class="text-sm font-light text-slate-700">
+                <p>
+                  Betalingsbetingelser: {{ Validations.translateTerms(invoice.contact.paymentTermsMethod) }} {{ invoice.contact.paymentTermsDays }}
+                  dage
+                  Beløbet bedes indbetales til vor bank: {{ currentBusinessObject.bankName }} /
+                  Reg.nr. {{ currentBusinessObject.regNumber }} Konto nr. {{ currentBusinessObject.accNumber }} Ved
+                  betaling efter forfald tilskrives der renter på 1,5% pr. påbegyndt måned.
+                </p>
+              </div>
             </div>
           </div>
         </div>
