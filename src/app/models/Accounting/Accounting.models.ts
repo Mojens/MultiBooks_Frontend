@@ -1,4 +1,5 @@
 import {ContactsResponse} from "../Contacts/contacts.models";
+import {BusinessTeamResponse} from "../BusinessTeam/businessTeam.models";
 
 export interface AccountingRecordRequest {
   id: number;
@@ -18,6 +19,7 @@ export interface AccountingRecordCashRequest {
   subTotalVat: number;
   subTotalNoVat: number;
   total: number;
+  businessTeamId: number;
 }
 
 export interface AccountingRecordCreditRequest {
@@ -30,6 +32,7 @@ export interface AccountingRecordCreditRequest {
   subTotalVat: number;
   subTotalNoVat: number;
   total: number;
+  businessTeamId: number;
 }
 
 export interface AccountingRecordResponse {
@@ -49,6 +52,7 @@ export interface AccountingRecordCashResponse {
   subTotalNoVat: number;
   total: number;
   accountingRecords: AccountingRecordResponse[];
+  businessTeam: BusinessTeamResponse;
 }
 
 export interface AccountingRecordCreditResponse {
@@ -60,6 +64,7 @@ export interface AccountingRecordCreditResponse {
   subTotalVat: number,
   subTotalNoVat: number,
   total: number,
+  businessTeam: BusinessTeamResponse,
   supplier: ContactsResponse,
   accountingRecords: AccountingRecordResponse[]
 }
