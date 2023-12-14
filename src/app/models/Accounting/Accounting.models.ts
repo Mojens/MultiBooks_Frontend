@@ -19,7 +19,7 @@ export interface AccountingRecordCashRequest {
   subTotalVat: number;
   subTotalNoVat: number;
   total: number;
-  businessTeamId: number;
+  businessTeamCVRNumber: number;
 }
 
 export interface AccountingRecordCreditRequest {
@@ -32,7 +32,7 @@ export interface AccountingRecordCreditRequest {
   subTotalVat: number;
   subTotalNoVat: number;
   total: number;
-  businessTeamId: number;
+  businessTeamCVRNumber: number;
 }
 
 export interface AccountingRecordResponse {
@@ -67,4 +67,9 @@ export interface AccountingRecordCreditResponse {
   businessTeam: BusinessTeamResponse,
   supplier: ContactsResponse,
   accountingRecords: AccountingRecordResponse[]
+}
+
+export interface GetAccountingRecordRequest {
+  accountingRecordCashId: number;
+  accountingRecordCreditId: number;
 }
