@@ -91,7 +91,7 @@ export class CreateSalesComponent implements OnInit {
     this.invoiceStatusOptions = Variables.invoiceStatusOptions;
     this.invoiceNumber = Number(this.route.snapshot.params['invoiceId'])
     this.currentBusinessTeamCVRNumber = Number(this.teamService.getCurrentBusinessTeam().cvrnumber);
-    this.items = [{label: 'Sales', routerLink: '/sales'}, {label: 'Create sale', routerLink: '/sales/create'}];
+    this.items = [{label: 'Sales', routerLink: '/sales'}, {label: 'Create sale', routerLink: `/sales/create/${this.invoiceNumber}`}];
     this.getContacts();
     this.getProducts();
     this.hasChanges = true;

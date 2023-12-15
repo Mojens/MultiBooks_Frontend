@@ -4,5 +4,40 @@
     Accounting
   </h1>
 </div>
-<hr class="my-4 border-black" />
+<hr class="my-4 border-black"/>
 
+<div class="mb-5">
+  <h2 class="text-xl font-semibold mb-2">Streamline Your Financial Management</h2>
+  <p>
+    Harness the efficiency of our accounting platform to enhance your financial management.
+    Designed for optimal accounting, it offers a streamlined approach for tracking transactions, managing budgets,
+    and producing detailed reports. Its intuitive design simplifies complex financial tasks, ensuring accuracy and
+    efficiency.
+    With all financial data integrated in one place, you get a clear, real-time view of your financial health,
+    supporting informed decisions.
+    This tool covers all aspects of accounting, from cash flow management to audit preparation, enabling strategic
+    financial planning and growth.
+    Strengthen your business's financial foundation with our powerful accounting solution.
+  </p>
+</div>
+<hr class="my-4 border-black-alpha-90 mb-2"/>
+<div class="flex justify-between mb-4">
+  <h2 class="text-xl font-semibold mb-2">Your uploaded purchases</h2>
+  <button pButton type="button" label="Add new purchase" icon="pi pi-plus" class="p-button-success"></button>
+</div>
+<p-tabView styleClass="tabview-custom">
+  <p-tabPanel>
+    <ng-template pTemplate="header">
+      <i class="pi pi-credit-card"></i>
+      <span>Credit</span>
+    </ng-template>
+    // Table
+  </p-tabPanel>
+  <p-tabPanel header="Header II">
+    <ng-template pTemplate="header">
+      <i class="pi pi-money-bill"></i>
+      <span>Cash</span>
+    </ng-template>
+   // Table
+  </p-tabPanel>
+</p-tabView>
