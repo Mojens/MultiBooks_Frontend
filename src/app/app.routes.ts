@@ -20,6 +20,13 @@ import {CreateProductComponent} from "./features/sales/product/create-product/cr
 import {EditProductComponent} from "./features/sales/product/edit-product/edit-product.component";
 import {CanDeactivateCreateInvoiceGuard} from "./features/sales/create-sales/CanDeactivateCreateInvoiceGuard";
 import {InvoiceDisplayComponent} from "./features/sales/invoice-display/invoice-display.component";
+import {AccountingCreateComponent} from "./features/accounting/accounting-create/accounting-create.component";
+import {
+  AccountingCreateCashComponent
+} from "./features/accounting/accounting-create/cash/accounting-create-cash.component";
+import {
+  AccountingCreateCreditComponent
+} from "./features/accounting/accounting-create/credit/accounting-create-credit.component";
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -27,6 +34,9 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'sales', component: SalesComponent, canActivate: [AuthGuard] },
   { path: 'accounting', component: AccountingComponent, canActivate: [AuthGuard] },
+  { path: 'accounting/create', component: AccountingCreateComponent, canActivate: [AuthGuard] },
+  { path: 'accounting/create/cash/:id', component: AccountingCreateCashComponent, canActivate: [AuthGuard] },
+  { path: 'accounting/create/credit/:id', component: AccountingCreateCreditComponent, canActivate: [AuthGuard] },
   { path: 'contacts', component: ContactsComponent, canActivate: [AuthGuard] },
   { path: 'taxes', component: TaxesComponent, canActivate: [AuthGuard] },
   { path: 'taxes/vat', component: VatComponent, canActivate: [AuthGuard] },

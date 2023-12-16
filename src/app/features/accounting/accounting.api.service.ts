@@ -56,8 +56,8 @@ export class AccountingApiService {
     return this.http.post<ApiResponse<any>>(createAccountingRecordCashUrl, request, this.httpOptions);
   }
 
-  getAccountingRecordCash(cvrNumber: number): Observable<ApiResponse<accountingModels.PagedResponse<accountingModels.AccountingRecordCashResponse>>> {
-    const getAccountingRecordCashUrl = `${this.ACCOUNTING_RECORD_CASH}/all/${cvrNumber}`;
+  getAccountingRecordCash(cvrNumber: number, page: number, size: number): Observable<ApiResponse<accountingModels.PagedResponse<accountingModels.AccountingRecordCashResponse>>> {
+    const getAccountingRecordCashUrl = `${this.ACCOUNTING_RECORD_CASH}/all/${cvrNumber}?page=${page}&size=${size}`;
     return this.http.get<ApiResponse<any>>(getAccountingRecordCashUrl, this.httpOptions);
   }
 
@@ -78,8 +78,8 @@ export class AccountingApiService {
 
   // ***************************************** AccountingRecordCredit *****************************************
 
-  getAccountingRecordCredit(cvrNumber: number): Observable<ApiResponse<accountingModels.PagedResponse<accountingModels.AccountingRecordCreditResponse>>> {
-    const getAccountingRecordCreditUrl = `${this.ACCOUNTING_RECORD_CREDIT}/all/${cvrNumber}`;
+  getAccountingRecordCredit(cvrNumber: number, page: number, size: number): Observable<ApiResponse<accountingModels.PagedResponse<accountingModels.AccountingRecordCreditResponse>>> {
+    const getAccountingRecordCreditUrl = `${this.ACCOUNTING_RECORD_CREDIT}/all/${cvrNumber}?page=${page}&size=${size}`;
     return this.http.get<ApiResponse<any>>(getAccountingRecordCreditUrl, this.httpOptions);
   }
 

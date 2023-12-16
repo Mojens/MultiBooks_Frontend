@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-error',
@@ -10,4 +11,10 @@ import { CommonModule } from '@angular/common';
 })
 export class ErrorComponent {
 
+  constructor(private route: Router,) {
+  }
+
+  navigateToDashboard() {
+    this.route.navigate(['dashboard']);
+  }
 }

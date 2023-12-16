@@ -13,7 +13,7 @@ export interface AccountingRecordRequest {
 
 export interface AccountingRecordCashRequest {
   id: number;
-  documentDate: Date;
+  documentDate: string;
   holdings: string;
   boughtFrom: string;
   subTotalVat: number;
@@ -24,8 +24,8 @@ export interface AccountingRecordCashRequest {
 
 export interface AccountingRecordCreditRequest {
   id: number;
-  documentDate: Date;
-  dueDate: Date;
+  documentDate: string;
+  dueDate: string;
   valuta: string;
   supplierId: number;
   boughtFrom: string;

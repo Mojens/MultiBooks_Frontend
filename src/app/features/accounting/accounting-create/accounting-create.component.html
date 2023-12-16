@@ -1,1 +1,45 @@
-<p>accounting-create works!</p>
+<div class="flex justify-items-center mb-4">
+  <h1 class="text-2xl font-bold">
+    <fa-icon [icon]="faFileInvoiceDollar"></fa-icon>
+    Register Purchase
+  </h1>
+</div>
+<hr class="my-4 border-black"/>
+<p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
+<hr class="my-4"/>
+
+<div class="card flex justify-content-center mb-10">
+  <p-fieldset legend="Cash purchase" [toggleable]="true">
+    <p>
+      Registering a cash purchase requires you to fill in details about the transaction completed with immediate payment.
+      This includes the date of the document, the entity or person from whom you bought the items (Bought From),
+      and the financial details of the transaction. These financial details comprise the subtotal with VAT, the subtotal without VAT,
+      and the total amount of the purchase. This process is essential for keeping accurate records of all cash-based transactions.
+    </p>
+    <div class="flex flex-col items-center mb-10 mt-10">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+              (click)="navigateToCash()">
+        Register Cash Purchase
+      </button>
+    </div>
+  </p-fieldset>
+</div>
+
+<div class="card flex justify-content-center">
+  <p-fieldset legend="Credit purchase" [toggleable]="true">
+    <p>
+      When registering a credit purchase, you'll need to provide details about the transaction made on credit terms.
+      This includes the date of the document, the due date for payment, the currency used (Valuta), and the supplier.
+      You also need to fill in the entity or person from whom the items were bought (Bought From),
+      along with the financial details such as the subtotal with VAT, the subtotal without VAT, and the total amount of the purchase.
+      Recording credit purchases accurately is crucial for managing payables and understanding your financial obligations.
+    </p>
+    <div class="flex flex-col items-center mb-10 mt-10">
+      <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              (click)="navigateToCredit()">
+        Register Credit Purchase
+      </button>
+    </div>
+  </p-fieldset>
+
+</div>
