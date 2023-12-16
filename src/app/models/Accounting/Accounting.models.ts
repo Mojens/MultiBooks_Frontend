@@ -2,7 +2,7 @@ import {ContactsResponse} from "../Contacts/contacts.models";
 import {BusinessTeamResponse} from "../BusinessTeam/businessTeam.models";
 
 export interface AccountingRecordRequest {
-  id: number;
+  id?: number;
   priceInclVat: number;
   vat: number;
   description: string;

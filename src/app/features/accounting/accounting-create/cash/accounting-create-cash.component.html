@@ -6,38 +6,129 @@
 </div>
 <hr class="my-4 border-black"/>
 <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-2 bg-white shadow-lg rounded-lg p-4 max-w-4xl mx-auto mb-5 mt-5">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-2 bg-white shadow-lg rounded-lg p-4 max-w-4xl mx-auto mb-20 mt-5">
   <div class="flex flex-col mb-4 col-span-2">
     <h4 class="text-lg font-bold mb-2">Purchase info</h4>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
       <div class="flex flex-col mb-4">
         <label for="date" class="block text-gray-700 font-bold mb-2">Date *</label>
-        <input type="text" id="date" name="companyName" required
-               class="w-full px-3 py-2 border rounded-lg shadow-sm">
+        <p-calendar
+          [(ngModel)]="formData.documentDate"
+          dateFormat="dd/mm/yy"
+          [showIcon]="true"
+          [readonlyInput]="true"
+          id="date"></p-calendar>
       </div>
       <div class="flex flex-col mb-4">
-        <label for="companyName" class="block text-gray-700 font-bold mb-2">Bought from *</label>
-        <input type="text" id="companyName" name="companyName" required
-               class="w-full px-3 py-2 border rounded-lg shadow-sm">
+        <label for="boughtFrom" class="block text-gray-700 font-bold mb-2">Bought from *</label>
+        <p-dropdown [options]="Variables.boughtFromOptions"
+                    [(ngModel)]="formData.boughtFrom"
+                    optionValue="value"
+                    id="boughtFrom"
+                    class="ml-2" placeholder="Select a country"></p-dropdown>
       </div>
       <div class="flex flex-col mb-4">
-        <label for="companyName" class="block text-gray-700 font-bold mb-2">Holdings *</label>
-        <input type="text" id="companyName" name="companyName" required
-               class="w-full px-3 py-2 border rounded-lg shadow-sm">
+        <label for="holdings" class="block text-gray-700 font-bold mb-2">Holdings *</label>
+        <p-dropdown [options]="Variables.holdingOptions"
+                    [(ngModel)]="formData.holdings"
+                    optionLabel="label"
+                    [filter]="true"
+                    filterBy="value"
+                    id="holdings"
+                    class="ml-2" placeholder="Select a holding"></p-dropdown>
       </div>
     </div>
     <hr class="my-4 border-black"/>
   </div>
-  <div class="flex flex-col mb-4 col-span-2">
+  <div class="flex flex-col mb-20 col-span-2">
     <h4 class="text-lg font-bold mb-2">Product info</h4>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+    <hr class="my-4"/>
+    <div *ngIf="recordRequests.length <= 0"  class="text-center py-4">
+      <p class="text-lg"><b>No products added.</b> Please add new products to display here.</p>
+    </div>
+    <div *ngFor="let request of recordRequests, let i = index">
+      <div class="flex justify-between mb-4">
+        <h2 class="text-sm font-semibold mb-2">Product: {{ i + 1 }}</h2>
+        <button pButton type="button" label="Remove" icon="pi pi-times" class="bg-red-500 p-1"
+                (click)="removeRecordRequest(i)"></button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div class="flex flex-col mb-4">
+          <label for="priceInclVat" class="block text-gray-700 font-bold mb-2">Price incl. vat</label>
+          <input type="number" id="priceInclVat" name="priceInclVat"
+                 min="0" value="0"
+                 class="w-full px-3 py-2 border rounded-lg shadow-sm"
+                 [(ngModel)]="recordRequests[i].priceInclVat"
+                 (change)="updateVat(i)"
+          >
+        </div>
+        <div class="flex flex-col mb-4">
+          <label for="vat" class="block text-gray-700 font-bold mb-2">Vat</label>
+          <input type="number" id="vat" name="vat"
+                 min="0" value="0" [(ngModel)]="recordRequests[i].vat"
+                 class="w-full px-3 py-2 border rounded-lg shadow-sm"
+                 [disabled]="true"
+          >
+        </div>
+      </div>
+      <div class="mb-4">
+        <label for="description" class="block text-gray-700 font-bold mb-2">Description, what you have purchased – for example,
+          "varekøb", "blomster" max 1 product pr. line *</label>
+        <input type="text" id="description" name="vat"
+               [(ngModel)]="recordRequests[i].description"
+               class="w-full px-3 py-2 border rounded-lg shadow-sm"
+               placeholder="computerudstyr, varekøb, blomster, etc."
+               [disabled]="false"
+        >
+      </div>
+      <div>
+        <label for="account" class="block text-gray-700 font-bold mb-2">Account</label>
+        <p-dropdown [options]="Variables.accountOptionsForRecords" [(ngModel)]="recordRequests[i].account"
+                    placeholder="Select an account" [group]="true" id="account" [filter]="true"
+                    filterBy="label" optionLabel="label">
+          <ng-template let-group pTemplate="group">
+            <div class="flex align-items-center">
+              <span>{{ group.label }}</span>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
 
+      <hr class="my-4"/>
+    </div>
+    <div class="flex justify-between mb-4">
+      <h2 class="text-xl font-semibold mb-2"></h2>
+      <button pButton type="button" label="Add new product" icon="pi pi-plus" class="bg-blue-500 p-3"
+              (click)="addNewRecordRequest()"></button>
     </div>
     <hr class="my-4 border-black"/>
-  </div>
-  <div class="flex flex-col mb-4 col-span-2">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div class="flex flex-col mb-4" *ngIf="formData.boughtFrom">
+        <h2 class="text-xl font-bold mb-2">Bought from</h2>
+        <div class="inline-flex items-center">
+          <img
+            src="{{'https://flagcdn.com/16x12/'+getCountryCode(formData.boughtFrom)+'.png'}}"
+            class="mr-2 w-4 h-3 object-contain"
+          />
+          <span class="font-semibold">
+            {{ formData.boughtFrom }}
+          </span>
+        </div>
+      </div>
+
+      <div class="flex flex-col mb-4" *ngIf="formData.subTotalVat !== 0">
+        <h2 class="text-xl font-bold mb-2">Subtotal with VAT</h2>
+        <span class="font-semibold">{{ formData.subTotalVat | currency:'DKK' }}</span>
+      </div>
+      <div class="flex flex-col mb-4" *ngIf="formData.subTotalNoVat !== 0">
+        <h2 class="text-xl font-bold mb-2">Subtotal with no VAT</h2>
+        <span class="font-semibold">{{ formData.subTotalNoVat | currency:'DKK' }}</span>
+      </div>
+      <div class="flex flex-col mb-4" *ngIf="formData.total !== 0">
+        <h2 class="text-xl font-bold mb-2">Total</h2>
+        <span class="font-semibold">{{ formData.total | currency:'DKK' }}</span>
+      </div>
     </div>
   </div>
 </div>
