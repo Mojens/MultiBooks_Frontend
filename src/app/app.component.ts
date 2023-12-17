@@ -87,10 +87,6 @@ export class AppComponent implements OnInit {
     this.router.navigate(["/contacts"]);
   }
 
-  navigateToTaxes() {
-    this.router.navigate(["/taxes"]);
-  }
-
   navigateToSettings() {
     this.router.navigate(["/settings"]);
   }

@@ -5,9 +5,6 @@ import {ErrorComponent} from "./core/error/error.component";
 import {SalesComponent} from "./features/sales/sales.component";
 import {AccountingComponent} from "./features/accounting/accounting.component";
 import {ContactsComponent} from "./features/contacts/contacts.component";
-import {TaxesComponent} from "./features/taxes/taxes.component";
-import {VatComponent} from "./features/taxes/vat/vat.component";
-import {GovtaxComponent} from "./features/taxes/govtax/govtax.component";
 import {RegisterComponent} from "./core/auth/register/register.component";
 import {ForgotPwdComponent} from "./core/auth/forgot-pwd/forgot-pwd.component";
 import { AuthGuard } from "./core/auth/authGuard";
@@ -38,9 +35,6 @@ export const routes: Routes = [
   { path: 'accounting/create/cash/:id', component: AccountingCreateCashComponent, canActivate: [AuthGuard] },
   { path: 'accounting/create/credit/:id', component: AccountingCreateCreditComponent, canActivate: [AuthGuard] },
   { path: 'contacts', component: ContactsComponent, canActivate: [AuthGuard] },
-  { path: 'taxes', component: TaxesComponent, canActivate: [AuthGuard] },
-  { path: 'taxes/vat', component: VatComponent, canActivate: [AuthGuard] },
-  { path: 'taxes/govtax', component: GovtaxComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent},
   { path: 'forgot-password', component: ForgotPwdComponent},
   { path: 'reset-password/:reset-token', component: ResetPwdComponent},
