@@ -12,6 +12,8 @@ import {AccountingRecordCashRequest, AccountingRecordRequest} from "../../../../
 import {PaginatorModule} from "primeng/paginator";
 import {CalendarModule} from "primeng/calendar";
 import {Variables} from "../../../../@shared/variables";
+import {ContactsApiService} from "../../../contacts/contacts.api.service";
+import {Validations} from "../../../../@shared/validations";
 
 @Component({
   selector: 'app-accounting-create-cash',
@@ -27,6 +29,7 @@ export class AccountingCreateCashComponent implements OnInit {
   items: MenuItem[] | undefined;
   currentBusinessTeamCVRNumber: number = 0;
   currentAccountingRecordCashId: number = 0;
+  selectedDate: Date = new Date();
 
   formData: AccountingRecordCashRequest = {
     id: 0,
@@ -46,6 +49,7 @@ export class AccountingCreateCashComponent implements OnInit {
               private accountingService: AccountingApiService,
               private toast: ToastrService,
               private teamService: TeamManagementApiService,
+              private datePipe: DatePipe,
               private confirmationService: ConfirmationService,){
   }
 
@@ -78,10 +82,6 @@ export class AccountingCreateCashComponent implements OnInit {
     this.onChangeRequests();
   }
 
-  getCountryCode(countryName: string){
-    return Variables.getCountryCode(countryName);
-  }
-
   onChangeRequests(){
     this.formData.subTotalVat = this.recordRequests.map(x => x.priceInclVat).reduce((a, b) => a + b, 0);
     let vat = this.recordRequests.map(x => x.vat).reduce((a, b) => a + b, 0);
@@ -89,5 +89,42 @@ export class AccountingCreateCashComponent implements OnInit {
     this.formData.total = this.formData.subTotalVat;
   }
 
+  onSelectBoughtFrom(event:any){
+    this.formData.boughtFrom = event.value;
+  }
+
+  onSelectHoldings(event:any){
+    this.formData.holdings = event.value.value;
+  }
+
+  onSelectAccount(event:any, index: number){
+    this.recordRequests[index].account = event.value.value;
+  }
+
+  formatDate(date: Date) {
+    return this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00Z')?.split('+')[0] + 'Z';
+  }
+
+  anyDescriptionEmpty(){
+    return this.recordRequests.some((record) => {
+      return record.description.length < 1;
+    });
+  }
+
+  onSave(){
+    this.formData.businessTeamCVRNumber = this.currentBusinessTeamCVRNumber;
+    this.formData.id = this.currentAccountingRecordCashId;
+    this.formData.documentDate = this.formatDate(this.selectedDate);
+    this.accountingService.updateAccountingRecordCash(this.formData).subscribe((res) => {
+      this.recordRequests.forEach((record) => {
+        this.accountingService.createAccountingRecord(record).subscribe((res) => {
+          this.toast.success('Purchase registered');
+          this.router.navigate(['/accounting']);
+        });
+      });
+    });
+  }
+
   protected readonly Variables = Variables;
+  protected readonly Validations = Validations;
 }

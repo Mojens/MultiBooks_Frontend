@@ -1,4 +1,5 @@
 export class Variables {
+
   static unitOptions = [
     {label: 'Hours', value: 'Hours'},
     {label: 'Piece', value: 'Piece'},
@@ -20,6 +21,7 @@ export class Variables {
     {label: 'Tons', value: 'Tons'},
     {label: 'Square Meters', value: 'Square Meters'},
   ]
+
   static invoiceStatusOptions = [
     { label: 'Confirmed', value: 2 },
     { label: 'Paid', value: 3 },
@@ -58,12 +60,12 @@ export class Variables {
     { label: 'Employee expenses', value: 'Employee expenses' },
     { label: 'Tax account', value: 'Tax account' },
   ]
+
   static boughtFromOptions = [
     { label: 'Denmark', value: 'Denmark' },
     { label: 'EU', value: 'EU' },
     { label: 'World', value: 'World' },
   ]
-
 
   static accountOptionsForRecords = [
     {
@@ -236,6 +238,92 @@ export class Variables {
         return '';
     }
   }
+
+  static valutaOptions = [
+    { label: 'Danish Kroner (DKK)', value: 'Danish Kroner (DKK)' },
+    { label: 'Euro (EUR)', value: 'Euro (EUR)' },
+    { label: 'US Dollars (USD)', value: 'US Dollars (USD)' },
+    { label: 'Norwegian Kroner (NOK)', value: 'Norwegian Kroner (NOK)' },
+    { label: 'Swedish Kroner (SEK)', value: 'Swedish Kroner (SEK)' },
+    { label: 'British Pounds (GBP)', value: 'British Pounds (GBP)' },
+    { label: 'Australian Dollars (AUD)', value: 'Australian Dollars (AUD)' },
+    { label: 'Bulgarian Lev (BGN)', value: 'Bulgarian Lev (BGN)' },
+    { label: 'Brazilian Real (BRL)', value: 'Brazilian Real (BRL)' },
+    { label: 'Canadian Dollars (CAD)', value: 'Canadian Dollars (CAD)' },
+    { label: 'Swiss Francs (CHF)', value: 'Swiss Francs (CHF)' },
+    { label: 'Chinese Yuan Renminbi (CNY)', value: 'Chinese Yuan Renminbi (CNY)' },
+    { label: 'Czech Koruna (CZK)', value: 'Czech Koruna (CZK)' },
+    { label: 'Hong Kong Dollars (HKD)', value: 'Hong Kong Dollars (HKD)' },
+    { label: 'Croatian Kuna (HRK)', value: 'Croatian Kuna (HRK)' },
+    { label: 'Hungarian Forint (HUF)', value: 'Hungarian Forint (HUF)' },
+    { label: 'Indonesian Rupiah (IDR)', value: 'Indonesian Rupiah (IDR)' },
+    { label: 'Israeli Shekel (ILS)', value: 'Israeli Shekel (ILS)' },
+    { label: 'Indian Rupee (INR)', value: 'Indian Rupee (INR)' },
+    { label: 'Icelandic Kroner (ISK)', value: 'Icelandic Kroner (ISK)' },
+    { label: 'Japanese Yen (JPY)', value: 'Japanese Yen (JPY)' },
+    { label: 'South Korean Won (KRW)', value: 'South Korean Won (KRW)' },
+    { label: 'Lithuanian Litas (LTL)', value: 'Lithuanian Litas (LTL)' },
+    { label: 'Latvian Lats (LVL)', value: 'Latvian Lats (LVL)' },
+    { label: 'Mexican Peso (MXN)', value: 'Mexican Peso (MXN)' },
+    { label: 'Malaysian Ringgit (MYR)', value: 'Malaysian Ringgit (MYR)' },
+    { label: 'New Zealand Dollars (NZD)', value: 'New Zealand Dollars (NZD)' },
+    { label: 'Philippine Peso (PHP)', value: 'Philippine Peso (PHP)' },
+    { label: 'Polish Zloty (PLN)', value: 'Polish Zloty (PLN)' },
+    { label: 'Romanian Lei (RON)', value: 'Romanian Lei (RON)' },
+    { label: 'Special Drawing Rights (SDR)', value: 'Special Drawing Rights (SDR)' },
+    { label: 'Singapore Dollars (SGD)', value: 'Singapore Dollars (SGD)' },
+    { label: 'Thai Baht (THB)', value: 'Thai Baht (THB)' },
+    { label: 'Turkish Lira (TRY)', value: 'Turkish Lira (TRY)' },
+    { label: 'South African Rand (ZAR)', value: 'South African Rand (ZAR)' }
+  ];
+
+  static returnCurrency(label: string) {
+    const currencyOptions = [
+      { label: 'Danish Kroner (DKK)', value: 'DKK' },
+      { label: 'Euro (EUR)', value: 'EUR' },
+      { label: 'US Dollars (USD)', value: 'USD' },
+      { label: 'Norwegian Kroner (NOK)', value: 'NOK' },
+      { label: 'Swedish Kroner (SEK)', value: 'SEK' },
+      { label: 'British Pounds (GBP)', value: 'GBP' },
+      { label: 'Australian Dollars (AUD)', value: 'AUD' },
+      { label: 'Bulgarian Lev (BGN)', value: 'BGN' },
+      { label: 'Brazilian Real (BRL)', value: 'BRL' },
+      { label: 'Canadian Dollars (CAD)', value: 'CAD' },
+      { label: 'Swiss Francs (CHF)', value: 'CHF' },
+      { label: 'Chinese Yuan Renminbi (CNY)', value: 'CNY' },
+      { label: 'Czech Koruna (CZK)', value: 'CZK' },
+      { label: 'Hong Kong Dollars (HKD)', value: 'HKD' },
+      { label: 'Croatian Kuna (HRK)', value: 'HRK' },
+      { label: 'Hungarian Forint (HUF)', value: 'HUF' },
+      { label: 'Indonesian Rupiah (IDR)', value: 'IDR' },
+      { label: 'Israeli Shekel (ILS)', value: 'ILS' },
+      { label: 'Indian Rupee (INR)', value: 'INR' },
+      { label: 'Icelandic Kroner (ISK)', value: 'ISK' },
+      { label: 'Japanese Yen (JPY)', value: 'JPY' },
+      { label: 'South Korean Won (KRW)', value: 'KRW' },
+      { label: 'Lithuanian Litas (LTL)', value: 'LTL' },
+      { label: 'Latvian Lats (LVL)', value: 'LVL' },
+      { label: 'Mexican Peso (MXN)', value: 'MXN' },
+      { label: 'Malaysian Ringgit (MYR)', value: 'MYR' },
+      { label: 'New Zealand Dollars (NZD)', value: 'NZD' },
+      { label: 'Philippine Peso (PHP)', value: 'PHP' },
+      { label: 'Polish Zloty (PLN)', value: 'PLN' },
+      { label: 'Romanian Lei (RON)', value: 'RON' },
+      { label: 'Special Drawing Rights (SDR)', value: 'SDR' },
+      { label: 'Singapore Dollars (SGD)', value: 'SGD' },
+      { label: 'Thai Baht (THB)', value: 'THB' },
+      { label: 'Turkish Lira (TRY)', value: 'TRY' },
+      { label: 'South African Rand (ZAR)', value: 'ZAR' }
+    ];
+
+    const currency = currencyOptions.find((currency) => currency.label === label);
+    if (currency) {
+      return currency.value;
+    } else {
+      return '???';
+    }
+  }
+
 
 
 
