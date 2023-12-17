@@ -32,7 +32,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
     DividerModule, RippleModule, TooltipModule, ToastrModule.forRoot(), ScrollTopModule,
     ButtonModule, BrowserAnimationsModule, MatStepperModule, MatFormFieldModule, ReactiveFormsModule,
     RouterModule.forRoot(routes), FontAwesomeModule, ReactiveFormsModule, ConfirmDialogModule],
-  declarations: [AppComponent, LoginComponent, DashboardComponent, RegisterComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent],
   providers: [AuthService, TeamManagementApiService, ConfirmationService],
   bootstrap: [AppComponent],
 })
