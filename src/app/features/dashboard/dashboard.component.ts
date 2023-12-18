@@ -15,6 +15,7 @@ import {FormsModule} from "@angular/forms";
 import {YearRange} from "../../models/Charts/charts.models";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {TeamManagementApiService} from "../team-management/team-management.api.service";
+import {circleOneOptions, graphOneOptions, graphTwoOptions} from "../../@shared/charts.config";
 
 @Component({
   selector: 'app-dashboard',
@@ -29,15 +30,21 @@ export class DashboardComponent implements OnInit{
   currentBusinessTeamCVRNumber: number = 0;
 
   currentYear = new Date().getFullYear().toString();
-  graphData: any;
-  graphOptions: any;
   yearOptions: any[] = [];
   selectedYear:any = {label: new Date().getFullYear().toString(), value: new Date().getFullYear().toString()};
 
+  graphOneData: any;
+  graphOneOptions: any;
   graphOneQuotaOne: number = 0;
   graphOneQuotaTwo: number = 0;
   graphOneQuotaThree: number = 0;
   graphOneQuotaFour: number = 0;
+
+  circleOneData: any;
+  circleOneOptions: any;
+
+  graphTwoData: any;
+  graphTwoOptions: any;
 
   constructor(private router: Router,
               private dashboardService: DashboardApiService,
@@ -49,39 +56,36 @@ export class DashboardComponent implements OnInit{
     this.yearOptions = this.dashboardService.getYearOptions();
     this.currentBusinessTeamCVRNumber = Number(this.teamService.getCurrentBusinessTeam().cvrnumber);
     const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-    this.graphOptions = {
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor
-          }
+    this.graphOneOptions = graphOneOptions;
+    this.circleOneData = {
+      labels: ['Confirmed', 'Overdue', 'Paid', 'Overpaid', 'Cancelled'],
+      datasets: [
+        {
+          data: [540, 325, 702, 421, 100],
+          backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--red-500'), documentStyle.getPropertyValue('--gray-500')],
+          hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--red-400'), documentStyle.getPropertyValue('--gray-400')]
         }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            color: textColorSecondary
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false
-          }
-        },
-        x: {
-          ticks: {
-            color: textColorSecondary
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false
-          }
-        }
-      }
+      ]
     };
+    this.circleOneOptions = circleOneOptions;
+    this.graphTwoData = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      datasets: [
+        {
+          label: 'My First dataset',
+          backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+          borderColor: documentStyle.getPropertyValue('--blue-500'),
+          data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56]
+        },
+        {
+          label: 'My Second dataset',
+          backgroundColor: documentStyle.getPropertyValue('--pink-500'),
+          borderColor: documentStyle.getPropertyValue('--pink-500'),
+          data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86]
+        }
+      ]
+    };
+    this.graphTwoOptions = graphTwoOptions;
   }
 
   formatDate(date: Date) {
@@ -110,7 +114,7 @@ export class DashboardComponent implements OnInit{
             this.graphOneQuotaFour = item.total;
             break;
         }
-        this.graphData = {
+        this.graphOneData = {
           labels: ['Quota 1', 'Quota 2', 'Quota 3', 'Quota 4'],
           datasets: [
             {
