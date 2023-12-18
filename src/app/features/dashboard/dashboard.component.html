@@ -4,7 +4,29 @@
     Dashboard
   </h1>
 </div>
-<hr class="my-4 border-black" />
-<div>
-  <p-chart type="bar" [data]="basicData" [options]="basicOptions" height="500px" width="1600px"></p-chart>
+<hr class="my-4 border-black"/>
+<div class="grid grid-cols-3 gap-3">
+  <div>
+    <p-card header="Total users {{'('+currentYear+')'}}">
+      <h2 class="text-2xl font-bold">{{ 50 }}</h2>
+    </p-card>
+  </div>
+  <div>
+    <p-card header="Total Invoices {{'('+currentYear+')'}}">
+      <h2 class="text-2xl font-bold">{{ 50 }}</h2>
+    </p-card>
+  </div>
+  <div>
+    <p-card header="Total products {{'('+currentYear+')'}}">
+      <h2 class="text-2xl font-bold">{{ 50 }}</h2>
+    </p-card>
+  </div>
+</div>
+<div class="mb-4 mt-4">
+  <h2 class="text-2xl font-bold">Sales overview</h2>
+  <p-dropdown [options]="yearOptions" [(ngModel)]="selectedYear" optionLabel="label"
+              placeholder="Select a year" (onChange)="onYearChange($event)"></p-dropdown>
+  <div *ngIf="selectedYear">
+  <p-chart type="bar" [data]="graphData" [options]="graphOptions" height="500px" width="1600px"></p-chart>
+  </div>
 </div>
