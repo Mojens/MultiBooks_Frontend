@@ -6390,3 +6390,6 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   border-radius: 6px;
   padding: 0.25rem 0.5rem;
 }
+.p-button-icon-only {
+  color:#3B82F6;
+}

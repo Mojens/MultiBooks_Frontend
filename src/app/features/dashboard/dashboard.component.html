@@ -23,61 +23,88 @@
   </div>
 </div>
 <div class="mb-4 mt-4">
-  <h2 class="text-2xl font-bold">Sales overview</h2>
-  <p-dropdown [options]="yearOptions" [(ngModel)]="graphOneSelectedYear" optionLabel="label"
-              placeholder="Select a year" (onChange)="graphOneYearChange($event)"></p-dropdown>
-  <div *ngIf="graphOneSelectedYear && graphOneHasData">
-    <p-chart type="bar" [data]="graphOneData" [options]="graphOneOptions" height="500px" width="1600px"></p-chart>
-  </div>
-  <div *ngIf="!graphOneHasData" class="text-center py-4">
-    <p class="text-lg"><b>No Data available.</b></p>
-  </div>
-</div>
-<div class="grid grid-cols-2 gap-2">
-  <div>
-    <h2 class="text-2xl font-bold">Invoice status overview</h2>
-    <p-dropdown
-      [options]="yearOptions"
-      [(ngModel)]="circleOneSelectedYear"
-      optionLabel="label"
-      placeholder="Select a year"
-      (onChange)="circleOneYearChange($event)"
-    ></p-dropdown>
-    <div *ngIf="circleOneHasData">
-      <p-chart type="pie" [data]="circleOneData" [options]="circleOneOptions" height="450px"></p-chart>
+  <p-card>
+    <h2 class="text-2xl font-bold">Sales overview</h2>
+    <p-dropdown [options]="yearOptions" [(ngModel)]="graphOneSelectedYear" optionLabel="label"
+                placeholder="Select a year" (onChange)="graphOneYearChange($event)"></p-dropdown>
+    <div *ngIf="graphOneSelectedYear && graphOneHasData">
+      <p-chart type="bar" [data]="graphOneData" [options]="graphOneOptions" height="500px" width="1600px"></p-chart>
     </div>
-    <div *ngIf="!circleOneHasData" class="text-center py-4">
+    <div *ngIf="!graphOneHasData" class="text-center py-4">
       <p class="text-lg"><b>No Data available.</b></p>
     </div>
-  </div>
-  <div>
-    <h2 class="text-2xl font-bold">Invoice comparison overview</h2>
-    <div class="flex justify-between">
-      <div class="text-center mr-4">
-        <label for="dropdown1" class="block text-gray-600 text-sm">Dropdown 1 Label</label>
-        <p-dropdown
-          [options]="yearOptions"
-          [(ngModel)]="graphTwoSelectedYearOne"
-          optionLabel="label"
-          placeholder="Select a year"
-          id="dropdown1"
-          (onChange)="compareCharts()"
-        ></p-dropdown>
+  </p-card>
+</div>
+<div class="grid grid-cols-2 gap-2">
+  <p-card>
+    <div>
+      <h2 class="text-2xl font-bold">Invoice status overview</h2>
+      <p-dropdown
+        [options]="yearOptions"
+        [(ngModel)]="circleOneSelectedYear"
+        optionLabel="label"
+        placeholder="Select a year"
+        (onChange)="circleOneYearChange($event)"
+      ></p-dropdown>
+      <div *ngIf="circleOneHasData">
+        <p-chart type="pie" [data]="circleOneData" [options]="circleOneOptions" height="450px"></p-chart>
       </div>
-      <div class="text-center ml-4">
-        <label for="dropdown2" class="block text-gray-600 text-sm">Dropdown 2 Label</label>
-        <p-dropdown
-          [options]="yearOptions"
-          [(ngModel)]="graphTwoSelectedYearTwo"
-          optionLabel="label"
-          placeholder="Select a year"
-          id="dropdown2"
-          (onChange)="compareCharts()"
-        ></p-dropdown>
+      <div *ngIf="!circleOneHasData" class="text-center py-4">
+        <p class="text-lg"><b>No Data available.</b></p>
       </div>
     </div>
-
-
-    <p-chart type="bar" [data]="graphTwoData" [options]="graphTwoOptions"></p-chart>
+  </p-card>
+  <p-card>
+    <div>
+      <h2 class="text-2xl font-bold">Invoice comparison overview</h2>
+      <div class="flex justify-between">
+        <div class="text-center mr-4">
+          <label for="dropdown1" class="block text-gray-600 text-sm">First year</label>
+          <p-dropdown
+            [options]="yearOptions"
+            [(ngModel)]="graphTwoSelectedYearOne"
+            optionLabel="label"
+            placeholder="Select a year"
+            id="dropdown1"
+            (onChange)="compareCharts()"
+          ></p-dropdown>
+        </div>
+        <div class="text-center ml-4">
+          <label for="dropdown2" class="block text-gray-600 text-sm">Second year</label>
+          <p-dropdown
+            [options]="yearOptions"
+            [(ngModel)]="graphTwoSelectedYearTwo"
+            optionLabel="label"
+            placeholder="Select a year"
+            id="dropdown2"
+            (onChange)="compareCharts()"
+          ></p-dropdown>
+        </div>
+      </div>
+      <p-chart type="bar" [data]="graphTwoData" [options]="graphTwoOptions" height="430px"></p-chart>
+    </div>
+  </p-card>
+</div>
+<div class="grid grid-cols-2 gap-2 mb-20">
+  <div class="mb-20 mt-5">
+    <p-card>
+      <h2 class="text-2xl font-bold">Vat overview</h2>
+      <p-dropdown
+        [options]="Variables.quotaStatusOptions"
+        [(ngModel)]="selectedVatQuota"
+        optionLabel="label"
+        placeholder="Select a quota"
+        (onChange)="onChangeVatQuota($event)"
+      ></p-dropdown>
+      <div class="mb-2 mt-2">
+        <p class="block text-gray-600 text-sm">Amount of Vat to be payed</p>
+        <h2 class="text-3xl font-bold">{{ Validations.formatCurrency(vatForQuota) + ' DKK' }}</h2>
+      </div>
+    </p-card>
+  </div>
+  <div class="mb-20 mt-5">
+    <p-card>
+      <h2 class="text-2xl font-bold">Invoice status overview</h2>
+    </p-card>
   </div>
 </div>

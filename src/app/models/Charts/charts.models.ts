@@ -12,8 +12,8 @@ export interface InvoiceStatusResponse {
 }
 
 export interface YearRange {
-  start: string;
-  end: string;
+  start: Date;
+  end: Date;
 }
 
 export interface InvoiceSalesResponse {
@@ -24,4 +24,9 @@ export interface InvoiceSalesResponse {
 
 export interface TotalInvoicesResponse {
   totalInvoices: number;
+}
+
+export interface AccountingTotalResponse {
+  quarter: string;
+  total: number;
 }

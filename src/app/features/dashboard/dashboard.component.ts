@@ -15,6 +15,9 @@ import {FormsModule} from "@angular/forms";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {TeamManagementApiService} from "../team-management/team-management.api.service";
 import {circleOneOptions, documentStyle, graphOneOptions, graphTwoOptions} from "../../@shared/charts.config";
+import {Variables} from "../../@shared/variables";
+import {getQuote} from "html2canvas/dist/types/css/property-descriptors/quotes";
+import {Validations} from "../../@shared/validations";
 
 @Component({
   selector: 'app-dashboard',
@@ -58,6 +61,8 @@ export class DashboardComponent implements OnInit {
   graphTwoHasData: boolean = false;
   circleOneHasData: boolean = false;
 
+  selectedVatQuota: any = {label: 'Quarter 1', value: 'Quarter 1'};
+  vatForQuota: number = 0;
 
   constructor(private router: Router,
               private dashboardService: DashboardApiService,
@@ -108,10 +113,10 @@ export class DashboardComponent implements OnInit {
         }
         this.graphOneHasData = totalQuotaOne > 0 || totalQuotaTwo > 0 || totalQuotaThree > 0 || totalQuotaFour > 0;
         this.graphOneData = {
-          labels: ['Quota 1', 'Quota 2', 'Quota 3', 'Quota 4'],
+          labels: ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'],
           datasets: [
             {
-              label: `Sales`,
+              label: `${chosenYear} Sales (Paid and overpaid invoices)`,
               data: [totalQuotaOne, totalQuotaTwo, totalQuotaThree, totalQuotaFour],
               backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
               borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
@@ -240,7 +245,7 @@ export class DashboardComponent implements OnInit {
           }
           this.graphTwoHasData = firstTotalQuotaOne > 0 || firstTotalQuotaTwo > 0 || firstTotalQuotaThree > 0 || firstTotalQuotaFour > 0 || secondTotalQuotaOne > 0 || secondTotalQuotaTwo > 0 || secondTotalQuotaThree > 0 || secondTotalQuotaFour > 0;
           this.graphTwoData = {
-            labels: ['Quota 1', 'Quota 2', 'Quota 3', 'Quota 4'],
+            labels: ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'],
             datasets: [
               {
                 label: `${chosenYearOne}`,
@@ -263,4 +268,16 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  onChangeVatQuota(event: any) {
+    this.selectedVatQuota = event.value;
+    let start =  this.formatDate(this.dashboardService.getQuarterDates(this.selectedVatQuota.value).start);
+    let end =  this.formatDate(this.dashboardService.getQuarterDates(this.selectedVatQuota.value).end);
+    this.dashboardService.getVatForQuarter(this.currentBusinessTeamCVRNumber, start, end).subscribe((response) => {
+      this.vatForQuota = response.data.total;
+    });
+
+  }
+
+  protected readonly Variables = Variables;
+  protected readonly Validations = Validations;
 }
