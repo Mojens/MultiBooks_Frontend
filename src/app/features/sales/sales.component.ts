@@ -15,11 +15,14 @@ import {ToastrService} from "ngx-toastr";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {BreadcrumbModule} from "primeng/breadcrumb";
 import {Validations} from "../../@shared/validations";
+import {SelectButtonModule} from "primeng/selectbutton";
+import {FormsModule} from "@angular/forms";
+import {Variables} from "../../@shared/variables";
 
 @Component({
   selector: 'app-sales',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, BreadcrumbModule, ButtonModule, RippleModule, TableModule, ConfirmDialogModule, InputTextModule],
+  imports: [CommonModule, FontAwesomeModule, BreadcrumbModule, ButtonModule, RippleModule, TableModule, ConfirmDialogModule, InputTextModule, SelectButtonModule, FormsModule],
   providers: [ConfirmationService, DatePipe],
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.css'
@@ -31,6 +34,8 @@ export class SalesComponent implements OnInit {
   totalRecords: number = 0;
   rows: number = 5;
   currentPage: number = 0;
+
+  chosenStatus!: number;
 
   constructor(private route: Router,
               private salesService: SalesApiService,
@@ -102,6 +107,16 @@ export class SalesComponent implements OnInit {
     this.route.navigate(['sales/invoice/', invoiceNumber]);
   }
 
+  changeStatus(invoiceNumber: number, event: any) {
+    this.salesService.changeInvoiceStatus(invoiceNumber, event.value).subscribe((response) => {
+      setTimeout(() => {
+        this.getInvoices(this.currentPage, this.rows);
+        this.toast.success('Successfully changed invoice status');
+      }, 300);
+    });
+  }
+
   protected readonly Validations = Validations;
   protected readonly Number = Number;
+  protected readonly Variables = Variables;
 }

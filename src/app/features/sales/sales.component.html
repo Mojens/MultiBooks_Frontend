@@ -89,7 +89,7 @@
         <th class="border p-2 font-bold text-center">Date</th>
         <th class="border p-2 font-bold text-center">Total</th>
         <th class="border p-2 font-bold text-center">Status</th>
-        <th class="border p-2 font-bold text-center">Tools</th>
+        <th class="border p-2 font-bold text-center">Tools / Change status</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-invoice>
@@ -101,29 +101,35 @@
           {{ invoice.invoiceDate | date:'dd-MM-yyyy' }}
         </td>
         <td class="text-center border p-2">
-          {{ Validations.formatCurrency(Number(invoice.total*1.25)) }}
+          {{ Validations.formatCurrency(Number(invoice.total * 1.25)) }}
         </td>
         <td class="text-center border p-2">{{ invoice.status }}</td>
         <td class="text-center border p-2">
+          <div class="flex items-center space-x-4">
+            <button pButton pRipple type="button" icon="pi pi-eye" class="p-button-text p-button-lg text-blue-500"
+                    pTooltip="{{ 'See invoice' }}" tooltipPosition="top"
+                    (click)="navigateToInvoice(invoice.invoiceNumber)">
+            </button>
 
-          <button pButton pRipple type="button" icon="pi pi-eye" class="p-button-text p-button-lg text-blue-500"
-                  pTooltip="{{ 'See invoice' }}" tooltipPosition="top" (click)="navigateToInvoice(invoice.invoiceNumber)">
-          </button>
+            <button pButton pRipple type="button" icon="pi pi-pencil"
+                    class="p-button-text p-button-lg text-yellow-500 hidden"
+                    pTooltip="{{ 'Edit' }}" tooltipPosition="top"></button>
 
-          <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-text p-button-lg text-yellow-500 hidden"
-                  pTooltip="{{ 'Edit' }}" tooltipPosition="top" ></button>
-
-          <button pButton pRipple type="button" icon="pi pi-trash"
-                  class="p-button-text p-button-danger p-button-lg text-red-500"
-                  pTooltip="{{ 'Delete' }}" tooltipPosition="top"
-                  (click)="deleteInvoice(invoice.invoiceNumber)"
-
-          ></button>
+            <button pButton pRipple type="button" icon="pi pi-trash"
+                    class="p-button-text p-button-danger p-button-lg text-red-500"
+                    pTooltip="{{ 'Delete' }}" tooltipPosition="top"
+                    (click)="deleteInvoice(invoice.invoiceNumber)"
+            ></button>
+            <p-selectButton [options]="Variables.invoiceStatusOptions" [multiple]="false" optionLabel="label"
+                            optionValue="value"
+                            (onChange)="changeStatus(invoice.invoiceNumber, $event)"></p-selectButton>
+          </div>
         </td>
+
       </tr>
     </ng-template>
   </p-table>
 </div>
-<div *ngIf="invoices.length <= 0"  class="text-center py-4">
+<div *ngIf="invoices.length <= 0" class="text-center py-4">
   <p class="text-lg"><b>No invoices available.</b> Please create new invoices to display here.</p>
 </div>
