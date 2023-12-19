@@ -6,6 +6,7 @@ import * as chartsModels from '../../models/Charts/charts.models';
 import {ApiResponse} from "../../@shared/api.response";
 import {AuthService} from "../../core/auth/auth.service";
 import {YearRange} from "../../models/Charts/charts.models";
+import {InvoiceResponse} from "../../models/Invoice/invoice.models";
 
 @Injectable({
   providedIn: 'root',
@@ -94,6 +95,11 @@ export class DashboardApiService {
   getVatForQuarter(cvrNumber: number, start: string, end: string): Observable<ApiResponse<chartsModels.AccountingTotalResponse>> {
     const VAT_FOR_QUARTER_URL = this.CHART_URL + `/total-vat/${cvrNumber}?start=${start}&end=${end}`;
     return this.http.get<ApiResponse<chartsModels.AccountingTotalResponse>>(VAT_FOR_QUARTER_URL, this.httpOptions);
+  }
+
+  getInvoicesByStatus(cvrNumber: number, statusCode: number,page: number, size: number): Observable<ApiResponse<InvoiceResponse[]>> {
+    const INVOICES_BY_STATUS_URL = this.CHART_URL + `/invoice-status/${cvrNumber}/status/${statusCode}?page=${page}&size=${size}`;
+    return this.http.get<ApiResponse<InvoiceResponse[]>>(INVOICES_BY_STATUS_URL, this.httpOptions);
   }
 
 }

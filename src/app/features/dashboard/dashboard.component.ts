@@ -16,13 +16,14 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {TeamManagementApiService} from "../team-management/team-management.api.service";
 import {circleOneOptions, documentStyle, graphOneOptions, graphTwoOptions} from "../../@shared/charts.config";
 import {Variables} from "../../@shared/variables";
-import {getQuote} from "html2canvas/dist/types/css/property-descriptors/quotes";
 import {Validations} from "../../@shared/validations";
+import {InvoiceResponse} from "../../models/Invoice/invoice.models";
+import {TooltipModule} from "primeng/tooltip";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, ButtonModule, RippleModule, TableModule, ConfirmDialogModule, ChartModule, CardModule, DropdownModule, FormsModule],
+  imports: [CommonModule, FontAwesomeModule, ButtonModule, RippleModule, TableModule, ConfirmDialogModule, ChartModule, CardModule, DropdownModule, FormsModule, TooltipModule],
   providers: [DatePipe, MessageService, ConfirmationService],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -63,6 +64,15 @@ export class DashboardComponent implements OnInit {
 
   selectedVatQuota: any = {label: 'Quarter 1', value: 'Quarter 1'};
   vatForQuota: number = 0;
+
+  selectedStatus: any =  {label: 'Paid', value: 3};
+  totalRecords: number = 0;
+  rows: number = 5;
+  currentPage: number = 0;
+  invoices: InvoiceResponse[] = [];
+
+  startVatDate: String = '';
+  endVatDate: String = '';
 
   constructor(private router: Router,
               private dashboardService: DashboardApiService,
@@ -272,12 +282,31 @@ export class DashboardComponent implements OnInit {
     this.selectedVatQuota = event.value;
     let start =  this.formatDate(this.dashboardService.getQuarterDates(this.selectedVatQuota.value).start);
     let end =  this.formatDate(this.dashboardService.getQuarterDates(this.selectedVatQuota.value).end);
+
+    this.startVatDate = this.datePipe.transform(start, 'dd-MM-yyyy')?.split('+')[0] + '';
+    this.endVatDate = this.datePipe.transform(end, 'dd-MM-yyyy')?.split('+')[0] + '';
+
     this.dashboardService.getVatForQuarter(this.currentBusinessTeamCVRNumber, start, end).subscribe((response) => {
       this.vatForQuota = response.data.total;
     });
 
   }
+  getInvoicesByStatus(event: any) {
+    this.selectedStatus = event.value;
+    this.getInvoices(this.selectedStatus.value, this.currentPage, this.rows);
+  }
+  onLazyLoad(event: any): void {
+    this.currentPage = event.first / event.rows;
+    this.getInvoices(this.selectedStatus.value, this.currentPage, this.rows);
+  }
+  getInvoices(statusCode: number, currentPage: number, rows: number) {
+    this.dashboardService.getInvoicesByStatus(this.currentBusinessTeamCVRNumber, statusCode, currentPage, rows).subscribe((response: any) => {
+      this.invoices = response.data.content;
+      this.totalRecords = response.data.totalElements;
+    });
+  }
 
   protected readonly Variables = Variables;
   protected readonly Validations = Validations;
+  protected readonly Number = Number;
 }
