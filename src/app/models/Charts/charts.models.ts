@@ -21,3 +21,7 @@ export interface InvoiceSalesResponse {
   quarter: string;
   total: number;
 }
+
+export interface TotalInvoicesResponse {
+  totalInvoices: number;
+}
