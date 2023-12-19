@@ -1,3 +1,4 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <div class="flex justify-items-center mb-4">
   <h1 class="text-2xl font-bold">
     <fa-icon [icon]="faFileInvoiceDollar"></fa-icon>
@@ -74,7 +75,7 @@
           <td class="text-center border p-2">
 
             <button pButton pRipple type="button" icon="pi pi-eye" class="p-button-text p-button-lg text-blue-500"
-                    pTooltip="{{ 'See details' }}" tooltipPosition="top">
+                    pTooltip="{{ 'See details' }}" tooltipPosition="top" (click)="onDetailAccountingRecordCredit(accountingRecordCredit)">
             </button>
 
             <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-text p-button-lg p-button-warning"
@@ -83,6 +84,7 @@
             <button pButton pRipple type="button" icon="pi pi-trash"
                     class="p-button-text p-button-danger p-button-lg text-red-500"
                     pTooltip="{{ 'Delete' }}" tooltipPosition="top"
+                    (click)="onDeleteAccountingRecordCredit(accountingRecordCredit.id)"
 
             ></button>
           </td>
@@ -146,7 +148,7 @@
           <td class="text-center border p-2">
 
             <button pButton pRipple type="button" icon="pi pi-eye" class="p-button-text p-button-lg text-blue-500"
-                    pTooltip="{{ 'See details' }}" tooltipPosition="top">
+                    pTooltip="{{ 'See details' }}" tooltipPosition="top" (click)="onDetailAccountingRecordCash(accountingRecordCash)">
             </button>
 
             <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-text p-button-lg p-button-warning"
@@ -155,7 +157,7 @@
             <button pButton pRipple type="button" icon="pi pi-trash"
                     class="p-button-text p-button-danger p-button-lg text-red-500"
                     pTooltip="{{ 'Delete' }}" tooltipPosition="top"
-
+                    (click)="onDeleteAccountingRecordCash(accountingRecordCash.id)"
             ></button>
           </td>
 
