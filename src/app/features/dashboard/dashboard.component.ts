@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
 import {faDashboard} from "@fortawesome/free-solid-svg-icons";
-import { ChartModule } from 'primeng/chart';
+import {ChartModule} from 'primeng/chart';
 import {CommonModule, DatePipe} from "@angular/common";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {ButtonModule} from "primeng/button";
@@ -24,16 +24,22 @@ import {circleOneOptions, documentStyle, graphOneOptions, graphTwoOptions} from 
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit {
   faDashboard = faDashboard;
   currentBusinessTeamCVRNumber: number = 0;
 
   currentYear = new Date().getFullYear().toString();
   yearOptions: any[] = [];
-  graphOneSelectedYear:any = {label: new Date().getFullYear().toString(), value: new Date().getFullYear().toString()};
-  graphTwoSelectedYearOne:any = {label: new Date().getFullYear().toString(), value: new Date().getFullYear().toString()};
-  graphTwoSelectedYearTwo:any = {label: new Date().getFullYear().toString(), value: new Date().getFullYear().toString()};
-  circleOneSelectedYear:any = {label: new Date().getFullYear().toString(), value: new Date().getFullYear().toString()};
+  graphOneSelectedYear: any = {label: new Date().getFullYear().toString(), value: new Date().getFullYear().toString()};
+  graphTwoSelectedYearOne: any = {
+    label: (new Date().getFullYear()-1).toString(),
+    value: (new Date().getFullYear()-1).toString()
+  };
+  graphTwoSelectedYearTwo: any = {
+    label: new Date().getFullYear().toString(),
+    value: new Date().getFullYear().toString()
+  };
+  circleOneSelectedYear: any = {label: new Date().getFullYear().toString(), value: new Date().getFullYear().toString()};
 
   graphOneData: any;
   graphOneOptions: any;
@@ -64,23 +70,6 @@ export class DashboardComponent implements OnInit{
     this.currentBusinessTeamCVRNumber = Number(this.teamService.getCurrentBusinessTeam().cvrnumber);
     this.graphOneOptions = graphOneOptions;
     this.circleOneOptions = circleOneOptions;
-    this.graphTwoData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      datasets: [
-        {
-          label: 'My First dataset',
-          backgroundColor: documentStyle.getPropertyValue('--blue-500'),
-          borderColor: documentStyle.getPropertyValue('--blue-500'),
-          data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56]
-        },
-        {
-          label: 'My Second dataset',
-          backgroundColor: documentStyle.getPropertyValue('--pink-500'),
-          borderColor: documentStyle.getPropertyValue('--pink-500'),
-          data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86]
-        }
-      ]
-    };
     this.graphTwoOptions = graphTwoOptions;
     this.getTotalProducts();
     this.getTotalUsers();
@@ -91,7 +80,7 @@ export class DashboardComponent implements OnInit{
     return this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00Z')?.split('+')[0] + 'Z';
   }
 
-  graphOneYearChange(event:any){
+  graphOneYearChange(event: any) {
     let chosenYear = Number(event.value.value);
     const firstDayOfYear = new Date(chosenYear, 0, 1);
     const lastDayOfYear = new Date(chosenYear, 11, 31);
@@ -134,7 +123,7 @@ export class DashboardComponent implements OnInit{
     });
   }
 
-  circleOneYearChange(event:any){
+  circleOneYearChange(event: any) {
     let chosenYear = Number(event.value.value);
     const firstDayOfYear = new Date(chosenYear, 0, 1);
     const lastDayOfYear = new Date(chosenYear, 11, 31);
@@ -147,7 +136,7 @@ export class DashboardComponent implements OnInit{
     let totalCancelled = 0;
     this.dashboardService.getInvoiceStatusCircleChart(this.currentBusinessTeamCVRNumber, start, end).subscribe((response) => {
       response.data.forEach((item) => {
-        switch (item.status){
+        switch (item.status) {
           case 'CONFIRMED':
             totalConfirmed = item.totalInvoices;
             break;
@@ -179,21 +168,98 @@ export class DashboardComponent implements OnInit{
     });
   }
 
-  getTotalProducts(){
+  getTotalProducts() {
     this.dashboardService.getTotalProducts(this.currentBusinessTeamCVRNumber).subscribe((response) => {
       this.totalProducts = response.data.totalProducts;
     });
   }
 
-  getTotalUsers(){
+  getTotalUsers() {
     this.dashboardService.getTotalUsers(this.currentBusinessTeamCVRNumber).subscribe((response) => {
       this.totalUsers = response.data.totalUsers;
     });
   }
 
-  getTotalInvoices(){
+  getTotalInvoices() {
     this.dashboardService.getTotalInvoices(this.currentBusinessTeamCVRNumber).subscribe((response) => {
       this.totalInvoices = response.data.totalInvoices;
+    });
+  }
+
+  compareCharts() {
+    let chosenYearOne = Number(this.graphTwoSelectedYearOne.value);
+    let chosenYearTwo = Number(this.graphTwoSelectedYearTwo.value);
+    const firstDayOfYearOne = new Date(chosenYearOne, 0, 1);
+    const lastDayOfYearOne = new Date(chosenYearOne, 11, 31);
+    const startOne = this.formatDate(firstDayOfYearOne);
+    const endOne = this.formatDate(lastDayOfYearOne);
+    const firstDayOfYearTwo = new Date(chosenYearTwo, 0, 1);
+    const lastDayOfYearTwo = new Date(chosenYearTwo, 11, 31);
+    const startTwo = this.formatDate(firstDayOfYearTwo);
+    const endTwo = this.formatDate(lastDayOfYearTwo);
+    let firstTotalQuotaOne = 0;
+    let firstTotalQuotaTwo = 0;
+    let firstTotalQuotaThree = 0;
+    let firstTotalQuotaFour = 0;
+    let secondTotalQuotaOne = 0;
+    let secondTotalQuotaTwo = 0;
+    let secondTotalQuotaThree = 0;
+    let secondTotalQuotaFour = 0;
+    this.dashboardService.getSalesYearly(this.currentBusinessTeamCVRNumber, startOne, endOne).subscribe((response) => {
+      response.data.forEach((item) => {
+        switch (item.quarter) {
+          case 'Q1':
+            firstTotalQuotaOne = item.total;
+            break;
+          case 'Q2':
+            firstTotalQuotaTwo = item.total;
+            break;
+          case 'Q3':
+            firstTotalQuotaThree = item.total;
+            break;
+          case 'Q4':
+            firstTotalQuotaFour = item.total;
+            break;
+        }
+      });
+      this.dashboardService.getSalesYearly(this.currentBusinessTeamCVRNumber, startTwo, endTwo).subscribe((response) => {
+        response.data.forEach((item) => {
+          switch (item.quarter) {
+            case 'Q1':
+              secondTotalQuotaOne = item.total;
+              break;
+            case 'Q2':
+              secondTotalQuotaTwo = item.total;
+              break;
+            case 'Q3':
+              secondTotalQuotaThree = item.total;
+              break;
+            case 'Q4':
+              secondTotalQuotaFour = item.total;
+              break;
+          }
+          this.graphTwoHasData = firstTotalQuotaOne > 0 || firstTotalQuotaTwo > 0 || firstTotalQuotaThree > 0 || firstTotalQuotaFour > 0 || secondTotalQuotaOne > 0 || secondTotalQuotaTwo > 0 || secondTotalQuotaThree > 0 || secondTotalQuotaFour > 0;
+          this.graphTwoData = {
+            labels: ['Quota 1', 'Quota 2', 'Quota 3', 'Quota 4'],
+            datasets: [
+              {
+                label: `${chosenYearOne}`,
+                data: [firstTotalQuotaOne, firstTotalQuotaTwo, firstTotalQuotaThree, firstTotalQuotaFour],
+                backgroundColor: ['rgb(255, 159, 64)', 'rgb(255, 159, 64)', 'rgb(255, 159, 64)', 'rgb(255, 159, 64)'],
+                borderColor: ['rgb(255, 159, 64)', 'rgb(255, 159, 64)', 'rgb(255, 159, 64)', 'rgb(255, 159, 64)'],
+                borderWidth: 1
+              },
+              {
+                label: `${chosenYearTwo}`,
+                data: [secondTotalQuotaOne, secondTotalQuotaTwo, secondTotalQuotaThree, secondTotalQuotaFour],
+                backgroundColor: ['rgb(255, 99, 132)', 'rgb(255, 99, 132)', 'rgb(255, 99, 132)', 'rgb(255, 99, 132)'],
+                borderColor: ['rgb(255, 99, 132)', 'rgb(255, 99, 132)', 'rgb(255, 99, 132)', 'rgb(255, 99, 132)'],
+                borderWidth: 1
+              }
+            ]
+          };
+        });
+      });
     });
   }
 
