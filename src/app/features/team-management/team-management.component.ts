@@ -87,18 +87,19 @@ export class TeamManagementComponent implements OnInit {
       ownerEmail: this.userMail
     }
     this.validateData();
-
-    this.teamService.createBusinessTeam(request).subscribe(
-      (response) => {
-        this.toast.success('Successfully created business team');
-        this.userBusinessTeams.push(response.data);
-        this.setCreateMode();
-      },
-      (error) => {
-        this.toast.error(error.error.message);
-      }
-    );
-
+    let validForm = this.validForm();
+    if (validForm) {
+      this.teamService.createBusinessTeam(request).subscribe(
+        (response) => {
+          this.toast.success('Successfully created business team');
+          this.userBusinessTeams.push(response.data);
+          this.setCreateMode();
+        },
+        (error) => {
+          this.toast.error(error.error.message);
+        }
+      );
+    }
   }
 
   validateData() {
@@ -114,6 +115,44 @@ export class TeamManagementComponent implements OnInit {
       this.toast.error("Invalid CVR number.");
       return;
     }
+  }
+
+  validForm() {
+    if (this.formData.regNumber == 0) {
+      this.toast.error("Invalid reg number.");
+      return false;
+    } else if (this.formData.CVRNumber == 0 || this.formData.CVRNumber.toString().length != 8 || !Validations.isValidCVR(this.formData.CVRNumber)) {
+      this.toast.error("Invalid CVR number.");
+      return false;
+    } else if (!Validations.isValidVAT(this.formData.VATNumber)) {
+      this.toast.error("Invalid VAT number.");
+      return false;
+    } else if (this.formData.companyName == '') {
+      this.toast.error("Invalid company name.");
+      return false;
+    } else if (this.formData.address == '') {
+      this.toast.error("Invalid address.");
+      return false;
+    } else if (this.formData.city == '') {
+      this.toast.error("Invalid city.");
+      return false;
+    } else if (this.formData.zipCode == 0) {
+      this.toast.error("Invalid zip code.");
+      return false;
+    } else if (this.formData.country == '') {
+      this.toast.error("Invalid country.");
+      return false;
+    } else if (this.formData.phoneNumber == '') {
+      this.toast.error("Invalid phone number.");
+      return false;
+    } else if (this.formData.website == '') {
+      this.toast.error("Invalid website.");
+      return false;
+    } else if (this.formData.companyEmail == '' || !Validations.isValidEmail(this.formData.companyEmail)) {
+      this.toast.error("Invalid company email.");
+      return false;
+    }
+    return true;
   }
 
   protected readonly localStorage = localStorage;

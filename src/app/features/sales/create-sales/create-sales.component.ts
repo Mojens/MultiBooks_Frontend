@@ -185,6 +185,7 @@ export class CreateSalesComponent implements OnInit {
   allChosenToCurrent(event: any) {
     this.productRequests = [];
     this.toast.error('All products removed from invoice', 'Success');
+    this.resetForms();
   }
 
   allCurrentToChosen(event: any) {
@@ -207,6 +208,7 @@ export class CreateSalesComponent implements OnInit {
     this.chosenProducts = [];
     this.productRequests = [];
     this.toast.error('All products removed from invoice', 'Success');
+    this.resetForms();
   }
 
   changeQuantity(event: any, product: ProductResponse) {

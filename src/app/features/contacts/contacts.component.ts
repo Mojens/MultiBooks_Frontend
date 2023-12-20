@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TooltipModule} from "primeng/tooltip";
@@ -13,10 +13,10 @@ import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {DropdownModule} from "primeng/dropdown";
 import {ToastrService} from "ngx-toastr";
-import { ConfirmationService } from 'primeng/api';
+import {ConfirmationService} from 'primeng/api';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import DOMPurify from 'dompurify';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import {trigger, state, style, transition, animate} from '@angular/animations';
 import {InputTextModule} from "primeng/inputtext";
 import {Validations} from "../../@shared/validations";
 import {Variables} from "../../@shared/variables";
@@ -24,7 +24,7 @@ import {Variables} from "../../@shared/variables";
 @Component({
   selector: 'app-contacts',
   standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, FormsModule, TooltipModule, DividerModule, FontAwesomeModule, TableModule, ButtonModule, RippleModule, DropdownModule, ConfirmDialogModule, InputTextModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, TooltipModule, DividerModule, FontAwesomeModule, TableModule, ButtonModule, RippleModule, DropdownModule, ConfirmDialogModule, InputTextModule],
   providers: [ConfirmationService],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.css',
@@ -86,10 +86,10 @@ export class ContactsComponent implements OnInit {
   createMode: boolean = false;
   editMode: boolean = false;
 
-  constructor(  private contactService: ContactsApiService,
-                private teamService: TeamManagementApiService,
-                private toast: ToastrService,
-                private confirmationService: ConfirmationService) {
+  constructor(private contactService: ContactsApiService,
+              private teamService: TeamManagementApiService,
+              private toast: ToastrService,
+              private confirmationService: ConfirmationService) {
   }
 
   ngOnInit(): void {
@@ -119,18 +119,21 @@ export class ContactsComponent implements OnInit {
     this.createMode = !this.createMode;
   }
 
-  createContact(){
+  createContact() {
     const request: ContactsRequest = {
       ...this.formData,
       businessTeamCVRNumber: this.currentBusinessTeamCVRNumber
     }
-    this.contactService.createContact(request).subscribe(
-      (response) => {
-        this.contacts.push(response.data);
-        this.toast.success('Successfully created business team');
-        this.setCreateMode();
-        this.getContacts(this.currentPage, this.rows);
-      });
+    let isValid = this.validateForm();
+    if (isValid) {
+      this.contactService.createContact(request).subscribe(
+        (response) => {
+          this.contacts.push(response.data);
+          this.toast.success('Successfully created a new contact');
+          this.setCreateMode();
+          this.getContacts(this.currentPage, this.rows);
+        });
+    }
   }
 
   deleteContact(id: number) {
@@ -214,6 +217,7 @@ export class ContactsComponent implements OnInit {
       });
 
   }
+
   setEditMode(contact: ContactsResponse) {
     this.editMode = !this.editMode;
     this.editFormData = {
@@ -234,8 +238,44 @@ export class ContactsComponent implements OnInit {
       businessTeamCVRNumber: this.currentBusinessTeamCVRNumber,
     }
   }
+
   exitEditMode() {
     this.editMode = false;
+  }
+
+  validateForm(): boolean {
+    if (!Validations.isValidEmail(this.formData.email)) {
+      this.toast.error('Please enter a valid email');
+      return false;
+    } else if (this.formData.phoneNumber.length < 8) {
+      this.toast.error('Please enter a valid phone number');
+      return false;
+    } else if (this.formData.companyName.length < 1) {
+      this.toast.error('Please enter a valid company name');
+      return false;
+    } else if (this.formData.companyAddress.length < 1) {
+      this.toast.error('Please enter a valid company address');
+      return false;
+    } else if (this.formData.companyCity.length < 1) {
+      this.toast.error('Please enter a valid company city');
+      return false;
+    } else if (this.formData.companyZipCode.toString().length < 1) {
+      this.toast.error('Please enter a valid company zip code');
+      return false;
+    } else if (this.formData.companyCountry.length < 1) {
+      this.toast.error('Please enter a valid company country');
+      return false;
+    } else if (this.formData.attentionPerson.length < 1) {
+      this.toast.error('Please enter a valid attention person');
+      return false;
+    } else if (this.formData.paymentTermsDays <= 0) {
+      this.toast.error('Please enter a valid payment terms days');
+      return false;
+    } else if (this.formData.CVRNumber < 8) {
+      this.toast.error('Please enter a valid CVR number');
+      return false;
+    }
+    return true;
   }
 
 
