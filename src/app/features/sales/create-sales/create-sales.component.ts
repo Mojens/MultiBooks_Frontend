@@ -75,6 +75,7 @@ export class CreateSalesComponent implements OnInit {
   vatPrice: number = -1;
   totalPrice: number = -1;
 
+  priceCalculated: boolean = false;
   constructor(private router: Router,
               private route: ActivatedRoute,
               private contactService: ContactsApiService,
@@ -213,11 +214,13 @@ export class CreateSalesComponent implements OnInit {
     newProductRequests.forEach((productRequest) => {
       if (productRequest.productId === Number(product.id)) {
         productRequest.productAmount = Number(event.target.value);
+        productRequest.productPriceAfterDiscount = productRequest.productAmount * product.productPriceExclVAT;
       }
     });
     this.productRequests = newProductRequests;
-    this.getDiscountedPrice(product);
+    this.calculateTotal();
   }
+
 
   changeDiscount(event: any, product: ProductResponse) {
     if (event.target.value > 100) {
@@ -299,11 +302,17 @@ export class CreateSalesComponent implements OnInit {
   }
 
   calculateTotal() {
-    console.log('calculateTotal')
     this.getTotal();
     this.getVAT();
     this.getSubTotalExclVAT();
     this.getSubTotalInclVAT();
+  }
+  calculateTotalButton() {
+    this.getTotal();
+    this.getVAT();
+    this.getSubTotalExclVAT();
+    this.getSubTotalInclVAT();
+    this.priceCalculated = true;
   }
 
   onCreateInvoice() {

@@ -48,7 +48,6 @@ export class ResetPwdComponent implements OnInit {
 
   verifyToken() {
     this.service.verifyResetToken(this.resetToken).subscribe((res) => {
-      console.log(res);
     }, (error) => {
       this.errorMessage = error.error.message;
     })

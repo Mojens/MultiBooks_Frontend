@@ -57,7 +57,6 @@ export class AccountingComponent implements OnInit{
   getAccountingRecordCash(page: number, size: number) {
     this.accountingService.getAccountingRecordCash(this.currentBusinessTeamCVRNumber, page, size).subscribe((response) => {
       this.accountingRecordCash = response.data.content;
-      console.log(this.accountingRecordCash);
       this.totalRecordsCash = response.data.totalElements;
     });
   }

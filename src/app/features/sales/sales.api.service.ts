@@ -39,7 +39,6 @@ export class SalesApiService {
   }
 
   createInvoice(CVRNumber: number): Observable<ApiResponse<invoiceModels.InvoiceResponse>> {
-    console.log(this.token)
     const createInvoiceUrl = `${this.INVOICE_URL}/create/${CVRNumber}`;
     return this.http.post<ApiResponse<any>>(createInvoiceUrl, {}, this.httpOptions);
   }

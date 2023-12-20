@@ -99,7 +99,6 @@ export class SettingsComponent implements OnInit {
   getIsTeamOwner() {
     this.settingsService.isTeamOwner(this.currentBusinessTeamCVRNumber).subscribe((response: any) => {
       this.isTeamOwner = response.data;
-      console.log(this.isTeamOwner);
     });
   }
   changeTeamInfo() {

@@ -81,7 +81,7 @@
       <div class="flex flex-col mb-4 text-center">
         <button pButton type="button" label="Calculate Price"
                 class="p-button-success bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
-                (click)="calculateTotal()"
+                (click)="calculateTotalButton()"
         ></button>
       </div>
       <div class="flex flex-col mb-4">
@@ -138,7 +138,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="subTotalWithVat !== -1 || vatPrice !== -1 || totalPrice !== -1 || subTotalWithoutVat !== -1">
+  <div *ngIf="priceCalculated && (subTotalWithVat !== -1 || vatPrice !== -1 || totalPrice !== -1 || subTotalWithoutVat !== -1)">
     <hr class="my-4 border-black mb-3"/>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
       <div class="flex flex-col mb-4">
@@ -160,7 +160,7 @@
     </div>
   </div>
   <div class="flex justify-end"
-       *ngIf="subTotalWithVat !== -1 || vatPrice !== -1 || totalPrice !== -1 || subTotalWithoutVat !== -1">
+       *ngIf="priceCalculated && (subTotalWithVat !== -1 || vatPrice !== -1 || totalPrice !== -1 || subTotalWithoutVat !== -1)">
     <button type="button"
             class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 ml-2"
             (click)="onCreateInvoice()">

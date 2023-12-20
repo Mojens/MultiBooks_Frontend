@@ -39,7 +39,6 @@ export class DashboardApiService {
   }
 
   getQuarterDates(quarter: string):YearRange {
-    console.log(quarter)
     const currentYear = new Date().getFullYear();
     let startDate, endDate;
 

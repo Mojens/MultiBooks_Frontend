@@ -87,7 +87,6 @@ export class InvoiceDisplayComponent implements OnInit {
   getInvoice(invoiceNumber: number) {
     this.salesService.getInvoice(invoiceNumber).subscribe((response: any) => {
       this.invoice = response.data;
-      console.log(this.invoice);
     });
   }
 
@@ -172,7 +171,6 @@ export class InvoiceDisplayComponent implements OnInit {
       const contentDataURL = canvas.toDataURL('image/png');
       pdf.addImage(contentDataURL, 'PNG', x, y, imgWidth, imgHeight);
 
-      // Open the PDF in a new window and initiate printing
       pdf.autoPrint();
       window.open(pdf.output('bloburl'), '_blank');
     });
