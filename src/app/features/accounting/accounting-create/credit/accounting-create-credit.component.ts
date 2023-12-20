@@ -66,12 +66,18 @@ export class AccountingCreateCreditComponent implements OnInit {
   ngOnInit(): void {
     this.currentAccountingRecordCreditId = Number(this.route.snapshot.params['id'])
     this.currentBusinessTeamCVRNumber = Number(this.teamService.getCurrentBusinessTeam().cvrnumber)
-    this.items = [{label: 'Accounting', routerLink: '/accounting'}, {label: 'Register purchase', routerLink: '/accounting/create'}, {label: 'Register credit purchase', routerLink: `/accounting/create/credit/${this.currentAccountingRecordCreditId}`}];
+    this.items = [{label: 'Accounting', routerLink: '/accounting'}, {
+      label: 'Register purchase',
+      routerLink: '/accounting/create'
+    }, {
+      label: 'Register credit purchase',
+      routerLink: `/accounting/create/credit/${this.currentAccountingRecordCreditId}`
+    }];
     this.getSuppliers();
   }
 
-  getSuppliers(){
-    this.contactService.getContacts(this.currentBusinessTeamCVRNumber,0,1000).subscribe((res) => {
+  getSuppliers() {
+    this.contactService.getContacts(this.currentBusinessTeamCVRNumber, 0, 1000).subscribe((res) => {
       this.suppliers = res.data.content;
       this.suppliersOptions = this.suppliers.map((supplier) => {
         return {label: supplier.companyName, value: supplier.id};
@@ -79,7 +85,7 @@ export class AccountingCreateCreditComponent implements OnInit {
     });
   }
 
-  addNewRecordRequest(){
+  addNewRecordRequest() {
     let request: AccountingRecordRequest = {
       priceInclVat: 0,
       vat: 0,
@@ -92,40 +98,40 @@ export class AccountingCreateCreditComponent implements OnInit {
     this.toast.success('Product added');
   }
 
-  updateVat(index: number){
+  updateVat(index: number) {
     this.recordRequests[index].vat = this.recordRequests[index].priceInclVat * 0.25;
     this.onChangeRequests();
   }
 
-  onChangeRequests(){
+  onChangeRequests() {
     this.formData.subTotalVat = this.recordRequests.map(x => x.priceInclVat).reduce((a, b) => a + b, 0);
     let vat = this.recordRequests.map(x => x.vat).reduce((a, b) => a + b, 0);
     this.formData.subTotalNoVat = this.formData.subTotalVat - vat;
     this.formData.total = this.formData.subTotalVat;
   }
 
-  removeRecordRequest(index: number){
+  removeRecordRequest(index: number) {
     this.recordRequests.splice(index, 1);
     this.toast.error('Product removed');
   }
 
-  onSelectAccount(event:any, index: number){
+  onSelectAccount(event: any, index: number) {
     this.recordRequests[index].account = event.value.value;
   }
 
-  onSelectValuta(event:any){
+  onSelectValuta(event: any) {
     this.formData.valuta = event.value.value
   }
 
-  onSelectBoughtFrom(event:any){
+  onSelectBoughtFrom(event: any) {
     this.formData.boughtFrom = event.value;
   }
 
-  onSelectSupplier(event:any){
+  onSelectSupplier(event: any) {
     this.formData.supplierId = event.value.value;
   }
 
-  anyDescriptionEmpty(){
+  anyDescriptionEmpty() {
     return this.recordRequests.some((record) => {
       return record.description.length < 1;
     });
@@ -135,19 +141,39 @@ export class AccountingCreateCreditComponent implements OnInit {
     return this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00Z')?.split('+')[0] + 'Z';
   }
 
-  onSave(){
+  onSave() {
     this.formData.businessTeamCVRNumber = this.currentBusinessTeamCVRNumber;
     this.formData.id = this.currentAccountingRecordCreditId;
     this.formData.documentDate = this.formatDate(this.selectedDocumentDate);
     this.formData.dueDate = this.formatDate(this.selectedDueDate);
-   this.accountingService.updateAccountingRecordCredit(this.formData).subscribe((res) => {
-     this.recordRequests.forEach((record) => {
-        this.accountingService.createAccountingRecord(record).subscribe((res) => {
-          this.toast.success('Purchase registered');
-          this.router.navigate(['/accounting']);
+    let validForm = this.validateForm();
+    if (validForm) {
+      this.accountingService.updateAccountingRecordCredit(this.formData).subscribe((res) => {
+        this.recordRequests.forEach((record) => {
+          this.accountingService.createAccountingRecord(record).subscribe((res) => {
+            this.toast.success('Purchase registered');
+            this.router.navigate(['/accounting']);
+          });
         });
-     });
+      });
+    }
+  }
+
+  validateForm(): boolean {
+    this.recordRequests.forEach((record) => {
+      if (record.priceInclVat < 0) {
+        this.toast.error('Price must be greater than 0');
+        return false;
+      } else if (record.description.length < 1) {
+        this.toast.error('Description is required');
+        return false;
+      } else if (this.formData.supplierId === 0) {
+        this.toast.error('Supplier is required');
+        return false;
+      }
+      return true;
     });
+    return true
   }
 
   protected readonly Variables = Variables;

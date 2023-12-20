@@ -50,17 +50,20 @@ export class AccountingCreateCashComponent implements OnInit {
               private toast: ToastrService,
               private teamService: TeamManagementApiService,
               private datePipe: DatePipe,
-              private confirmationService: ConfirmationService,){
+              private confirmationService: ConfirmationService,) {
   }
 
   ngOnInit() {
     this.currentAccountingRecordCashId = Number(this.route.snapshot.params['id'])
     this.currentBusinessTeamCVRNumber = Number(this.teamService.getCurrentBusinessTeam().cvrnumber)
-    this.items = [{label: 'Accounting', routerLink: '/accounting'}, {label: 'Register purchase', routerLink: '/accounting/create'}, {label: 'Register cash purchase', routerLink: `/accounting/create/cash/${this.currentAccountingRecordCashId}`}];
+    this.items = [{label: 'Accounting', routerLink: '/accounting'}, {
+      label: 'Register purchase',
+      routerLink: '/accounting/create'
+    }, {label: 'Register cash purchase', routerLink: `/accounting/create/cash/${this.currentAccountingRecordCashId}`}];
   }
 
-  addNewRecordRequest(){
-    let request:AccountingRecordRequest = {
+  addNewRecordRequest() {
+    let request: AccountingRecordRequest = {
       priceInclVat: 0,
       vat: 0,
       description: '',
@@ -72,32 +75,32 @@ export class AccountingCreateCashComponent implements OnInit {
     this.toast.success('Product added');
   }
 
-  removeRecordRequest(index: number){
+  removeRecordRequest(index: number) {
     this.recordRequests.splice(index, 1);
     this.toast.error('Product removed');
   }
 
-  updateVat(index: number){
+  updateVat(index: number) {
     this.recordRequests[index].vat = this.recordRequests[index].priceInclVat * 0.25;
     this.onChangeRequests();
   }
 
-  onChangeRequests(){
+  onChangeRequests() {
     this.formData.subTotalVat = this.recordRequests.map(x => x.priceInclVat).reduce((a, b) => a + b, 0);
     let vat = this.recordRequests.map(x => x.vat).reduce((a, b) => a + b, 0);
     this.formData.subTotalNoVat = this.formData.subTotalVat - vat;
     this.formData.total = this.formData.subTotalVat;
   }
 
-  onSelectBoughtFrom(event:any){
+  onSelectBoughtFrom(event: any) {
     this.formData.boughtFrom = event.value;
   }
 
-  onSelectHoldings(event:any){
+  onSelectHoldings(event: any) {
     this.formData.holdings = event.value.value;
   }
 
-  onSelectAccount(event:any, index: number){
+  onSelectAccount(event: any, index: number) {
     this.recordRequests[index].account = event.value.value;
   }
 
@@ -105,24 +108,41 @@ export class AccountingCreateCashComponent implements OnInit {
     return this.datePipe.transform(date, 'yyyy-MM-ddT00:00:00Z')?.split('+')[0] + 'Z';
   }
 
-  anyDescriptionEmpty(){
+  anyDescriptionEmpty() {
     return this.recordRequests.some((record) => {
       return record.description.length < 1;
     });
   }
 
-  onSave(){
+  onSave() {
     this.formData.businessTeamCVRNumber = this.currentBusinessTeamCVRNumber;
     this.formData.id = this.currentAccountingRecordCashId;
     this.formData.documentDate = this.formatDate(this.selectedDate);
-    this.accountingService.updateAccountingRecordCash(this.formData).subscribe((res) => {
-      this.recordRequests.forEach((record) => {
-        this.accountingService.createAccountingRecord(record).subscribe((res) => {
-          this.toast.success('Purchase registered');
-          this.router.navigate(['/accounting']);
+    let validForm = this.validateForm();
+    if (validForm) {
+      this.accountingService.updateAccountingRecordCash(this.formData).subscribe((res) => {
+        this.recordRequests.forEach((record) => {
+          this.accountingService.createAccountingRecord(record).subscribe((res) => {
+            this.toast.success('Purchase registered');
+            this.router.navigate(['/accounting']);
+          });
         });
       });
+    }
+  }
+
+  validateForm(): boolean {
+    this.recordRequests.forEach((record) => {
+      if (record.priceInclVat < 0) {
+        this.toast.error('Price must be greater than 0');
+        return false;
+      } else if (record.description.length < 1) {
+        this.toast.error('Description is required');
+        return false;
+      }
+      return true;
     });
+    return true
   }
 
   protected readonly Variables = Variables;
