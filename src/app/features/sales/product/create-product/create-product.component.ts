@@ -12,11 +12,11 @@ import {TableModule} from "primeng/table";
 import {ProductRequest} from "../../../../models/Product/product.models";
 import {TeamManagementApiService} from "../../../team-management/team-management.api.service";
 import {ToastrService} from "ngx-toastr";
-import { ConfirmationService } from 'primeng/api';
+import {ConfirmationService} from 'primeng/api';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
-import { EditorModule } from 'primeng/editor';
+import {EditorModule} from 'primeng/editor';
 import {Variables} from "../../../../@shared/variables";
 
 @Component({
@@ -27,7 +27,7 @@ import {Variables} from "../../../../@shared/variables";
   templateUrl: './create-product.component.html',
   styleUrl: './create-product.component.css'
 })
-export class CreateProductComponent implements OnInit{
+export class CreateProductComponent implements OnInit {
 
   faClipboardCheck = faClipboardCheck;
   items: MenuItem[] | undefined;
@@ -47,6 +47,7 @@ export class CreateProductComponent implements OnInit{
   };
 
   currentBusinessTeamCVRNumber: number = 0;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private productService: ProductApiService,
@@ -57,13 +58,16 @@ export class CreateProductComponent implements OnInit{
 
   ngOnInit(): void {
     this.currentBusinessTeamCVRNumber = Number(this.teamService.getCurrentBusinessTeam().cvrnumber);
-    this.items = [{label: 'Sales', routerLink: '/sales'}, {label: 'Products', routerLink: '/sales/product'}, {label: 'Create Product', routerLink: '/sales/product/create'}];
+    this.items = [{label: 'Sales', routerLink: '/sales'}, {
+      label: 'Products',
+      routerLink: '/sales/product'
+    }, {label: 'Create Product', routerLink: '/sales/product/create'}];
     this.unitOptions = Variables.unitOptions;
     this.accountOptions = Variables.accountOptions;
   }
 
   onCancelCreateProduct() {
-    if(this.formData.productName !== '' || this.formData.productCode !== 0 || this.formData.productAmount !== 0 || this.formData.productUnit !== '' || this.formData.productPriceExclVAT !== 0 || this.formData.productPriceInclVAT !== 0 || this.formData.productDescription !== '' || this.formData.productAccount !== '') {
+    if (this.formData.productName !== '' || this.formData.productCode !== 0 || this.formData.productAmount !== 0 || this.formData.productUnit !== '' || this.formData.productPriceExclVAT !== 0 || this.formData.productPriceInclVAT !== 0 || this.formData.productDescription !== '' || this.formData.productAccount !== '') {
       this.confirmationService.confirm({
         message: 'Are you sure you want to leave this page?',
         header: 'Leave confirmation',
@@ -79,7 +83,7 @@ export class CreateProductComponent implements OnInit{
         reject: () => {
         }
       });
-    }else{
+    } else {
       this.router.navigate(['../'], {relativeTo: this.route});
     }
   }
@@ -90,12 +94,41 @@ export class CreateProductComponent implements OnInit{
       businessCVRNumber: this.currentBusinessTeamCVRNumber,
       productPriceInclVAT: this.formData.productPriceExclVAT * 1.25
     }
-    this.productService.createProduct(productRequest).subscribe((response: any) => {
-      this.toast.success('Product created successfully');
-      this.router.navigate(['../'], {relativeTo: this.route});
-    }, error => {
-      this.toast.error('Something went wrong');
-    })
+    let validForm = this.validForm(productRequest);
+    if (validForm) {
+      this.productService.createProduct(productRequest).subscribe((response: any) => {
+        this.toast.success('Product created successfully');
+        this.router.navigate(['../'], {relativeTo: this.route});
+      }, error => {
+        this.toast.error('Something went wrong');
+      })
+    }
+  }
+
+  validForm(request: ProductRequest): boolean {
+    if (request.productName === '') {
+      this.toast.error('Product name is required');
+      return false;
+    } else if (request.productCode === 0) {
+      this.toast.error('Product code is required');
+      return false;
+    } else if (request.productAmount === 0) {
+      this.toast.error('Product amount is required');
+      return false;
+    } else if (request.productUnit === '') {
+      this.toast.error('Product unit is required');
+      return false;
+    } else if (request.productPriceExclVAT < 0) {
+      this.toast.error('Product price is required');
+      return false;
+    } else if (request.productAccount === '') {
+      this.toast.error('Product account is required');
+      return false;
+    } else if (request.productPriceExclVAT < 0) {
+      this.toast.error('Product price is required');
+      return false;
+    }
+    return true;
   }
 
 }
