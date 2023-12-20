@@ -48,6 +48,11 @@ export class TeamManagementApiService {
     return this.http.get<ApiResponse<any>>(getBusinessTeamUrl, this.httpOptions);
   }
 
+  editBusinessTeam(request: teamModels.BusinessTeamRequest): Observable<ApiResponse<teamModels.BusinessTeamResponse>>{
+    const editBusinessTeamUrl = `${this.URL}/edit`;
+    return this.http.patch<ApiResponse<teamModels.BusinessTeamResponse>>(editBusinessTeamUrl, request, this.httpOptions);
+  }
+
 
 
 }
